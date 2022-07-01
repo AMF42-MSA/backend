@@ -25,8 +25,18 @@ public class PolicyHandler {
 
         Category category = new Category();
         category.setId(categoryChanged.getId());
+        category.setTitle(categoryChanged.getTitle());
 
-        // categoryRepository.save(category);
+        if ("INSERT".equals(categoryChanged.getJobType())) {
+            categoryRepository.save(category);
+        } else if ("UPDATE".equals(categoryChanged.getJobType())) {
+            categoryRepository.save(category);
+        } else if ("DELETE".equals(categoryChanged.getJobType())) {
+            categoryRepository.delete(category);
+        }     
+        System.out.println("kafka in: =====================" );
+        System.out.println("<" + categoryChanged.getJobType() + ":" + categoryChanged.getId() + ":" + categoryChanged.getTitle()  );
+        System.out.println("kafka end: =====================" );
     }
 
     // @StreamListener(KafkaProcessor.INPUT)
