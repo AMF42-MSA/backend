@@ -117,6 +117,18 @@ public class AuctionApplication {
 	}
 
 
+    ///입찰부분이에요.
+    //@RequestMapping(method = RequestMethod.PUT, path="auctions/{auctionId}/bidAuction")
+	//public String bidAuction(@PathVariable(value = "auctionId") Long auctionId){
+	//	System.out.println("###########################"+ auctionId);
+    //    Auction LectureBid = auctionRepository.findById(auctionId).get();
+    //    LectureBid.
+	//	auction.startAuction();
+	//	auctionRepository.save(auction);
+	//	return "경매가 시작 되었습니다.";
+	//}
+
+
 
 
 
