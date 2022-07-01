@@ -1,5 +1,7 @@
 package com.example.lecturecategory.domain;
 
+import javax.persistence.*;
+
 @Entity
 public class InterestCategory {     // Entity. Domain Class.
 
@@ -9,6 +11,7 @@ public class InterestCategory {     // Entity. Domain Class.
             return Id;
         }
 
+    @Embedded
     private Category category;
         public Category getCategory() {
             return category;
@@ -17,6 +20,7 @@ public class InterestCategory {     // Entity. Domain Class.
             this.category = category;
         }
 
+    @Embedded
     private MemberVO memberVO;
         public MemberVO getMemberVO() {
             return memberVO;
