@@ -200,4 +200,84 @@ https://labs.msaez.io/#/courses/cna-full/full-course-cna/ops-utility
   
  ## 3. 2일차(7/01) 코딩
  1. class --> lecture  ==> 완료
- 2. 강의 분류를 ReadModel로 만들자
+ 2. 강의 분류를 ReadMode
+
+### Kafka  연동 정리
+1. 수정한 프로그램 목록
+   - AbstractEvent
+   - PolicyHandler
+   - KafkaProcessor
+   - application.yml은 
+     ```
+      group: lecture
+      destination: lecture-category
+     ```
+2. 기능
+   - category의 ReadModel  ( 변경 내역을 )      
+3. 테스트한 내용
+   - 로컬에서 수행중
+   - "docker-compose exec -it kafka /bin/bash" 수행한 아무런 동작이 없어, docker-desktop의 'CLI' 명령어 입력
+    ```
+    sh-4.4$ ./kafka-console-producer --bootstrap-server localhost:29092 --topic lecture-category
+    >{"jobType":"INSERT","id":"100","title":"MSA"}
+    >{"jobType":"INSERT","id":"100","title":"MSA"}
+    ```
+4. 테스트 결과
+    ```json
+    PS D:\APP\GIT-AMF3\backend\kafka> http GET :8081/categories/1
+    HTTP/1.1 200 
+    Connection: keep-alive
+    Content-Type: application/hal+json
+    Date: Fri, 01 Jul 2022 07:28:40 GMT
+    Keep-Alive: timeout=60
+    Transfer-Encoding: chunked
+    Vary: Origin
+    Vary: Access-Control-Request-Method
+    Vary: Access-Control-Request-Headers
+
+    {
+        "_links": {
+            "category": {
+                "href": "http://localhost:8081/categories/1"
+            },
+            "self": {
+                "href": "http://localhost:8081/categories/1"
+            }
+        },
+        "title": "MSA"
+    }
+    ```    
+5. 'id'는 입력받은 대로 그대로 입력
+    ```
+    sh-4.4$ ./kafka-console-producer --bootstrap-server localhost:29092 --topic lecture-category
+    >{"jobType":"INSERT","id":"100","title":"MSA"}
+    >{"jobType":"INSERT","id":"100","title":"MSA"}
+    >{"jobType":"UPDATE","id":"100","title":"MSA-수정"}
+    ```
+    ``` json
+    PS D:\APP\GIT-AMF3\backend\kafka> http GET :8081/categories/100
+    HTTP/1.1 200
+
+    {
+        "_links": {
+            "category": {
+                "href": "http://localhost:8081/categories/100"
+            },
+            "self": {
+                "href": "http://localhost:8081/categories/100"
+            }
+        },
+        "title": "MSA"
+    }
+
+
+    PS D:\APP\GIT-AMF3\backend\kafka> http GET :8081/categories/100
+    {
+        "_links": {
+            "category": {
+                "href": "http://localhost:8081/categories/100"
+            },
+        "title": "MSA-수정"
+    }
+
+    ```
