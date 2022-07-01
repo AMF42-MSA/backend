@@ -22,14 +22,36 @@ public class Auction {     // Entity. Domain Class.
             return id;
         }
 
-    Long lectureId;    
+    Long lectId;    
 
-    public Long getLectureId() {
-        return lectureId;
+    public Long getLectId() {
+        return lectId;
     }
-    public void setLectureId(Long lectureId) {
-        this.lectureId = lectureId;
+    public void setLectId(Long lectId) {
+        this.lectId = lectId;
     }
+
+    String lectName;    
+
+    public String getLectName() {
+        return lectName;
+    }
+    public void setLectName(String lectName) {
+        this.lectName = lectName;
+    }
+
+    String lectStatus;    
+
+    public String getLectStatus() {
+        return lectStatus;
+    }
+    public void setLectStatus(String lectStatus) {
+        this.lectStatus = lectStatus;
+    }
+
+
+
+
 
     Date startAuctionDate;
 
@@ -62,6 +84,13 @@ public class Auction {     // Entity. Domain Class.
         
         setAuctionStatus(AuctionStatus.CANCEL); //취소
         return "경매가 취소되었읍니다.";
+    }
+
+    public String startAuction() {
+        //answer must be obtained by UI
+        
+        setAuctionStatus(AuctionStatus.AUCTION); //취소
+        return "경매가 시작되었읍니다.";
     }
 
     

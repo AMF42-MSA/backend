@@ -19,6 +19,16 @@ public abstract class LectureBid {     // Entity. Domain Class.
         public Long getId() {
             return id;
         }
+        
+
+    @ManyToOne
+    Auction auction;
+        public Auction getCustomer() {
+            return auction;
+        }
+        public void setCustomer(Auction auction) {
+            this.auction = auction;
+        }
 
     Long memberId;
         public Long getMemberId() {
