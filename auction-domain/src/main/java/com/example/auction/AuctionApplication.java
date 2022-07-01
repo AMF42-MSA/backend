@@ -100,6 +100,15 @@ public class AuctionApplication {
 		auctionRepository.save(auction);
 		return "경매가 취소 되었습니다.";
 	}
+    
+    @RequestMapping(method = RequestMethod.PUT, path="auctions/{auctionId}/startAuction")
+	public String startAuction(@PathVariable(value = "auctionId") Long auctionId){
+		System.out.println("###########################"+ auctionId);
+        Auction auction = auctionRepository.findById(auctionId).get();
+		auction.startAuction();
+		auctionRepository.save(auction);
+		return "경매가 시작 되었습니다.";
+	}
 
     @RequestMapping(method = RequestMethod.GET, path="auctions/{auctionId}/search")
 	public Auction search(@PathVariable(value = "auctionId") Long auctionId){
