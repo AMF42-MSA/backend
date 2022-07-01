@@ -1,8 +1,11 @@
 package com.example.lecturecategory.domain;
 
+import javax.persistence.*;
+
 /*
  * 관심분류 등록자 VO
  */
+@Embeddable
 public class MemberVO {
 
     private Long memberId;      //등록자Id

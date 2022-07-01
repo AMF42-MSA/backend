@@ -1,9 +1,8 @@
 package com.example.lecturecategory.domain;
 
-import org.springframework.beans.BeanUtils;
-
 import javax.persistence.*;
 
+@Embeddable
 @Entity
 public class Category {     // Entity. Domain Class.
 
@@ -11,6 +10,9 @@ public class Category {     // Entity. Domain Class.
     private Long categoryId;
         public Long getCategoryId() {
             return categoryId;
+        }
+        public void setCategoryId(Long categoryId) {
+            this.categoryId = categoryId;
         }
     
     private String categoryName;
