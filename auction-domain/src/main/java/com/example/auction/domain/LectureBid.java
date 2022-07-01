@@ -11,7 +11,7 @@ import javax.persistence.*;
 
 @Entity
 
-public abstract class LectureBid {     // Entity. Domain Class.
+public class LectureBid {     // Entity. Domain Class.
 
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
@@ -23,10 +23,10 @@ public abstract class LectureBid {     // Entity. Domain Class.
 
     @ManyToOne
     Auction auction;
-        public Auction getCustomer() {
+        public Auction getAuction() {
             return auction;
         }
-        public void setCustomer(Auction auction) {
+        public void setAuction(Auction auction) {
             this.auction = auction;
         }
 
