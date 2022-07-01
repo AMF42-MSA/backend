@@ -19,6 +19,7 @@ public class Member {     // Entity. Domain Class.
     String memberName;
 
     String phoneNo;
+    //sss
 
     
 }
