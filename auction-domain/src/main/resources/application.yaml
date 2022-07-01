@@ -25,7 +25,7 @@ spring:
                   serde: org.apache.kafka.common.serialization.Serdes$StringSerde
       bindings:
         event-in:
-          group: store
+          group: auction
           destination: lecture
           contentType: application/json
         event-out:
