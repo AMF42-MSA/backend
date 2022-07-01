@@ -14,8 +14,9 @@ import lombok.Data;
 @Data
 public class Category {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+     @Id
+    // @GeneratedValue(strategy = GenerationType.AUTO)
+    //Read Mode로 입력받은 대로 그대로 
     private Long id;
 
     private String title;
