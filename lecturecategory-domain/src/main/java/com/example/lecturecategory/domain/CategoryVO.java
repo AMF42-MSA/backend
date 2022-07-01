@@ -2,11 +2,10 @@ package com.example.lecturecategory.domain;
 
 import javax.persistence.*;
 
-@Entity
-public class Category {     // Entity. Domain Class.
+@Embeddable
+public class CategoryVO {
 
-    @Id @GeneratedValue
-    private Long categoryId;
+    Long categoryId;
         public Long getCategoryId() {
             return categoryId;
         }
@@ -14,25 +13,12 @@ public class Category {     // Entity. Domain Class.
             this.categoryId = categoryId;
         }
     
-    private String categoryName;
+    String categoryName;
         public String getCategoryName() {
             return categoryName;
         }
         public void setCategoryName(String categoryName) {
             this.categoryName = categoryName;
         }
-        
-    
-    @PostPersist
-    public void onPostPersist(){
-        CategoryReserved categoryReserved = new CategoryReserved();
-
-        categoryReserved.setCategoryId(this.getCategoryId());
-        categoryReserved.setCategoryName(this.getCategoryName());
-
-        categoryReserved.publishAfterCommit();
-    }
-
-
     
 }
