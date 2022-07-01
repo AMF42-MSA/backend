@@ -23,7 +23,7 @@ public abstract class Pet {     // Entity. Domain Class.
         public Long getId() {
             return id;
         }
-
+    //수정
     private int appearance;
         public int getAppearance() {
             return appearance;

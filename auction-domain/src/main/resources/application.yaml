@@ -1,7 +1,7 @@
 server:
   port: 8084
 
----
+--- 
 
 spring:
   profiles: default
@@ -26,10 +26,10 @@ spring:
       bindings:
         event-in:
           group: store
-          destination: petstore
+          destination: lecture
           contentType: application/json
         event-out:
-          destination: petstore
+          destination: lecture
           contentType: application/json
 
 logging:
@@ -55,9 +55,9 @@ spring:
                   serde: org.apache.kafka.common.serialization.Serdes$StringSerde
       bindings:
         event-in:
-          group: store
-          destination: petstore
+          group: auction
+          destination: lecture
           contentType: application/json
         event-out:
-          destination: petstore
+          destination: lecture
           contentType: application/json
