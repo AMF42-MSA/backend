@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Embeddable
 public class MemberVO {
 
-    private Long memberId;      //등록자Id
+    Long memberId;      //등록자Id
         public Long getMemberId() {
             return memberId;
         }
@@ -16,7 +16,7 @@ public class MemberVO {
             this.memberId = memberId;
         }
 
-    private String memberName;  //등록자명
+    String memberName;  //등록자명
         public String getMemberName() {
             return memberName;
         }

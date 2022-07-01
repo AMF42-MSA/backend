@@ -12,12 +12,12 @@ public class InterestCategory {     // Entity. Domain Class.
         }
 
     @Embedded
-    private Category category;
-        public Category getCategory() {
-            return category;
+    private CategoryVO categoryVO;
+        public CategoryVO getCategoryVO() {
+            return categoryVO;
         }
-        public void setCategory(Category category) {
-            this.category = category;
+        public void setCategoryVO(CategoryVO categoryVO) {
+            this.categoryVO = categoryVO;
         }
 
     @Embedded
