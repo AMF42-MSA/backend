@@ -76,6 +76,11 @@ https://labs.msaez.io/#/courses/cna-full/full-course-cna/ops-utility
     http :8083/categories title="MSA_catalog"
 
     ```
+    wsl 
+    cd /tmp/docker-desktop-root/mnt/host/d/APP/git-amf3/backend#
+
+
+
 ## 2. 테이블 확인
 
 ### 처음 생성된 테이블
