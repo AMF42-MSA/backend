@@ -1,7 +1,5 @@
 package lecturemgt.domain;
 
-import java.util.List;
-
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Embedded;

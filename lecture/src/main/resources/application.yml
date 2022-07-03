@@ -10,6 +10,8 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+
+
   cloud:
     stream:
       kafka:
@@ -39,7 +41,7 @@ logging:
 
 
 server:
-  port: 8081
+  port: ${PORT:8081}
 ---
 
 spring:
