@@ -85,6 +85,7 @@ public class AuctionApplication {
 
 		System.out.println("시작되었습니다.");
 		Auction auction = new Auction();
+        LectureBid lectureBid = new LectureBid();
 
 		applicationContext = SpringApplication.run(AuctionApplication.class, args);
 	}
@@ -115,6 +116,18 @@ public class AuctionApplication {
 		Auction auction = auctionRepository.findById(auctionId).get();
 		return auction;
 	}
+
+    @RequestMapping(method = RequestMethod.PUT, path="auctions/{auctionId}/bidAuction")
+	public String bidAuction(@PathVariable(value = "auctionId") Long auctionId){
+		System.out.println("###########################"+ auctionId);
+        Auction auction = auctionRepository.findById(auctionId).get();
+		auction.startAuction();
+		auctionRepository.save(auction);
+		return "경매가 시작 되었습니다.";
+	}
+    //@PostMapping(path="auctions/bidAuction")
+    //public String bidAuction(@RequestBody )
+
 
 
     ///입찰부분이에요.
