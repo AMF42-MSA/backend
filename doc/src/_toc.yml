@@ -25,3 +25,4 @@ parts:
       - file: lecture/README-Lecture.md
       - file: lecture/01-주요변경내용.md
       - file: lecture/02-테스트내용.md
+      - file: lecture/03-Docker이미지생성.md

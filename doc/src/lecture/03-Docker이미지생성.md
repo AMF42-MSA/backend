@@ -1,6 +1,6 @@
 # Lecture-Docker이미지빌드
 
-## DockerFile 생성
+## Docker-compose로 일괄실행하기
 1. 이미 생성되어 있음
 
    ```
