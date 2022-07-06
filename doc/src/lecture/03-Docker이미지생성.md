@@ -1,7 +1,7 @@
 # Lecture-Docker이미지빌드
 
 ## Docker-compose로 일괄실행하기
-1. 이미 생성되어 있음
+1. DockerFile 생성(개별 서비스별)
 
    ```
    FROM openjdk:15-jdk-alpine
