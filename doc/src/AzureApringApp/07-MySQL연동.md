@@ -1,9 +1,7 @@
 
-# 07-Build a Spring Boot microservice using MySQL
+# 07-MySQL을 사용하여 Spring Boot 마이크로서비스 구축
 - https://github.com/microsoft/azure-spring-cloud-training/edit/master/07-build-a-spring-boot-microservice-using-mysql/README.md
 - 2022-07-08 Azure Spring App 교육
-
-__This guide is part of the [Azure Spring Apps training](./README.md)__
 
 - [MySQL database](https://docs.microsoft.com/en-us/azure/mysql/?WT.mc_id=azurespringcloud-github-judubois)기반 마이크로서비스를 빌드
 - JPA(Java Persistence API)를 사용하여 데이터에 액세스
@@ -11,24 +9,24 @@ __This guide is part of the [Azure Spring Apps training](./README.md)__
 
 ## Azure Spring Apps에서 애플리케이션 만들기
 
-[02 - Build a simple Spring Boot microservice](02-build-a-simple-spring-boot-microservice/README.md)와 같이,`weather-service` application 생성
+[02-Build a simple Spring Boot microservice](02-build-a-simple-spring-boot-microservice.md)와 같이,`weather-service` application 생성
 
 ```bash
 az spring app create -n weather-service --runtime-version Java_17
 ```
 
 
-## Configure the MySQL Server instance
+## MySQL 서버 인스턴스 구성
 
-After following the steps in Section 00, you should have an Azure Database for MySQL instance named `sclabm-<unique string>` in your resource group.
+`sclabm-<unique string>`섹션 00의 단계를 수행한 후에는 리소스 그룹에 Azure Database for MySQL 인스턴스가 있어야 합니다 .
 
-Before we can use it however, we will need to perform several tasks:
+그러나 사용하기 전에 몇 가지 작업을 수행해야 합니다.
 
-1. Create a MySQL firewall rule to allow connections from our local environment.
-1. Create a MySQL firewall rule to allow connections from Azure Services. This will enable connections from Azure Spring Apps.
-1. Create a MySQL database.
+1. 로컬 환경에서 연결을 허용하는 MySQL 방화벽 규칙을 만듭니다.
+2. Azure Services에서 연결을 허용하는 MySQL 방화벽 규칙을 만듭니다. 이렇게 하면 Azure Spring Apps에서 연결할 수 있습니다.
+3. MySQL 데이터베이스를 생성합니다.
+> 💡암호를 묻는 메시지가 표시되면 섹션 00 에서 ARM 템플릿을 배포할 때 지정한 MySQL 암호를 입력합니다(`super$ecr3t`)
 
-> 💡When prompted for a password, enter the MySQL password you specified when deploying the ARM template in [Section 00](../00-setup-your-environment/README.md).
 
 ```bash
 # Obtain the info on the MYSQL server in our resource group:
@@ -57,32 +55,32 @@ az mysql db create \
     --name "azure-spring-cloud-training" \
     --server-name $MYSQL_SERVERNAME
 
+
 # Display MySQL username (to be used in the next section)
 echo "Your MySQL username is: ${MYSQL_USERNAME}"
 
 ```
 
-## Bind the MySQL database to the application
+## MySQL 데이터베이스를 애플리케이션에 바인딩
 
-As we did for CosmosDB in the previous section, create a service binding for the MySQL database to make it available to Azure Spring Apps microservices.
-In the [Azure Portal](https://portal.azure.com/?WT.mc_id=azurespringcloud-github-judubois):
+Azure Spring Apps 마이크로서비스에서 사용할 수 있도록 MySQL 데이터베이스에 대한 서비스 바인딩을 만듭니다. [Azure Portal](https://portal.azure.com/?WT.mc_id=azurespringcloud-github-judubois)에서 :
 
-- Navigate to your Azure Spring Apps instance
-- Click on Apps
-- Click on `weather-service`.
-- Click on "Service Bindings" and then on "Create Service Binding".
-- Populate the service binding fields as shown.
-  - The username will be displayed in last line of output from the section above.
-  - The password is the one you specified in section 0. The default value is `super$ecr3t`.
-- Click on `Create` to create the database binding
+- Azure Spring Apps 인스턴스로 이동
+- Apps을 클릭하십시오
+- `weather-service`를 클릭
+- "Service Bindings"을 클릭한 다음 "서비스 바인딩 만들기"를 클릭합니다.
+- 표시된 대로 서비스 바인딩 필드를 채우십시오.
+    - 사용자 이름은 위 섹션의 출력 마지막 줄에 표시됩니다.
+    - 암호는 섹션 0에서 지정한 암호입니다. 기본값은 'super$ecr3t'입니다.
+- Create데이터베이스 바인딩을 만들려면 클릭하십시오
 
-![MySQL Service Binding](media/01-create-service-binding-mysql.png)
+![MySQL Service Binding](images/7-01-create-service-binding-mysql.png)
 
-## Create a Spring Boot microservice
+## Spring Boot 마이크로서비스 생성
 
-Now that we've provisioned the Azure Spring Apps instance and configured the service binding, let's get the code for `weather-service` ready. The microservice that we create in this guide is [available here](weather-service/).
+Azure Spring Apps 인스턴스를 프로비저닝하고 서비스 바인딩을 구성했으므로 코드를 `weather-service`준비하겠습니다.
 
-To create our microservice, we will invoke the Spring Initalizer service from the command line:
+마이크로 서비스를 생성하기 위해 명령줄에서 Spring Initalizer 서비스를 호출합니다.
 
 ```bash
 curl https://start.spring.io/starter.tgz -d dependencies=web,data-jpa,mysql,cloud-eureka,cloud-config-client -d baseDir=weather-service -d bootVersion=2.7.0 -d javaVersion=17 | tar -xzvf -
@@ -90,7 +88,7 @@ curl https://start.spring.io/starter.tgz -d dependencies=web,data-jpa,mysql,clou
 
 > We use the `Spring Web`, `Spring Data JPA`, `MySQL Driver`, `Eureka Discovery Client` and the `Config Client` components.
 
-## Add Spring code to get the data from the database
+## 데이터베이스에서 데이터를 가져오는 Spring 코드 추가
 
 Next to the `DemoApplication` class, create a `Weather` JPA entity:
 
@@ -172,7 +170,7 @@ public class WeatherController {
 }
 ```
 
-## Add sample data in MySQL
+## MySQL에 샘플 데이터 추가
 
 In order to have Hibernate automatically create your database, open up the `src/main/resources/application.properties` file and add:
 
@@ -180,18 +178,18 @@ In order to have Hibernate automatically create your database, open up the `src/
 spring.jpa.hibernate.ddl-auto=create
 ```
 
-Then, in order to have Spring Boot add sample data at startup, create a `src/main/resources/import.sql` file and add:
+Spring Boot가 시작 시 샘플 데이터를 추가하도록 하려면  `src/main/resources/import.sql`파일을 만들고 다음을 추가
 
 ```sql
 INSERT INTO `azure-spring-cloud-training`.`weather` (`city`, `description`, `icon`) VALUES ('Paris, France', 'Very cloudy!', 'weather-fog');
 INSERT INTO `azure-spring-cloud-training`.`weather` (`city`, `description`, `icon`) VALUES ('London, UK', 'Quite cloudy', 'weather-pouring');
 ```
 
-> The icons we are using are the ones from [https://materialdesignicons.com/](https://materialdesignicons.com/) - you can pick their other weather icons if you wish.
+> 사용하는 아이콘은 [https://materialdesignicons.com/](https://materialdesignicons.com/) 에서 가져온 것 입니다. 원하는 경우 다른 날씨 아이콘을 선택할 수 있습니다.
 
-## Deploy the application
+## 애플리케이션 배포
 
-You can now build your "weather-service" project and send it to Azure Spring Apps:
+Y 프로젝트를 빌드하고 Azure Spring Apps로 배포:
 
 ```bash
 cd weather-service
@@ -200,17 +198,19 @@ az spring app deploy -n weather-service --artifact-path target/demo-0.0.1-SNAPSH
 cd ..
 ```
 
-## Test the project in the cloud
+## 클라우드에서 테스트
 
-- Go to "Apps" in your Azure Spring Apps instance.
-  - Verify that `weather-service` has a `Registration status` which says `1/1`. This shows that it is correctly registered in the Spring Cloud Service Registry.
-  - Select `weather-service` to have more information on the microservice.
-- Copy/paste the "Test endpoint" that is provided.
+- Azure Spring Apps 인스턴스에서 "Apps"으로 이동합니다.
+  - `weather-service`에 `Registration status` 가 있는지 확인하십시오 1/1. 이것은 Spring Cloud Service Registry에 올바르게 등록되었음을 보여줍니다.
+  - `weather-service`마이크로 서비스에 대한 자세한 정보를 보려면 선택하십시오 .
+- 제공된 "Test endpoint"을 복사/붙여넣기 합니다.
+이제 cURL을 사용하여 /weather/city끝점을 테스트할 수 있습니다. 예를 들어 Paris, France도시를 테스트하려면 테스트 엔드포인트 끝에 를 추가합니다 /weather/city?name=Paris%2C%20France.
+```
+$ curl https://primary:epE4t3cUY4ymkKWLF4hL8j7Xuf8aCDDxOQJhk4KTCftq6sRhOvtuFbPQUElIUgRo@spring-apps-msa-01.test.azuremicroservices.io/weather-service/default//weather/city?name=Paris%2C%20France
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    74    0    74    0     0     54      0 --:--:--  0:00:01 --:--:--    54{"city":"Paris, France","description":"Very cloudy!","icon":"weather-fog"}
 
-You can now use cURL to test the `/weather/city` endpoint. For example, to test for `Paris, France` city, append to the end of the test endpoint: `/weather/city?name=Paris%2C%20France`.
-
-```bash
-curl "https://primary:31SifNyr649htxU3IEpYaLbxRz6Gy3xAk0aLDFM49hcwx9zcCEXvPEGkHSpzJzKv@judubois-4876.test.azuremicroservices.io/weather-service/default/weather/city?name=Paris%2C%20France"
 ```
 
 Here is the response you should receive:
@@ -219,10 +219,4 @@ Here is the response you should receive:
 {"city":"Paris, France","description":"Very cloudy!","icon":"weather-fog"}
 ```
 
-If you need to check your code, the final project is available in the ["weather-service" folder](weather-service/).
-
 ---
-
-⬅️ Previous guide: [06 - Build a reactive Spring Boot microservice using Cosmos DB](../06-build-a-reactive-spring-boot-microservice-using-cosmosdb/README.md)
-
-➡️ Next guide: [08 - Build a Spring Cloud Gateway](../08-build-a-spring-cloud-gateway/README.md)

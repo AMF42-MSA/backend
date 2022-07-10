@@ -69,7 +69,7 @@ portal에서 생성 [the Azure portal](https://portal.azure.com/?WT.mc_id=azures
 또는 명령줄을 사용하여 더 쉬운 앱 인스턴스를 만들 수 있습:
 
 ```bash
-az spring app create -n simple-microservice-3 --runtime-version Java_17
+az spring app create -n simple-microservice --runtime-version Java_17
 ```
 
 You can now build your "simple-microservice" project and deploy it to Azure Spring Apps:
@@ -132,3 +132,4 @@ cd ..
 ⬅️ Previous guide: [01-Create an Azure Spring Apps instance](./01-create-an-azure-spring-cloud-instance.md)
 
 ➡️ Next guide: [03-Configure monitoring](./03-configure-monitoring.md)
+                                

@@ -6,32 +6,34 @@
 
 Azure CLI가 Azure 구독에 로그인되어 있는지 확인
 
-```bash
-az login # Sign into an azure account(부라우저를 통하여 로그인 함)
-az account show # See the currently signed-in account.
-```
-```
-[
+  ```bash
+  az login # Sign into an azure account(부라우저를 통하여 로그인 함)
+  az account show # See the currently signed-in account.
+  ```
+- 결과
+  ```
   {
-    "cloudName": "AzureCloud",
-    "homeTenantId": "4a4c7dd5-33ba-4aa4-b839-9b53616b9c9d",
-    "id": "950e7b49-b333-4cfc-9685-ee8d4e01e645",
+    "environmentName": "AzureCloud",
+    "homeTenantId": "b8d6f9c4-6aed-4744-b6ed-a7fa69bbad4d",
+    "id": "2f3be25a-4f0c-4efe-b44f-474bf15974a3",
     "isDefault": true,
     "managedByTenants": [],
-    "name": "Training Subscription 01",
+    "name": "Azure subscription 1",
     "state": "Enabled",
-    "tenantId": "4a4c7dd5-33ba-4aa4-b839-9b53616b9c9d",
+    "tenantId": "b8d6f9c4-6aed-4744-b6ed-a7fa69bbad4d",
     "user": {
-      "name": "user09@iurcloudz01.onmicrosoft.com",
+      "name": "jcscom13@gmail.com",
       "type": "user"
     }
   }
-]
-
 ```
 
 구독 설정 방법
-```az account set --subscription <SUBSCRIPTION_ID>```
+```
+az account set --subscription <SUBSCRIPTION_ID>
+#예시
+az account set --subscription "Azure subscription 1"
+```
 
 ## 2. 인스턴스 만들기
 먼저 Azure Spring Apps 인스턴스의 이름을 지정
@@ -49,8 +51,8 @@ az account show # See the currently signed-in account.
 AZ_RESOURCE_GROUP=spring-apps-lab
 AZ_SPRING_APPS_NAME=azure-spring-apps-lab
 # 교육시 사용한 그룹
-AZ_RESOURCE_GROUP=spring-cloud-workshop-user09-2
-AZ_SPRING_APPS_NAME=azure-spring-apps-lab-user09
+AZ_RESOURCE_GROUP=msa-rg-01
+AZ_SPRING_APPS_NAME=msa-01
 ```
 
 인스턴스 생성.
@@ -74,12 +76,14 @@ az configure --defaults spring=$AZ_SPRING_APPS_NAME
     az login # Sign into an azure account(부라우저에서  로그인 함)
     az account show # See the currently signed-in account.
     # 교육시 사용한 그룹
-    AZ_RESOURCE_GROUP=spring-cloud-workshop-user09-2
-    AZ_SPRING_APPS_NAME=azure-spring-apps-lab-user09
+    AZ_RESOURCE_GROUP=msa-rg-1
+    AZ_SPRING_APPS_NAME=spring-apps-msa-01
 
     az configure --defaults group=$AZ_RESOURCE_GROUP
     az configure --defaults spring=$AZ_SPRING_APPS_NAME
-    ```
+   ```
+- 참고: Create Web Application
+  ![](images/00-CreateWebApp.png)
 ---
 
 ⬅️ Previous guide: [00-환경설정](./00-setup-your-environment.md)

@@ -15,8 +15,10 @@ To save time, 실습에 필요한 모든 Azure 리소스를 만들기 위한 ARM
 > * MySQL password 여기서 저장.
 >   * 6 chap에서 사용, 미 설정하면 `super$ecr3t`.
 
-[![Deploy to Azure](media/deploybutton.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fazure-spring-cloud-training%2Fmaster%2F00-setup-your-environment%2Fazuredeploy.json?WT.mc_id=azurespringcloud-github-judubois)
-
+[![Deploy to Azure](images/0-deploybutton.svg)](https://portal.azure.com/#create/Microsoft.Template?WT.mc_id=azurespringcloud-github-judubois)
+- 아래 화면에서 꼭 설정해야함
+  ![](images/0-10-확인.png)
+  위 이미지와 같은 화면이 열리지 않음(왜,  일단 원본에서 처리해보자)
 >⏱ 리소스 프로비저닝에는 시간이 걸립니다. 기다리지 마! 워크샵을 계속합니다.
 
 ## 2.전제 조건
@@ -38,7 +40,7 @@ PC 설치 필요내용:
 > 💡 위 명령에서  `bash: az: command not found`와 같은 오류가 발생하면
 >   -  `alias az='az.cmd'`
 
-* 🚧 추거 확장 설치  `az extension add -n spring -y`.
+* 🚧 추가 확장 설치  `az extension add -n spring -y`.
   * 기 설치되었으면 Upgrade: `az extension update -n spring`.
 
 > 💡 9,10에서는 WEB으로 접속 [new Edge](https://microsoft.com/edge/?WT.mc_id=azurespringcloud-github-judubois), Google Chrome, or Firefox

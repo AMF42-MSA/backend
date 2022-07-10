@@ -4,97 +4,85 @@ languages:
 - java
 ---
 
-# Azure Spring Apps training
+# Azure Spring Apps 교육
 
-You will find here a full workshop on Azure Spring Apps, including guides and demos.
+여기에서 가이드 및 데모를 포함하여 Azure Spring Apps에 대한 전체 워크샵을 찾을 수 있습니다.
 
-This lab is based on a public workshop created by [Julien Dubois](https://twitter.com/juliendubois) and available for free to everyone, under the [MIT license](LICENSE.txt).
+이 실습은 [Julien Dubois](https://twitter.com/juliendubois)가 만든 공개 워크숍을 기반으로 하며[MIT license](LICENSE.txt)하에 모든 사람이 무료로 사용할 수 있습니다
 
-## What you should expect
+## 당신이 기대해야 할 것
+What you should expect
 
-This is not the official documentation but an opinionated training.
+이것은 공식 문서가 아니라 의견이 있는 교육입니다.
 
-It is a hands-on training, and it will use the command line extensively. The idea is to get coding very quickly and play with the platform, from a simple demo to far more complex examples.
+실습 교육이며 명령줄을 광범위하게 사용합니다. 아이디어는 간단한 데모에서 훨씬 더 복잡한 예제에 이르기까지 매우 빠르게 코딩하고 플랫폼을 사용하는 것입니다.
 
-After completing all the guides, you should have a fairly good understanding of everything that Azure Spring Apps offers.
+모든 가이드를 완료한 후에는 Azure Spring Apps가 제공하는 모든 것을 상당히 잘 이해하게 될 것입니다.
 
 ## Symbols
 
->🛑 -  __Manual Modification Required__. When this symbol appears in front of one or more commands, you will need to modify the commands as indicated prior to running them.
+>🛑 -  __수동 수정이 필요__.
 
->🚧 - __Preview-specific__. This symbol indicates steps that are only necessary while Azure Spring Apps is in preview.
+>🚧 - __미리보기__. Azure Spring Apps가 미리 보기에 있는 동안에만 필요한 단계
 
->💡 - __Frustration Avoidance Tip__. These will help you avoid potential pitfalls.
+>💡 - __접근을 제한 Frustration Avoidance Tip__. 잠재적인 함정을 피하는 데 도움.
 
-## [00 - Prerequisites and Setup](00-setup-your-environment/README.md)
+## [00-환경설정](./00-setup-your-environment.md)
 
 Prerequisites and environment setup.
 
-## [01 - Create an Azure Spring Apps cluster](01-create-an-azure-spring-cloud-instance/README.md)
+## [01-Azure Spring Apps 클러스터 만들기](./01-create-an-azure-spring-cloud-instance.md)
 
 Basics on creating a cluster and configuring the CLI to work efficiently.
 
-## [02 - Build a simple Spring Boot microservice](02-build-a-simple-spring-boot-microservice/README.md)
+## [02-간단한 Spring Boot 마이크로서비스 빌드](02-build-a-simple-spring-boot-microservice.md)
 
 Build the simplest possible Spring Boot microservice using the Spring Initializer.
 
-## [03 - Configure application logs](03-configure-monitoring/README.md)
+## [03-애플리케이션 로그 구성](03-configure-monitoring.md)
 
 Access Spring Boot applications logs to understand common issues.
 
-## [04 - Configure a Spring Cloud Config server](04-configure-a-spring-cloud-config-server/README.md)
+## [04-Spring Cloud Config 서버 구성](04-configure-a-spring-cloud-config-server/README.md)
 
 Configure a [Spring Cloud Config Server](https://cloud.spring.io/spring-cloud-config), that will be entirely managed and supported by Azure Spring Apps, to be used by Spring Boot microservices.
 
-## [05 - Build a Spring Boot microservice using Spring Cloud features](05-build-a-spring-boot-microservice-using-spring-cloud-features/README.md)
+## [05-Spring Cloud 기능을 사용하여 Spring Boot 마이크로서비스 빌드](05-build-a-spring-boot-microservice-using-spring-cloud-features.md)
 
 Build a Spring Boot microservice that is cloud-enabled: it uses a Spring Cloud Service Registry and a [Spring Cloud Config Server](https://cloud.spring.io/spring-cloud-config) which are both managed and supported by Azure Spring Apps.
 
-## [06 - Build a reactive Spring Boot microservice using Cosmos DB](06-build-a-reactive-spring-boot-microservice-using-cosmosdb/README.md)
+## [06-Cosmos DB를 사용하여 반응형 Spring Boot 마이크로서비스 빌드](06-build-a-reactive-spring-boot-microservice-using-cosmosdb.md)
 
 Build a reactive Spring Boot microservice, that uses the [Spring reactive stack](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html) and is bound to a [Cosmos DB database](https://docs.microsoft.com/en-us/azure/cosmos-db/?WT.mc_id=azurespringcloud-github-judubois) in order to access a globally-distributed database with optimum performance.
 
-## [07 - Build a Spring Boot microservice using MySQL](07-build-a-spring-boot-microservice-using-mysql/README.md)
+## [07-MySQL을 사용하여 Spring Boot 마이크로서비스 구축](07-build-a-spring-boot-microservice-using-mysql.md)
 
 Build a classical Spring Boot application that uses JPA to access a [MySQL database managed by Azure](https://docs.microsoft.com/en-us/azure/mysql/?WT.mc_id=azurespringcloud-github-judubois).
 
-## [08 - Build a Spring Cloud Gateway](08-build-a-spring-cloud-gateway/README.md)
+## [08-스프링 클라우드 게이트웨이 구축](08-build-a-spring-cloud-gateway.md)
 
 Build a [Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway) to route HTTP requests to the correct Spring Boot microservices.
 
-## [09 - Putting it all together, a complete microservice stack](09-putting-it-all-together-a-complete-microservice-stack/README.md)
+## [09-모든 것을 통합하여 완전한 마이크로서비스 스택](09-putting-it-all-together-a-complete-microservice-stack.md)
 
 Use a front-end to access graphically our complete microservice stack. Monitor our services with Azure Spring Apps's distributed tracing mechanism and scale our services depending on our needs.
 
-## [10 - Blue/Green deployment](10-blue-green-deployment/README.md)
+## [10-Blue/Green deployment](10-blue-green-deployment.md)
 
 Deploy new versions of applications in a staging environment and switch between staging and production with Azure Spring Apps.
 
-## [11 - Configure CI/CD](11-configure-ci-cd/README.md)
+## [11-CI/CD 구성](11-configure-ci-cd.md)
 
-Configure a Continuous Integration / Continuous Deployment platform using GitHub Actions, so our Spring Boot microservices are automatically deployed.
+GitHub Actions를 사용하여 통합/지속적 배포 플랫폼을 구성하면 Spring Boot가 서비스를 제공합니다..
 
-## [12 - Making Microservices Talk to Each Other](12-making-microservices-talk-to-each-other/README.md)
+## [12-마이크로서비스가 서로 통신하게 하기](12-making-microservices-talk-to-each-other.md)
 
-Creating a microservice that talks to other microservices.
+서비스와 연결.
 
-## [Conclusion](99-conclusion/README.md)
+## [Conclusion](./99-conclusion.md)
 
 ---
 
 ## Legal Notices
 
-Microsoft and any contributors grant you a license to the Microsoft documentation and other content
-in this repository under the [Creative Commons Attribution 4.0 International Public License](https://creativecommons.org/licenses/by/4.0/legalcode),
-see the [LICENSE](LICENSE) file, and grant you a license to any code in the repository under the [MIT License](https://opensource.org/licenses/MIT), see the
-[LICENSE-CODE](LICENSE-CODE) file.
-
-Microsoft, Windows, Microsoft Azure and/or other Microsoft products and services referenced in the documentation
-may be either trademarks or registered trademarks of Microsoft in the United States and/or other countries.
-The licenses for this project do not grant you rights to use any Microsoft names, logos, or trademarks.
-Microsoft's general trademark guidelines can be found at http://go.microsoft.com/fwlink/?LinkID=254653.
-
-Privacy information can be found at https://privacy.microsoft.com/en-us/
-
-Microsoft and any contributors reserve all other rights, whether under their respective copyrights, patents,
-or trademarks, whether by implication, estoppel or otherwise.
+---

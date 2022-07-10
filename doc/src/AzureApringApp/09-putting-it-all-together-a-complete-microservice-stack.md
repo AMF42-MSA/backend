@@ -1,71 +1,67 @@
-# 09 - Putting it all together, a complete microservice stack
+# 09-모든 것을 통합하여 완전한 마이크로서비스 스택
 
-__This guide is part of the [Azure Spring Apps training](../README.md)__
-
-Now that we have made two microservices publicly available, we will incorporate a user interface to see them in action. Then, we will use Azure Monitor to monitor the flow of traffic to and among our services and to track metrics.
+이제 두 개의 마이크로서비스를 공개적으로 사용할 수 있게 만들었으므로 사용자 인터페이스를 통합하여 작동하는 모습을 볼 것입니다. 그런 다음 Azure Monitor를 사용하여 서비스 간 트래픽 흐름을 모니터링하고 메트릭을 추적합니다.
 
 ---
 
-## Add a front-end to the microservices stack
+## 마이크로서비스 스택에 프런트 엔드 추가
 
-We now have a complete microservices stack:
+완전한 마이크로서비스 스택:
 
-- A gateway based on Spring Cloud Gateway.
-- A reactive `city-service` microservice, that stores its data on Cosmos DB.
-- A `weather-service` microservice, that stores its data on MySQL
+- Spring Cloud Gateway를 기반으로 하는 게이트웨이
+- Cosmos DB에 데이터를 저장 하는 반응형 `city-service`마이크로 서비스
+- MySQL에 데이터를 저장 하는 `weather-service`마이크로서비스.
 
-In order to finish this architecture, we need to add a front-end to it:
+이 아키텍처를 완료하려면 프런트 엔드를 추가:
 
-- We've already built a VueJS application, that is available in the ["weather-app" folder](weather-app/).
-- This front-end could be hosted in Azure Spring Apps, using the same domain name (this won't be the case in this guide, and that's why we enabled CORS in our gateway earlier).
-- If you are familiar with NodeJS and Vue CLI, you can run this application locally by typing `npm install && vue ui`.
+- 우리는 이미 "weather-app" 폴더 에서 사용할 수 있는 VueJS 애플리케이션을 구축
+- 프런트 엔드는 동일한 도메인 이름을 사용하여 Azure Spring Apps에서 호스팅될 수 있습니다(이 가이드에서는 그렇지 않으며 이전에 게이트웨이에서 CORS를 활성화한 이유입니다).
+- 교차 출처 리소스 공유(Cross-Origin Resource Sharing, CORS)는 추가 HTTP 헤더를 사용하여, 한 출처에서 실행 중인 웹 애플리케이션이 다른 출처의 선택한 자원에 접근할 수 있는 권한을 부여하도록 브라우저에 알려주는 체제
 
-In order to simplify this part, which is not relevant to understanding Spring Cloud, we have already built a running front-end:
+Spring Cloud를 이해하는 것과 관련이 없는 이 부분을 단순화하기 위해 이미 실행 중인 프론트엔드를 구축:
 
 __[https://spring-training.azureedge.net/](https://spring-training.azureedge.net/)__
 
-For your information, this website is hosted on Azure Storage and served through Azure CDN for optimum performance.
+참고로 이 웹사이트는 Azure Storage에서 호스팅되며 최적의 성능을 위해 Azure CDN을 통해 제공.
 
-Go to [https://spring-training.azureedge.net/](https://spring-training.azureedge.net/), input your Spring Cloud Gateway's public URL in the text field and click on "Go". You should see the following screen:
+Go to [https://spring-training.azureedge.net/](https://spring-training.azureedge.net/), 으로 이동 하여 텍스트 필드에 Spring Cloud Gateway의 공개 URL을 입력하고 "이동"을 클릭합니다. 다음 화면이 표시되어야 합니다.:
+- https://spring-apps-msa-01-gateway.azuremicroservices.io
+![VueJS front-end](IMAGES/9-01-vuejs-frontend.png)
 
-![VueJS front-end](media/01-vuejs-frontend.png)
+## 아키텍처를 더 잘 이해하기 위해 분산 추적 검토
 
-## Review the distributed tracing to better understand the architecture
+분산 추적은 Azure Spring Apps에서 기본적으로 사용하도록 설정되어 있으므로 마이크로서비스 및 게이트웨이가 이미 모니터링되고 있습니다.
 
-Distributed tracing is enabled by default on Azure Spring Apps, so your microservices and gateway are already being monitored.
+이제 https://spring-training.azureedge.net/ 에서 VueJS 애플리케이션을 사용 하여 마이크로서비스 스택에서 일부 트래픽을 생성할 수 있습니다.
 
-Now, you can use the VueJS application on [https://spring-training.azureedge.net/](https://spring-training.azureedge.net/) to generate some traffic on the microservices stack.
+> 💡추적 데이터는 시스템에서 수집하는 데 몇 분이 걸릴 수 있으므로 이 시간을 사용하여 약간의 로드를 생성하십시오.
 
->💡 Tracing data can take a couple of minutes to be ingested by the system, so use this time to generate some load.
+Azure Portal의 "Application Insights" 메뉴에서 이제 전체 애플리케이션 맵과 성능 병목 현상을 찾을 수 있는 검색 엔진에 액세스할 수 있습니다.
 
-In the "Application Insights" menu in Azure Portal, you should now have access to a full application map, as well as a search engine that allows you to find performance bottlenecks.
+![Distributed tracing](images/9-02-distributed-tracing.png)
 
-![Distributed tracing](media/02-distributed-tracing.png)
-
-> 💡 If your application map looks different from the one above, select the hierarchical view from the layout switch in the top-right corner:
+> 💡애플리케이션 맵이 위의 맵과 다른 경우 오른쪽 상단 모서리에 있는 레이아웃 스위치에서 계층적 보기를 선택합니다.:
 >
-> ![layout switch](media/05-layout-switch.png)
+> ![layout switch](images/9-05-layout-switch.png)
 
-## Review the performance metrics
+## 성능 측정항목 검토
 
-Open a more holistic view at the `Performance` blade where you can see response times and request counts for operations exposed by your applications.
+`Performance`애플리케이션에 의해 노출된 작업에 대한 응답 시간 및 요청 수를 볼 수 있는 블레이드에서 보다 전체적인 보기(holistic view)를 엽니다
 
-![Trace detail](media/03-trace-detail.png)
+![Trace detail](images/9-03-trace-detail.png)
 
-For even more detailed data, navigate to the `Dependencies` tab in the `Performance` blade where you can see all your dependencies and their response times and request counts.
+더 자세한 데이터를 보려면 모든 종속성, 응답 시간 및 요청 수를 볼 수 `Dependencies`있는 블레이드의 탭으로 이동하십시오
 
-## Scale applications
 
-Now that distributed tracing is enabled, we can scale applications depending on our needs.
+## 스케일 애플리케이션
 
-- Go to [the Azure portal](https://portal.azure.com/?WT.mc_id=azurespringcloud-github-judubois).
-- Go to the overview page of your Azure Spring Apps server and select "Apps" in the menu.
-  - Select one service and click on "Scale Out" in the menu. Select the service that you want to scale out.
-  - Modify the number of instances to manually scale the service. You can also set custom auto scaling based on metrics. 
-  ![Application scaling](media/04-scale-out.png)
+이제 분산 추적이 활성화되었으므로 필요에 따라 애플리케이션을 확장할 수 있습니다.
+
+- [the Azure portal](https://portal.azure.com/?WT.mc_id=azurespringcloud-github-judubois)로 이동
+- Azure Spring Apps 서버의 개요 페이지로 이동하고 메뉴에서 "Apps" 을 선택합니다.
+  - 하나의 서비스를 선택하고 메뉴에서 "Scale Out"을 클릭합니다.  확장할 서비스를 선택합니다.
+  - 서비스를 수동으로 확장하려면 인스턴스 수를 수정하십시오. 메트릭을 기반으로 사용자 지정 Auto Scaling을 설정할 수도 있습니다.
+
+  ![Application scaling](images/9-04-scale-out.png)
 
 ---
-
-⬅️ Previous guide: [08 - Build a Spring Cloud Gateway](../08-build-a-spring-cloud-gateway/README.md)
-
-➡️ Next guide: [10 - Blue/Green deployment](../10-blue-green-deployment/README.md)

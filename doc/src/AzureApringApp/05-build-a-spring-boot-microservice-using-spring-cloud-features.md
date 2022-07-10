@@ -1,34 +1,32 @@
-# 05 - Build a Spring Boot microservice using Spring Cloud features
+# 05-Build a Spring Boot microservice using Spring Cloud features
 
-__This guide is part of the [Azure Spring Apps training](../README.md)__
-
-In this section, we'll build a similar service to the one from section 2, but with the addition of two important Spring Cloud features. First, we'll add this service to Spring Cloud registry for discovery by other services. Second, we'll use Spring Cloud Config to inject a setting from a Git repository into the application and display it on the screen.
+이 섹션에서는 [02-Build a simple Spring Boot microservice](./02-build-a-simple-spring-boot-microservice.md)와 유사한 서비스를 빌드하지만 두 가지 중요한 Spring Cloud 기능을 추가합니다.
+- 먼저 다른 서비스에서 검색할 수 있도록 이 서비스를 Spring Cloud Service Registry에 추가합니다.
+- 둘째, Spring Cloud Config를 사용하여 Git 리포지토리의 설정을 애플리케이션에 주입하고 화면에 표시합니다.
 
 ---
 
-## What we are going to build
+## 우리가 구축할 것
+(What we are going to build)
 
-This guide builds upon the previous guides: we are going to build again a simple Spring Boot microservice like in [02 - Build a simple Spring Boot microservice](../02-build-a-simple-spring-boot-microservice/README.md), but this time it will use two major Spring Cloud features:
+- Spring Cloud Service Registry에 연결되어 다른 마이크로 서비스를 검색할 수 있을 뿐만 아니라 자체적으로 검색됩니다!
 
-- It will be connected to a Spring Cloud Service Registry so it can discover other microservices, as well as being discovered itself!
+- 이전 가이드 [04 - Configure a Spring Cloud Config server](./04-configure-a-spring-cloud-config-server.md)에서 구성한 Spring Cloud Config 서버에서 구성을 가져옵니다.
 
-- It will get its configuration from the Spring Cloud Config server that we configured in the previous guide, [04 - Configure a Spring Cloud Config server](../04-configure-a-spring-cloud-config-server/README.md)
-
-For both features, it will just be a matter of adding an official Spring Boot starter, and Azure Spring Apps will take care of everything else.
+두 기능 모두 공식 Spring Boot 스타터(official Spring Boot starter)를 추가하기만 하면 되며 Azure Spring Apps가 나머지 모든 것을 처리합니다
 
 ## Create a simple Spring Cloud microservice
 
-The microservice that we create in this guide is [available here](spring-cloud-microservice/).
-
-To create our microservice, we will invoke the Spring Initalizer service from the command line:
+마이크로 서비스를 생성하기 위해 명령줄에서 Spring Initalizer 서비스를 호출:
 
 ```bash
 curl https://start.spring.io/starter.tgz -d dependencies=web,cloud-eureka,cloud-config-client -d baseDir=spring-cloud-microservice -d bootVersion=2.7.0 -d javaVersion=17 | tar -xzvf -
 ```
 
-> This time, we add the `Eureka Discovery Client` and the `Config Client` Spring Boot starters, which will respectively automatically trigger the use of Spring Cloud Service Registry and the Spring Cloud Config Server.
+> 이번에 는 `Eureka Discovery Client` and the `Config Client`를 추가
+> Spring Cloud Service Registry and the Spring Cloud Config Server 의 사용을 각각 자동으로 트리거
 
-## Add a new Spring MVC Controller
+## 새 Spring MVC 컨트롤러 추가
 
 Next to the DemoApplication class, create a new class called `HelloController` with the following content:
 
@@ -52,23 +50,25 @@ public class HelloController {
 }
 ```
 
-## Configure Spring Boot
+## 스프링 부트 구성
 
-Edit the file `src/main/resources/application.properties` and add the following line:
+`application.properties` 수정:
 
 ```properties
 spring.config.import=optional:configserver:
 ```
 
-This line makes using the Spring Cloud Config server optional. This will be useful in development mode (when we won't have a Spring Cloud Config server), and can be removed later in production.
+Spring Cloud Config 서버 사용을 선택 사항으로 만듭
+  - 개발 모드(Spring Cloud Config 서버가 없을 때)에서 유용하며
+  - 나중에 프로덕션 단계에서 제거할 수 있습
 
-## Test the project locally
+## 로컬에서 프로젝트 테스트
 
-Before deploying the microservice to Azure Spring Apps, let's run it locally.
+배포하기 전에 로컬에서 실행
 
->💡 Do not be alarmed when you see exception stack traces:
-> ![Exception stack trace](media/01-exception-stack-trace.png)
->Spring Cloud is attempting to contact a local configuration server, which we have not provided. The application will still start using any available local settings and defaults.
+>💡 외 스택 추적이 표시될 때 놀라지 마십시오:
+> ![Exception stack trace](images/5-01-exception-stack-trace.png)
+> Spring Cloud가 우리가 제공하지 않은 로컬 구성 서버에 접속을 시도.
 
 To run `simple-cloud-microservice` locally:
 
@@ -78,27 +78,34 @@ cd spring-cloud-microservice
 cd ..
 ```
 
-Requesting the `/hello` endpoint should return the "Not configured by a Spring Cloud Server" message.
+테스트 결과: "Not configured by a Spring Cloud Server"
 
 ```bash
 curl http://127.0.0.1:8080/hello
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     02022-07-09 13:10:18.242  INFO 5376 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-07-09 13:10:18.243  INFO 5376 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-07-09 13:10:18.243  INFO 5376 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+100    40  100    40    0     0    426      0 --:--:-- --:--:-- --:--:--   439Not configured by a Spring Cloud Server
+
 ```
 
-Kill the locally running microservice:
+종료:
 
 ```bash
 kill %1
 ```
 
-## Create and deploy the application on Azure Spring Apps
+## Azure Spring Apps에서 애플리케이션 생성 및 배포
 
-As in [02 - Build a simple Spring Boot microservice](../02-build-a-simple-spring-boot-microservice/README.md), create a specific `spring-cloud-microservice` application in your Azure Spring Apps instance:
+CLI를 이용하여 생성 `spring-cloud-microservice`:
 
 ```bash
 az spring app create -n spring-cloud-microservice --runtime-version Java_17
 ```
 
-You can now build your "spring-cloud-microservice" project and send it to Azure Spring Apps:
+"spring-cloud-microservice" 빌드 및 Azure Spring Apps으로 전송(send):
 
 ```bash
 cd spring-cloud-microservice
@@ -107,51 +114,60 @@ az spring app deploy -n spring-cloud-microservice --artifact-path target/demo-0.
 cd ..
 ```
 
-## Test the project in the cloud
+## 클라우드에서 테스트
 
 Go to [the Azure portal](https://portal.azure.com/?WT.mc_id=azurespringcloud-github-judubois):
 
-- Look for your Azure Spring Apps instance in your resource group
+- 리소스 그룹에서 Azure Spring Apps 인스턴스를 찾습니다
 - Go to "Apps"
-  - Verify that `spring-cloud-microservice` has a `Registration status` of `1/1`. This shows that it is correctly registered in Spring Cloud Service Registry.
+  - spring-cloud-microservice가 있는지 확인(Verify) Registration status. 1/1이것은 Spring Cloud Service Registry에 올바르게 등록되었음을 보여줍
+    - ![](images/5-04-App_Deploy.png)
   - Select `spring-cloud-microservice` to have more information on the microservice.
 - Copy/paste the "Test endpoint" that is provided.
+  - ![](images/5-05-spring-cloud-microservice.png)
 
-You can now use cURL again to test the `/hello` endpoint, this time it is served by Azure Spring Apps and configured using the Spring Config Server from [04 - Configure a Spring Cloud Config server](../04-configure-a-spring-cloud-config-server/README.md).
+이제 cURL을 다시 사용하여 /hello엔드포인트를 테스트.
 
 As a result, requesting the `/hello` endpoint should return the message that we configured in the `application.yml` file, coming from the Spring Cloud Config Server:
 
 ```bash
-Configured by Azure Spring Apps
+$ curl https://primary:wkUhHC5GKY3gl5tzzs0HQRzU6s1Nm4VvBheqHEApCQc44VlY1C01xlPcC44n9XPQ@msa-01.test.azuremicroservices.io/spring-cloud-microservice/default/hello
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    32  100    32    0     0     49      0 --:--:-- --:--:-- --:--:--    49Configured by Azure Spring Apps
+
 ```
+![](images/5-06-GitHub.png)
 
-## Stream application logs
+## 스트림 애플리케이션 로그
 
-When you run an application on your machine, you can see its output in the console. When you run a microservice on Azure Spring Apps, you can also see its console output through Azure CLI:
+Azure Spring Apps에서 마이크로서비스를 실행하면 Azure CLI를 통해 콘솔 출력을 볼 수도 있습:
 
 ```bash
 az spring app logs --name spring-cloud-microservice -f
 ```
 
-_Please be aware it might take a couple of minutes for the logs to show up._
+_로그가 표시되는 데 몇 분 정도 걸릴 수 있습니다._
 
-You should see the console output of `spring-cloud-microservice` scroll by on your terminal:
-
-![Console output](media/02-console-output.png)
+![Console output](images/5-02-console-output.png)
 
 Press CTRL+C to stop following the output and return to the shell.
 
 ## Query application logs
 
-Streaming the console output as we just did may be helpful in understanding the immediate state of a microservice. However, sometimes it's necessary to look further into the past or to look for something specific. This is easily done with Log Analytics. In section 3, we enabled log aggregation in Azure Log Analytics. Such settings changes can take 1-2 minutes to apply, so by now, you should be able to query Azure Log Analytics.
+과거를 더 자세히 살펴보거나 특정한 것을 찾아야 할 때 사용.
 
-[Open Azure Portal](https://portal.azure.com/?WT.mc_id=azurespringcloud-github-judubois) and navigate to your Azure Spring Apps instance. Click on "Logs". This is a shortcut to the Log Analytics workspace that was created earlier. If a tutorial appears, feel free to skip it for now.
+섹션 3에서는 Azure Log Analytics에서 로그 집계를 활성화했습니다. 이러한 설정 변경 사항을 적용하는 데 1-2분이 소요될 수 있으므로 지금쯤이면 Azure Log Analytics를 쿼리할 수 있습니다..
 
-This workspace allows you to run queries on the aggregated logs. The most common query is to get the latest log from a specific application:
+[Open Azure Portal](https://portal.azure.com/?WT.mc_id=azurespringcloud-github-judubois) and navigate to your Azure Spring Apps instance.
+- "Logs" 선택.
+- 이전에 만든 Log Analytics 작업 영역에 대한 바로 가기입니다. 튜토리얼이 나타나면 지금은 건너뛰어도 됩니다.
+
+이 작업 공간을 사용하면 집계된 로그에 대한 쿼리를 실행할 수 있습니다. 가장 일반적인 쿼리는 특정 애플리케이션에서 최신 로그를 가져오는 것:
 
 __Important:__ Spring Boot applications logs have a dedicated `AppPlatformLogsforSpring` type.
 
-Here is how to get its 50 most recent logs of the `AppPlatformLogsforSpring` type for the microservice we just deployed:
+최신 로그 50개를 가져오는 방법:
 
 Insert this text in the text area that states "Type your queries here or click on of the example queries to start".  Click the text of the query, then click "Run".
 
@@ -163,18 +179,8 @@ AppPlatformLogsforSpring
 | limit 50
 ```
 
-![Query logs](media/03-logs-query.png)
+![Query logs](images/5-03-logs-query.png)
 
 >💡 It can also take 1-2 minutes for the console output of an Azure Spring Apps microservice to be read into Log Analytics.
 
-## Conclusion
-
-Congratulations, you have deployed a complete Spring Cloud microservice, using Spring Cloud Service Registry and Spring Cloud Config Server!
-
-If you need to check your code, the final project is available in the ["spring-cloud-microservice" folder](spring-cloud-microservice/).
-
 ---
-
-⬅️ Previous guide: [04 - Configure a Spring Cloud Config server](../04-configure-a-spring-cloud-config-server/README.md)
-
-➡️ Next guide: [06 - Build a reactive Spring Boot microservice using Cosmos DB](../06-build-a-reactive-spring-boot-microservice-using-cosmosdb/README.md)
