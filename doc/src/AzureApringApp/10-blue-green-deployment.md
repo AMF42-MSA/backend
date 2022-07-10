@@ -1,20 +1,18 @@
-# 10 - Blue/Green deployment
+# 10-Blue/Green deployment
 
-__This guide is part of the [Azure Spring Apps training](../README.md)__
-
-The blue-green deployment pattern allows you to test latest application changes on production infrastructure, but without exposing the changes to consumers until your testing is complete. In this section, we'll perform a blue-green deployment with Azure CLI. Although we will go through the deployment steps manually, the Azure CLI commands we'll use can be automated in a CI/CD pipeline.
+블루-그린 배포 패턴을 사용하면 프로덕션 인프라에서 최신 애플리케이션 변경 사항을 테스트할 수 있지만 테스트가 완료될 때까지 변경 사항을 소비자에게 노출하지 않습니다. 이 섹션에서는 Azure CLI를 사용하여 블루-그린 배포를 수행합니다. 배포 단계를 수동으로 진행하지만 사용할 Azure CLI 명령은 CI/CD 파이프라인에서 자동화할 수 있습니다.
 
 ---
 
-We are going to deploy a new release of the "weather-service" microservice that was developed in [07 - Build a Spring Boot microservice using MySQL](../07-build-a-spring-boot-microservice-using-mysql/README.md).
+우리는 07년에 개발된 "weather-service" 마이크로서비스의 새로운 릴리스를 배포할 것입니다
 
 The microservice that we develop in this guide is [available here](weather-service/), which is a slightly modified version of the service that was developed earlier.
 
-## Modify the current application
+## 현재 애플리케이션 수정
 
-In the "weather-service" application, commit your current code and switch to a new branch where you will do your changes.
+"weather-service" 애플리케이션에서 현재 코드를 커밋하고 변경 작업을 수행할 새 분기로 전환합니다.
 
-Open the `WeatherController` class and modify its `getWeatherForCity()` method so it always returns sunny weather (this will be an easy-to-spot graphical view of our modifications in the code):
+`WeatherController`클래스를 열고 `getWeatherForCity()`항상 맑은 날씨를 반환하도록 메서드를 수정합니다(코드에서 수정한 내용을 그래픽으로 쉽게 확인할 수 있음):
 
 ```java
 package com.example.demo;
@@ -43,9 +41,9 @@ public class WeatherController {
 }
 ```
 
-## Deploy the new application to a new "green" deployment
+## "green" deployment
 
-Build a new version of the application and deploy it to a new `deployment` called `green`:
+`deployment`새 버전의 애플리케이션을 빌드하고 `green`이라는 새 버전에 배포:
 
 ```bash
 cd weather-service
@@ -54,55 +52,50 @@ az spring app deployment create --name green --app weather-service --runtime-ver
 cd ..
 ```
 
-Once the application is deployed, if you go to [https://spring-training.azureedge.net/](https://spring-training.azureedge.net/) you will still have the same data, as the new version of the microservice is now in a staging area and not in production yet.
+애플리케이션이 배포되면 [https://spring-training.azureedge.net/](https://spring-training.azureedge.net/)으로 이동 하면 마이크로 서비스의 새 버전이 현재 준비 영역에 있고 아직 프로덕션 단계가 아니기 때문에 동일한 데이터를 갖게 됩니다.
 
-Navigate to the Azure Spring Apps instance in [the Azure portal](https://portal.azure.com/?WT.mc_id=azurespringcloud-github-judubois):
+[the Azure portal](https://portal.azure.com/?WT.mc_id=azurespringcloud-github-judubois)에서 Azure Spring Apps 인스턴스로 이동합니다 .
 
-- Look for your Azure Spring Apps instance in your resource group
+- resource group에서 Azure Spring Apps 인스턴스를 찾습니다.
 - Go to "Apps"
-  - Select the `weather-service` microservice
-  - Click on "Deployments" in the menu. You should now see the "green" deployment, under the "default" deployment:
+  - `weather-service`마이크로서비스 선택
+  - 메뉴에서 "Deployments"를 클릭하십시오. 이제 "default" 배포 아래에 "green" 배포가 표시되어야 합니다.
 
-![Deployment Pane](media/02-deployment-pane.png)
+![Deployment Pane](images/10-02-deployment-pane.png)
 
-You can test the `green` deployment by invoking the same URL as in section 7, but replacing the deployment name `default` with `green`:
+섹션 7에서와 동일한 URL을 호출하여 배포를 테스트할 수 있지만 배포 이름 `default`을 `green`으로 대체합니다
 
 ```bash
 curl "https://***.test.azuremicroservices.io/weather-service/green/weather/city?name=Paris%2C%20France"
 ```
 
-And you should see the result of the recent modification:
+최근 수정 결과를 확인:
 
 ```json
 {"city":"Paris, France","description":"It's always sunny on Azure Spring Apps","icon":"weather-sunny"}
 ```
 
-Note: we're not testing the green deployment through the `gateway` application. The purpose of a green deployment is to test changes to a microservice before routing production traffic to it. Therefore, if you access `weather-service` through the public Gateway URL, as you did in section 8, you will be routed to the original version of the service.
+Note:  우리는 gateway애플리케이션을 통해 친환경 배포를 테스트하지 않습니다. 친환경 배포의 목적은 프로덕션 트래픽을 마이크로서비스로 라우팅하기 전에 마이크로서비스에 대한 변경 사항을 테스트하는 것입니다. 따라서 weather-service섹션 8에서와 같이 공개 게이트웨이 URL을 통해 액세스하면 서비스의 원래 버전으로 라우팅됩니다.
 
-To put this `green` deployment into production, you can use the command line:
+`green`배포를 프로덕션에 적용하려면:
 
 ```bash
 az spring app set-deployment -n weather-service --deployment green
 ```
 
-Another solution is to use [the Azure portal](https://portal.azure.com/?WT.mc_id=azurespringcloud-github-judubois):
+또 다른 솔루션은 [the Azure portal](https://portal.azure.com/?WT.mc_id=azurespringcloud-github-judubois)을 사용
 
-- Find your Azure Spring Apps instance
-- Click on the "Apps" menu
-- Select the `weather-service` application and click on "Deployments"
+- Azure Spring Apps 인스턴스 찾기
+- "Apps" menu를 클릭
+- `weather-service` "배포"를 클릭하십시오.
 
-> If you want to reuse a deployment name, you need first to delete the previous deployment under that name:
+> 배포 이름을 재사용하려면 먼저 해당 이름으로 이전 배포를 삭제
 >
 > ```bash
 > az spring app deployment delete --name green --app weather-service
 > ```
 
-Once you have swapped deployments and see that `green` is active, you need to wait a few seconds for the Spring Cloud Service Registry to synchronize and use this new version from the `gateway` application. You will then be able to see the new modified data:
-
-![Green deployment](media/01-green-deployment.png)
+배치를 교환하고 green활성화된 것을 확인하면 Spring Cloud Service Registry가 애플리케이션에서 이 새 버전을 동기화하고 사용할 때까지 몇 초를 기다려야 합니다 gateway. 그러면 새로 수정된 데이터를 볼 수 있습니다.
+![Green deployment](images/10-01-green-deployment.png)
 
 ---
-
-⬅️ Previous guide: [09 - Putting it all together, a complete microservice stack](../09-putting-it-all-together-a-complete-microservice-stack/README.md)
-
-➡️ Next guide: [11 - Configure CI/CD](../11-configure-ci-cd/README.md)
