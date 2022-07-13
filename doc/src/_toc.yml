@@ -26,3 +26,19 @@ parts:
       - file: lecture/01-주요변경내용.md
       - file: lecture/02-테스트내용.md
       - file: lecture/03-Docker이미지생성.md
+    - file: AzureApringApp/00-README.md
+      sections:
+      - file: AzureApringApp/00-setup-your-environment.md
+      - file: AzureApringApp/01-create-an-azure-spring-cloud-instance.md
+      - file: AzureApringApp/02-build-a-simple-spring-boot-microservice.md
+      - file: AzureApringApp/03-configure-monitoring.md
+      - file: AzureApringApp/04-configure-a-spring-cloud-config-server.md
+      - file: AzureApringApp/05-build-a-spring-boot-microservice-using-spring-cloud-features.md
+      - file: AzureApringApp/06-build-a-reactive-spring-boot-microservice-using-cosmosdb.md
+      - file: AzureApringApp/07-MySQL연동.md
+      - file: AzureApringApp/08-build-a-spring-cloud-gateway.md
+      - file: AzureApringApp/09-putting-it-all-together-a-complete-microservice-stack.md
+      - file: AzureApringApp/10-blue-green-deployment.md
+      - file: AzureApringApp/11-configure-ci-cd.md
+      - file: AzureApringApp/12-making-microservices-talk-to-each-other.md
+
