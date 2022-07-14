@@ -1,5 +1,4 @@
-
-# 07-MySQL을 사용하여 Spring Boot 마이크로서비스 구축
+# 07-MySQL연동
 - https://github.com/microsoft/azure-spring-cloud-training/edit/master/07-build-a-spring-boot-microservice-using-mysql/README.md
 - 2022-07-08 Azure Spring App 교육
 

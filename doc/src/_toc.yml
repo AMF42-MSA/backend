@@ -8,6 +8,15 @@ parts:
   - caption: Level3교육-Backend
     numbered: False
     chapters:
+    - file: 01-간단jupyterbook사용법
+      sections:
+      - file: lecture/시나리오
+    - file: 00_모두의강의.md
+      sections:
+      - file: lecture/README-Lecture.md
+      - file: lecture/01-주요변경내용.md
+      - file: lecture/02-테스트내용.md
+      - file: lecture/03-Docker이미지생성.md
     - file: 00_PetStore.md
       sections:
       - file: PetStore/ddd-petstore-level1-structured-programming
@@ -19,13 +28,6 @@ parts:
       - file: PetStore/ddd-petstore-level7-big-ball-of-mud
       - file: PetStore/ddd-petstore-level8-rest-api-and-aggregate-port
       - file: PetStore/ddd-petstore-level9-bounded-multi-model
-
-    - file: 00_모두의강의.md
-      sections:
-      - file: lecture/README-Lecture.md
-      - file: lecture/01-주요변경내용.md
-      - file: lecture/02-테스트내용.md
-      - file: lecture/03-Docker이미지생성.md
     - file: AzureApringApp/00-README.md
       sections:
       - file: AzureApringApp/00-setup-your-environment.md
