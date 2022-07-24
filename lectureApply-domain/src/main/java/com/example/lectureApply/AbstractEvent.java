@@ -1,31 +1,29 @@
-package com.example.petstore;
+package com.example.lectureApply;
 
-import com.example.petstore.kafka.KafkaProcessor;
+import com.example.lectureApply.kafka.KafkaProcessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.support.MessageBuilder;
-import org.springframework.util.MimeTypeUtils;
 import org.springframework.transaction.support.TransactionSynchronizationAdapter;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import org.springframework.util.MimeTypeUtils;
 
 public class AbstractEvent {
 
     String eventType;
     Long timestamp;
 
-    public AbstractEvent(){
+    public AbstractEvent() {
         this.setEventType(this.getClass().getSimpleName());
-        // SimpleDateFormat defaultSimpleDateFormat = new SimpleDateFormat("YYYYMMddHHmmss");
+        // SimpleDateFormat defaultSimpleDateFormat = new
+        // SimpleDateFormat("YYYYMMddHHmmss");
         // this.timestamp = defaultSimpleDateFormat.format(new Date());
         this.timestamp = System.currentTimeMillis();
     }
 
-    public String toJson(){
+    public String toJson() {
         ObjectMapper objectMapper = new ObjectMapper();
         String json = null;
 
@@ -38,13 +36,13 @@ public class AbstractEvent {
         return json;
     }
 
-    public void publish(String json){
-        if( json != null ){
+    public void publish(String json) {
+        if (json != null) {
 
             /**
              * spring streams 방식
              */
-            KafkaProcessor processor = PetApplication.applicationContext.getBean(KafkaProcessor.class);
+            KafkaProcessor processor = LectureApplyApplication.applicationContext.getBean(KafkaProcessor.class);
             MessageChannel outputChannel = processor.outboundTopic();
 
             outputChannel.send(MessageBuilder
@@ -55,11 +53,11 @@ public class AbstractEvent {
         }
     }
 
-    public void publish(){
+    public void publish() {
         this.publish(this.toJson());
     }
 
-    public void publishAfterCommit(){
+    public void publishAfterCommit() {
         TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
 
             @Override
@@ -68,7 +66,6 @@ public class AbstractEvent {
             }
         });
     }
-
 
     public String getEventType() {
         return eventType;
@@ -86,7 +83,7 @@ public class AbstractEvent {
         this.timestamp = timestamp;
     }
 
-    public boolean validate(){
+    public boolean validate() {
         return getEventType().equals(getClass().getSimpleName());
     }
 }
