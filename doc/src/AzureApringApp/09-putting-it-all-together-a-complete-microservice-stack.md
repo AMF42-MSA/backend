@@ -25,16 +25,17 @@ __[https://spring-training.azureedge.net/](https://spring-training.azureedge.net
 참고로 이 웹사이트는 Azure Storage에서 호스팅되며 최적의 성능을 위해 Azure CDN을 통해 제공.
 
 Go to [https://spring-training.azureedge.net/](https://spring-training.azureedge.net/), 으로 이동 하여 텍스트 필드에 Spring Cloud Gateway의 공개 URL을 입력하고 "이동"을 클릭합니다. 다음 화면이 표시되어야 합니다.:
-- https://spring-apps-msa-01-gateway.azuremicroservices.io
+```dotnetcli
+#이전에서 생성한 본인 URL로 변경
+https://spring-apps-msa-01-gateway.azuremicroservices.io
+```
 ![VueJS front-end](IMAGES/9-01-vuejs-frontend.png)
 
 ## 아키텍처를 더 잘 이해하기 위해 분산 추적 검토
 
-분산 추적은 Azure Spring Apps에서 기본적으로 사용하도록 설정되어 있으므로 마이크로서비스 및 게이트웨이가 이미 모니터링되고 있습니다.
+분산 추적은 Azure Spring Apps에서 기본적으로 사용하도록 설정되어 있으므로 마이크로서비스 및 게이트웨이가 이미 모니터링됨
 
-이제 https://spring-training.azureedge.net/ 에서 VueJS 애플리케이션을 사용 하여 마이크로서비스 스택에서 일부 트래픽을 생성할 수 있습니다.
-
-> 💡추적 데이터는 시스템에서 수집하는 데 몇 분이 걸릴 수 있으므로 이 시간을 사용하여 약간의 로드를 생성하십시오.
+> 💡추적 데이터는 시스템에서 수집하는 데 몇 분소요 ==> 거래 10회 이상 호출
 
 Azure Portal의 "Application Insights" 메뉴에서 이제 전체 애플리케이션 맵과 성능 병목 현상을 찾을 수 있는 검색 엔진에 액세스할 수 있습니다.
 

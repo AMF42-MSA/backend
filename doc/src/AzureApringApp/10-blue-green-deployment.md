@@ -1,12 +1,16 @@
 # 10-Blue/Green deployment
 
-블루-그린 배포 패턴을 사용하면 프로덕션 인프라에서 최신 애플리케이션 변경 사항을 테스트할 수 있지만 테스트가 완료될 때까지 변경 사항을 소비자에게 노출하지 않습니다. 이 섹션에서는 Azure CLI를 사용하여 블루-그린 배포를 수행합니다. 배포 단계를 수동으로 진행하지만 사용할 Azure CLI 명령은 CI/CD 파이프라인에서 자동화할 수 있습니다.
+블루-그린 배포 패턴을 사용하면
+- 프로덕션 인프라에서 최신 애플리케이션 변경 사항을 테스트할 수 있지만
+- 테스트가 완료될 때까지 변경 사항을 소비자에게 노출하지 않음
+이 섹션에서는 Azure CLI를 사용하여 블루-그린 배포를 수행
+- 배포 단계를 수동으로 진행하지만
+- Azure CLI 명령은 CI/CD 파이프라인에서 자동화
 
 ---
 
 우리는 07년에 개발된 "weather-service" 마이크로서비스의 새로운 릴리스를 배포할 것입니다
-
-The microservice that we develop in this guide is [available here](weather-service/), which is a slightly modified version of the service that was developed earlier.
+- 이전에 수정한 부분 반영(swagger 메인 메시지 변경)
 
 ## 현재 애플리케이션 수정
 
