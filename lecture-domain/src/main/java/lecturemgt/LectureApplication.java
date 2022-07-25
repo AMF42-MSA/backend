@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 
 import lecturemgt.config.kafka.KafkaProcessor;
 
+
 @SpringBootApplication
 @EnableBinding(KafkaProcessor.class)
 @EnableFeignClients
@@ -19,4 +20,6 @@ public class LectureApplication {
         applicationContext =
             SpringApplication.run(LectureApplication.class, args);
     }
+    
+    
 }

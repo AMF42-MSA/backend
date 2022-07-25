@@ -1,32 +1,24 @@
 version: '2'
 services:
-  member:
-    build: member-domain
-    mem_limit: 400m
-    ports:
-      - 8083:8080
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-    depends_on:
-      - kafka
   lecture:
-    build: lecture
+    build: lecture-domain
     mem_limit: 400m
     ports:
       - 8081:8080
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
-      - kafka, mysql
-  category:
-    build: lecturecategory-domain
-    mem_limit: 400m
+      - kafka, mysql, gateway
+
+#gateway설정: 8080에서 각각의 docker엔진으로 라우팅 설정 추가
+# 일단은 Member, lecture, category만 추가
+  gateway:
+    build: gateway
+    mem_limit: 200m
     ports:
-      - 8082:8080
+      - 8080:8080
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-    depends_on:
-      - kafka
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest

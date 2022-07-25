@@ -44,7 +44,11 @@ server:
   port: 8081
 ---
 
+
 spring.profiles: docker
+server.servlet.context-path: /lecture
+
+server.port: 8080
 
 spring:
   cloud:
@@ -82,4 +86,3 @@ spring.jpa.properties:
   hibernate:
     show_sql: true
     format_sql: true
-

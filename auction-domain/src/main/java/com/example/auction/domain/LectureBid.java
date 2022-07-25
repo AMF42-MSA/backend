@@ -1,13 +1,10 @@
 package com.example.auction.domain;
 
-import org.springframework.beans.BeanUtils;
-
-import com.example.auction.AuctionApplication;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 
@@ -15,11 +12,11 @@ public class LectureBid {     // Entity. Domain Class.
 
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    Long id;    
+    Long id;
         public Long getId() {
             return id;
         }
-        
+
 
     @ManyToOne
     Auction auction;
@@ -56,8 +53,8 @@ public class LectureBid {     // Entity. Domain Class.
 
     @Override
     public String toString() {
-        
+
         return "<a href='./"+this.getClass().getSimpleName().toLowerCase()+"'" + ">" + this.getClass().getSimpleName() + "</a>";
     }
-    
+
 }
