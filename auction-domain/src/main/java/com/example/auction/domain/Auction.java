@@ -1,15 +1,11 @@
 package com.example.auction.domain;
 
-import org.springframework.beans.BeanUtils;
-
-import com.example.auction.domain.AuctionStatus
-;import com.example.auction.AuctionApplication;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Date;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 
@@ -17,12 +13,12 @@ public class Auction {     // Entity. Domain Class.
 
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    Long id;    
+    Long id;
         public Long getId() {
             return id;
         }
 
-    Long lectId;    
+    Long lectId;
 
     public Long getLectId() {
         return lectId;
@@ -31,7 +27,7 @@ public class Auction {     // Entity. Domain Class.
         this.lectId = lectId;
     }
 
-    String lectName;    
+    String lectName;
 
     public String getLectName() {
         return lectName;
@@ -40,7 +36,7 @@ public class Auction {     // Entity. Domain Class.
         this.lectName = lectName;
     }
 
-    String lectStatus;    
+    String lectStatus;
 
     public String getLectStatus() {
         return lectStatus;
@@ -81,25 +77,25 @@ public class Auction {     // Entity. Domain Class.
 
     public String cancel() {
         //answer must be obtained by UI
-        
+
         setAuctionStatus(AuctionStatus.CANCEL); //취소
         return "경매가 취소되었읍니다.";
     }
 
     public String startAuction() {
         //answer must be obtained by UI
-        
+
         setAuctionStatus(AuctionStatus.AUCTION); //취소
         return "경매가 시작되었읍니다.";
     }
 
-    
+
 
 
     @Override
     public String toString() {
-        
+
         return "<a href='./"+this.getClass().getSimpleName().toLowerCase()+"'" + ">" + this.getClass().getSimpleName() + "</a>";
     }
-    
+
 }

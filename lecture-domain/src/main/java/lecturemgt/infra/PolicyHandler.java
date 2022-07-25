@@ -5,10 +5,10 @@ import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
+import lecturemgt.config.kafka.KafkaProcessor;
 import lecturemgt.domain.Category;
 import lecturemgt.domain.CategoryChanged;
 import lecturemgt.domain.CategoryRepository;
-import lecturemgt.kafka.KafkaProcessor;
 
 @Service
 public class PolicyHandler {

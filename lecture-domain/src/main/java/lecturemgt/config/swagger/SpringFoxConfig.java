@@ -27,7 +27,7 @@ public class SpringFoxConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
+        		.apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
@@ -36,7 +36,7 @@ public class SpringFoxConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("AMF-Level3 교육")
+                .title("AMF-Level3")
                 .version("1.0")
                 .description("AMF4차수- 모두의강의")
                 .license("AMF42조")

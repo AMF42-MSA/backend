@@ -44,8 +44,13 @@ server:
   port: 8081
 ---
 
+
+spring.profiles: docker
+server.servlet.context-path: /lecture
+
+server.port: 8080
+
 spring:
-  profiles: docker
   cloud:
     stream:
       kafka:
@@ -68,4 +73,16 @@ spring:
           destination: lecture-category
           contentType: application/json
 
+spring.datasource:
+  url: jdbc:mysql://mysql/lecture-db
+  username: user
+  password: pwd
 
+spring.datasource.hikari.initializationFailTimeout: 60000  
+
+spring.jpa.generate-ddl: true 
+spring.jpa.hibernate.ddl-auto: update 
+spring.jpa.properties:
+  hibernate:
+    show_sql: true
+    format_sql: true

@@ -6,63 +6,35 @@ server:
 spring:
   profiles: default
   cloud:
+    config.import-check.enabled: false
     gateway:
+      discovery:
+        locator:
+          enabled: true
       routes:
-        - id: pet
+        - id: lecture
           uri: http://localhost:8081
           predicates:
-            - Path=/pets/**, /cats/**, /dogs/** 
-        - id: store
-          uri: http://localhost:8083
-          predicates:
-            - Path=/cartItems/**, /customers/**, /items/**
-        - id: store-front
-          uri: http://localhost:8085
-          predicates:
-            - Path=/shop/**, /shop/js/
+            - Path=/lecture/**
         - id: pet-front
           uri: http://localhost:8084
           predicates:
             - Path=/**
-        
-      globalcors:
-        corsConfigurations:
-          '[/**]':
-            allowedOrigins:
-              - "*"
-            allowedMethods:
-              - "*"
-            allowedHeaders:
-              - "*"
-            allowCredentials: true
-
-
 ---
 
 spring:
   profiles: docker
   cloud:
+    config.import-check.enabled: false
     gateway:
-      routes:
-        - id: pet
-          uri: http://pet:8080
-          predicates:
-            - Path=/pets/**, /cats/**, /dogs/** 
-        - id: store
-          uri: http://store:8080
-          predicates:
-            - Path=/cartItems/**, /customers/**, /items/**
-        
-      globalcors:
-        corsConfigurations:
-          '[/**]':
-            allowedOrigins:
-              - "*"
-            allowedMethods:
-              - "*"
-            allowedHeaders:
-              - "*"
-            allowCredentials: true
+      discovery:
+        locator:
+          enabled: false
 
-server:
-  port: 8080
+spring.cloud.gateway.routes:
+- id: lecture
+  uri: http://lecture:8080
+  predicates:
+  - Path=/lecture/**
+
+server.port: 8080
