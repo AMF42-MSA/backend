@@ -1,7 +1,7 @@
-server:
-  port: 8080
+server.servlet.context-path: /lecture
 
 ---
+server.port: 8081
 
 spring:
   profiles: default
@@ -40,13 +40,9 @@ logging:
     org.springframework.cloud: debug
 
 
-server:
-  port: 8081
 ---
 
-
 spring.profiles: docker
-server.servlet.context-path: /lecture
 
 server.port: 8080
 
@@ -74,7 +70,7 @@ spring:
           contentType: application/json
 
 spring.datasource:
-  url: jdbc:mysql://mysql/lecture-db
+  url: jdbc:mysql://mysql/lecture
   username: user
   password: pwd
 

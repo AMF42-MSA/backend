@@ -12,6 +12,10 @@ spring:
         locator:
           enabled: true
       routes:
+        - id: member
+          uri: http://localhost:8082
+          predicates:
+            - Path=/member/**
         - id: lecture
           uri: http://localhost:8081
           predicates:
@@ -32,6 +36,10 @@ spring:
           enabled: false
 
 spring.cloud.gateway.routes:
+- id: member
+  uri: http://member:8080
+  predicates:
+  - Path=/member/**
 - id: lecture
   uri: http://lecture:8080
   predicates:
