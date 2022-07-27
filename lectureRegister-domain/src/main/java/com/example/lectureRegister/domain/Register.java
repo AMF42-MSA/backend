@@ -8,76 +8,29 @@ import javax.persistence.*;
 @Table(name="Register")
 public class Register {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
-    private String lectureName;
-    long minEnrollment;
-    long maxEnrollment;
-    long lectureCost;
+    @GeneratedValue(strategy=GenerationType.AUTO) 
 
-    private Long userId;
-    private String userName;
+    private Long registerId;
 
-    long paymentId;
-    String memberId; 
-    String paymentInfo;
+    public Long getRegisterId() {return registerId;}
+    public void setRegisterId(Long registerId) {this.registerId = registerId;}
 
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    } 
+    @Embedded
+    private Lecture Lecture;
+        public Lecture getLecture() {
+            return Lecture;
+        }
+        public void setLecture(Lecture Lecture) {
+            this.Lecture = Lecture;
+        }
 
-    public String getLectureName() {
-        return lectureName;
-    }
-    public void setlLectureName(String lectureName) {
-        this.lectureName = lectureName;
-    }
-
-    public Long getMinEnrollment() {
-        return minEnrollment;
-    }
-    public void setMinEnrollment(Long minEnrollment) {
-        this.minEnrollment = minEnrollment;
-    } 
-
-    public Long getMaxEnrollment() {
-        return minEnrollment;
-    }
-    public void setMaxEnrollment(Long minEnrollment) {
-        this.maxEnrollment = maxEnrollment;
-    } 
-
-    public Long getLectureCost() {
-        return lectureCost;
-    }
-    public void setLectureCost(Long lectureCost) {
-        this.lectureCost = lectureCost;
-    }  
-
-    public Long getUserId() {return userId;}
-    public void setUserId(Long userId) {this.userId = userId;}
-
-    public String getUserName() {return userName;}
-    public void setUserName(String userName) {this.userName = userName;}
-
- 
-
-    public Long getPaymentId() {return paymentId;}
-    public void setPaymentId(Long paymentId) {this.paymentId = paymentId;}
-
-    public String getMemberId() {return memberId;}
-    public void setMemberId(String memberId) {this.memberId = memberId;}
-
-    public String getPaymentInfo() {return paymentInfo;}
-    public void setPaymentInfo(String paymentInfo) {this.paymentInfo = paymentInfo;}
-
-    @Override
-    public String toString() {
-
-        return "<a href='./"+this.getClass().getSimpleName().toLowerCase()+"'" + ">" + this.getClass().getSimpleName() + "</a>";
-    }
+    @Embedded
+    private Payment Payment;
+        public Payment getPayment() {
+            return Payment;
+        }
+        public void setPayment(Payment Payment) {
+            this.Payment = Payment;
+        }
 
 }
