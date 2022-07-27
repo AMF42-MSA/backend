@@ -1,9 +1,9 @@
-package com.example.lecturecategory.domain;
+package com.everyoneslecture.lecturecategory.domain;
 
 import javax.persistence.*;
 
 @Entity
-public class InterestCategory {     // Entity. Domain Class.
+public class InterestCategory {
 
     @Id @GeneratedValue
     private Long Id;
@@ -12,11 +12,11 @@ public class InterestCategory {     // Entity. Domain Class.
         }
 
     @Embedded
-    private CategoryVO categoryVO;
-        public CategoryVO getCategoryVO() {
+    private LectureCategoryVO categoryVO;
+        public LectureCategoryVO getCategoryVO() {
             return categoryVO;
         }
-        public void setCategoryVO(CategoryVO categoryVO) {
+        public void setCategoryVO(LectureCategoryVO categoryVO) {
             this.categoryVO = categoryVO;
         }
 
@@ -28,5 +28,5 @@ public class InterestCategory {     // Entity. Domain Class.
         public void setMemberVO(MemberVO memberVO) {
             this.memberVO = memberVO;
         }
-    
+
 }

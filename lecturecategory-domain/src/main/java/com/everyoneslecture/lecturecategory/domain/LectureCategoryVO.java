@@ -1,9 +1,9 @@
-package com.example.lecturecategory.domain;
+package com.everyoneslecture.lecturecategory.domain;
 
 import javax.persistence.*;
 
 @Embeddable
-public class CategoryVO {
+public class LectureCategoryVO {
 
     Long categoryId;
         public Long getCategoryId() {
@@ -12,7 +12,7 @@ public class CategoryVO {
         public void setCategoryId(Long categoryId) {
             this.categoryId = categoryId;
         }
-    
+
     String categoryName;
         public String getCategoryName() {
             return categoryName;
@@ -20,5 +20,5 @@ public class CategoryVO {
         public void setCategoryName(String categoryName) {
             this.categoryName = categoryName;
         }
-    
+
 }

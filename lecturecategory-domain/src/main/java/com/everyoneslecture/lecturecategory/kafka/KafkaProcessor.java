@@ -1,4 +1,4 @@
-package com.example.lecturecategory.kafka;
+package com.everyoneslecture.lecturecategory.kafka;
 
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;

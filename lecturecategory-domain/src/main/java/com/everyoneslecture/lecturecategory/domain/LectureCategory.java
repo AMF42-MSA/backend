@@ -1,9 +1,9 @@
-package com.example.lecturecategory.domain;
+package com.everyoneslecture.lecturecategory.domain;
 
 import javax.persistence.*;
 
 @Entity
-public class Category {     // Entity. Domain Class.
+public class LectureCategory {
 
     @Id @GeneratedValue
     private Long categoryId;
@@ -13,7 +13,7 @@ public class Category {     // Entity. Domain Class.
         public void setCategoryId(Long categoryId) {
             this.categoryId = categoryId;
         }
-    
+
     private String categoryName;
         public String getCategoryName() {
             return categoryName;
@@ -21,11 +21,11 @@ public class Category {     // Entity. Domain Class.
         public void setCategoryName(String categoryName) {
             this.categoryName = categoryName;
         }
-        
-    
+
+
     @PostPersist
     public void onPostPersist(){
-        CategoryReserved categoryReserved = new CategoryReserved();
+        LectureCategoryReserved categoryReserved = new LectureCategoryReserved();
 
         categoryReserved.setCategoryId(this.getCategoryId());
         categoryReserved.setCategoryName(this.getCategoryName());
@@ -34,5 +34,5 @@ public class Category {     // Entity. Domain Class.
     }
 
 
-    
+
 }

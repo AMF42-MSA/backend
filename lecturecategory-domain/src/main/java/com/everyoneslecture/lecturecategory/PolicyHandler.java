@@ -1,7 +1,6 @@
-package com.example.lecturecategory;
+package com.everyoneslecture.lecturecategory;
 
-import com.example.lecturecategory.kafka.KafkaProcessor;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.everyoneslecture.lecturecategory.kafka.KafkaProcessor;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;

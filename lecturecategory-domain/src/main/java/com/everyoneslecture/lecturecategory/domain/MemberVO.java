@@ -1,4 +1,4 @@
-package com.example.lecturecategory.domain;
+package com.everyoneslecture.lecturecategory.domain;
 
 import javax.persistence.*;
 

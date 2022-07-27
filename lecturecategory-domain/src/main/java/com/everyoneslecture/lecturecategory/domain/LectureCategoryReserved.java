@@ -1,8 +1,8 @@
-package com.example.lecturecategory.domain;
+package com.everyoneslecture.lecturecategory.domain;
 
-import com.example.lecturecategory.AbstractEvent;
+import com.everyoneslecture.lecturecategory.AbstractEvent;
 
-public class CategoryReserved extends AbstractEvent {
+public class LectureCategoryReserved extends AbstractEvent {
     Long categoryId;
     public Long getCategoryId() {
         return categoryId;

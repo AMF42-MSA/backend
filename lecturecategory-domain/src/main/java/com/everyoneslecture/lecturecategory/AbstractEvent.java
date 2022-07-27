@@ -1,6 +1,6 @@
-package com.example.lecturecategory;
+package com.everyoneslecture.lecturecategory;
 
-import com.example.lecturecategory.kafka.KafkaProcessor;
+import com.everyoneslecture.lecturecategory.kafka.KafkaProcessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.messaging.MessageChannel;
@@ -9,9 +9,6 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.transaction.support.TransactionSynchronizationAdapter;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class AbstractEvent {
 
