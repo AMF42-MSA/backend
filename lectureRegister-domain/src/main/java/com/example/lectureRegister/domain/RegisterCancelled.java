@@ -1,6 +1,6 @@
-package com.example.lectureRegister.domain;
+package com.example.lectureRegister;
 
-public class RegisterCancelled extends EventPublisher {
+public class RegisterCancelled  {
     private Long id; 
     private String lectureName;
     private Long userId; 
