@@ -1,6 +1,6 @@
-package com.example.lectureApply;
+package com.example.lectureRegister;
 
-import com.example.lectureApply.kafka.KafkaProcessor;
+import com.example.lectureRegister.kafka.KafkaProcessor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.stream.annotation.EnableBinding;
@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @EnableAspectJAutoProxy
 @EnableBinding(KafkaProcessor.class)
-public class LectureApplyApplication {
+public class lectureRegisterApplication {
 
 	public static ApplicationContext applicationContext;
 
 	public static void main(String[] args) {
 
-		applicationContext = SpringApplication.run(LectureApplyApplication.class, args);
+		applicationContext = SpringApplication.run(lectureRegisterApplication.class, args);
 
 	}
 

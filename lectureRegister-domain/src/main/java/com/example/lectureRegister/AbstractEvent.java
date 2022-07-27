@@ -1,6 +1,6 @@
-package com.example.lectureApply;
+package com.example.lectureRegister;
 
-import com.example.lectureApply.kafka.KafkaProcessor;
+import com.example.lectureRegister.kafka.KafkaProcessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.messaging.MessageChannel;
@@ -42,7 +42,7 @@ public class AbstractEvent {
             /**
              * spring streams 방식
              */
-            KafkaProcessor processor = LectureApplyApplication.applicationContext.getBean(KafkaProcessor.class);
+            KafkaProcessor processor = lectureRegisterApplication.applicationContext.getBean(KafkaProcessor.class);
             MessageChannel outputChannel = processor.outboundTopic();
 
             outputChannel.send(MessageBuilder

@@ -1,9 +1,9 @@
-package com.example.lectureApply.domain;
+package com.example.lectureRegister.domain;
 
 import javax.persistence.*;
 
 @Entity
-public class LectureApply {
+public class Register {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
