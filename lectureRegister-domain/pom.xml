@@ -8,11 +8,11 @@
 		<version>2.3.1.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>classmgt</groupId>
-	<artifactId>enrollment</artifactId>
+	<groupId>lectureforyou</groupId>
+	<artifactId>lectureRegister</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>enrollment</name>
-	<description>Demo project for Spring Boot</description>
+	<name>lectureRegister</name>
+	<description>모두의강의</description>
 
 	<properties>
 		<java.version>11</java.version>
