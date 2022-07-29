@@ -36,15 +36,27 @@ public class Lecture {
     @Enumerated(EnumType.STRING)
     private LectureStatus status;
 
-    @Embedded
-    @AttributeOverride(
-        name = "id",
-        column = @Column(name = "categoryIdId", nullable = true)
-    )
-    private CategoryId categoryId;
+//    @Embedded
+//    @AttributeOverride(
+//        name = "id",
+//        column = @Column(name = "categoryIdId", nullable = true)
+//    )
+    private long 	categoryId;
+    private String  categoryName;
 
+
+    private long 	startLecture;  	//강의시작일
+    private long 	registerEndDt;  //수강마감일
+    private long 	lectureStatus;  //강의상태
+
+    private	String	memberId;		//강의등록자ID
+    private	String	opName;			//강의등록자
+    private	String	endterDate;     //강의등록일
+    
+    
     public static LectureRepository repository() {
         LectureRepository rectureRepository = LectureApplication.applicationContext.getBean(LectureRepository.class);
         return rectureRepository;
     }
+    
 }

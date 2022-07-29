@@ -14,9 +14,14 @@ parts:
     - file: 00_모두의강의.md
       sections:
       - file: lecture/README-Lecture.md
-      - file: lecture/01-주요변경내용.md
+      - file: lecture/01-주요변경-swagger.md
+      - file: lecture/01-주요변경-kafka연동.md
+      - file: lecture/01-주요변경-MYSQL.md
+      - file: lecture/01-주요변경-동기호출.md
       - file: lecture/02-테스트내용.md
       - file: lecture/03-Docker이미지생성.md
+      - file: lecture/04-Gateway.md
+      - file: lecture/05-Docker기반소스RemoteDebug설정.md
     - file: 개발표준/00_개발표준
       sections:
       - file: 개발표준/01-backend-Package구조

@@ -39,7 +39,6 @@ logging:
     org.hibernate.type: trace
     org.springframework.cloud: debug
 
-
 ---
 
 spring.profiles: docker
@@ -82,3 +81,16 @@ spring.jpa.properties:
   hibernate:
     show_sql: true
     format_sql: true
+    
+logging:
+  level:
+    org.hibernate.type: trace
+    org.springframework.cloud: debug    
+    lecturemgt: debug    
+  pattern.level: "user:%X{user} %5p"
+  #출처: https://luvstudy.tistory.com/133 [파란하늘의 지식창고:티스토리]    
+  pattern.console: "%d{HH:mm:ss.SSS} [%6t] %-5level %-36logger{36}:%L - %msg%n"
+  #https://www.bswen.com/2019/07/springboot-Show-logging-linenumber-in-springboot-applications.html
+member:
+  ribbon:
+    listOfServers: http://member

@@ -1,6 +1,13 @@
 FROM openjdk:15-jdk-alpine
+#FROM adoptopenjdk/openjdk11:x86_64-alpine-jdk-11.0.6_10-slim
 COPY target/*SNAPSHOT.jar app.jar
-EXPOSE 8080
+EXPOSE 8080 8000
+
 ENV TZ=Asia/Seoul
+
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-ENTRYPOINT ["java","-Xmx400M","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar","--spring.profiles.active=docker"]
+
+ENV JAVA_OPTS=""
+
+ENTRYPOINT ["java","-agentlib:jdwp=transport=dt_socket,address=*:8000,server=y,suspend=n","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+#-Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=docker

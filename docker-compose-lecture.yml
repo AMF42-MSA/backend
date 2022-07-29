@@ -1,6 +1,6 @@
 version: '2'
 
-#mysql을 위하여 추가함: 
+#mysql을 위하여 추가함:
 volumes:
   mysql-volume: {}
 
@@ -9,7 +9,7 @@ services:
     build: member-domain
     mem_limit: 400m
     ports:
-      - 8082:8080
+      - "8082:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
@@ -18,7 +18,8 @@ services:
     build: lecture-domain
     mem_limit: 400m
     ports:
-      - 8081:8080
+      - "8000:8000"
+      - "8081:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
@@ -56,7 +57,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_ADVERTISED_HOST_NAME: kafka
-  # $ mysql -uroot -h127.0.0.1 -p
+ # $ mysql -uroot -h127.0.0.1 -p
   mysql:
     image: mysql:5.7
     mem_limit: 350m
@@ -70,11 +71,11 @@ services:
     volumes:
       - ./initialize_mysql_multiple_databases.sh:/docker-entrypoint-initdb.d/initialize_mysql_multiple_databases.sh
       - mysql-volume:/var/lib/mysql
-    command:
-      - --character-set-server=utf8 
+    command:  #한글관련 추가
+      - --character-set-server=utf8
       - --collation-server=utf8_general_ci
-    healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-uuser", "-ppwd", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
+    #healthcheck:
+    #  test: ["CMD", "mysqladmin" ,"ping", "-uuser", "-ppwd", "-h", "localhost"]
+    #  interval: 10s
+    #  timeout: 5s
+    #  retries: 10

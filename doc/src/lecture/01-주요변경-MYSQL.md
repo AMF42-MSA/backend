@@ -13,7 +13,7 @@
         ```yaml
         # 추가된 내용
         spring.datasource:
-        url: jdbc:mysql://mysql/lecture-db
+        url: jdbc:mysql://mysql/lecture
         username: user
         password: pwd
 
@@ -38,7 +38,7 @@
             - "3306:3306"
             environment:
             - MYSQL_ROOT_PASSWORD=rootpwd
-            - MYSQL_DATABASE=lecture-db
+            - MYSQL_DATABASE=lecture
             - MYSQL_USER=user
             - MYSQL_PASSWORD=pwd
             healthcheck:
@@ -112,7 +112,7 @@
     ```yaml
     version: '2'
     volumes:
-    mysql-volume: {}
+      mysql-volume: {}
     services:
     # $ mysql -uroot -h127.0.0.1 -p
     mysql:
@@ -128,11 +128,11 @@
         volumes:
         - ./initialize_mysql_multiple_databases.sh:/docker-entrypoint-initdb.d/initialize_mysql_multiple_databases.sh
         - mysql-volume:/var/lib/mysql
-        healthcheck:
-        test: ["CMD", "mysqladmin" ,"ping", "-uuser", "-ppwd", "-h", "localhost"]
-        interval: 10s
-        timeout: 5s
-        retries: 10
+          healthcheck:
+          test: ["CMD", "mysqladmin" ,"ping", "-uuser", "-ppwd", "-h", "localhost"]
+          interval: 10s
+          timeout: 5s
+          retries: 10
     ```
 
 ## 3. MYSQL 한글입력을 위한 character set 설정
@@ -161,8 +161,8 @@
         - --character-set-server=utf8
         - --collation-server=utf8_general_ci
         healthcheck:
-        test: ["CMD", "mysqladmin" ,"ping", "-uuser", "-ppwd", "-h", "localhost"]
-        interval: 10s
-        timeout: 5s
-        retries: 10
+          test: ["CMD", "mysqladmin" ,"ping", "-uuser", "-ppwd", "-h", "localhost"]
+          interval: 10s
+          timeout: 5s
+          retries: 10
     ```
