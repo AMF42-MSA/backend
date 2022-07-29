@@ -2,7 +2,7 @@ package com.everyoneslecture.lecturecategory.domain;
 
 import com.everyoneslecture.lecturecategory.AbstractEvent;
 
-public class LectureCategoryReserved extends AbstractEvent {
+public class LectureCategoryRegistered extends AbstractEvent {
     Long categoryId;
     public Long getCategoryId() {
         return categoryId;

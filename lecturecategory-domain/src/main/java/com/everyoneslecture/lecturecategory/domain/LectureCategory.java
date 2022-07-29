@@ -25,12 +25,12 @@ public class LectureCategory {
 
     @PostPersist
     public void onPostPersist(){
-        LectureCategoryReserved categoryReserved = new LectureCategoryReserved();
+        LectureCategoryRegistered categoryRegistered = new LectureCategoryRegistered();
 
-        categoryReserved.setCategoryId(this.getCategoryId());
-        categoryReserved.setCategoryName(this.getCategoryName());
+        categoryRegistered.setCategoryId(this.getCategoryId());
+        categoryRegistered.setCategoryName(this.getCategoryName());
 
-        categoryReserved.publishAfterCommit();
+        categoryRegistered.publishAfterCommit();
     }
 
 

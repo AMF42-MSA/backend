@@ -14,8 +14,8 @@ public class LectureCategoryController {
   @Autowired
   LectureCategoryRepository lectureCategoryRepository;
 
-  @RequestMapping(value="lectureCategories/reserveCategory")
-  public Long reserveLectureCategory(@RequestParam String categoryName) {
+  @RequestMapping(value="lectureCategories/registerCategory")
+  public Long registerLectureCategory(@RequestParam String categoryName) {
     Long result = Long.valueOf(-1);
 
     System.out.println("categoryName: " + categoryName);
