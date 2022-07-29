@@ -1,5 +1,6 @@
 package com.everyoneslecture.lecturecategory.domain;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,11 @@ public class LectureCategoryController {
     result = lectureCategoryRepository.save(newLectureCategory).getCategoryId();
 
     return result;
+  }
+
+  // 카테고리 전체조회
+  @RequestMapping(value="lectureCategories/searchAll")
+  public List<LectureCategory> searchAllLectureCategory() {
+    return lectureCategoryRepository.findAll();
   }
 }
