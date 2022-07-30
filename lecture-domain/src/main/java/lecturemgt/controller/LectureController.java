@@ -1,8 +1,6 @@
-package lecturemgt.web.rest.controller;
+package lecturemgt.controller;
 
-import java.net.URI;
 import java.util.concurrent.ExecutionException;
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import lecturemgt.adaptor.client.MemberClient;
+import lecturemgt.controller.dto.LecturesPostInDTO;
+import lecturemgt.controller.dto.LecturesPostOutDTO;
+import lecturemgt.controller.dto.MemberInfoDTO;
+import lecturemgt.controller.mapper.LecturePOSTInMapper;
+import lecturemgt.controller.mapper.LecturePOSTOutMapper;
 import lecturemgt.domain.Lecture;
 import lecturemgt.service.LectureService;
-import lecturemgt.web.rest.dto.LecturesPostInDTO;
-import lecturemgt.web.rest.dto.LecturesPostOutDTO;
-import lecturemgt.web.rest.dto.MemberInfoDTO;
-import lecturemgt.web.rest.mapper.LecturePOSTInMapper;
-import lecturemgt.web.rest.mapper.LecturePOSTOutMapper;
 
 /**
  * REST controller for managing {@link lecturemgt.domain.Lecture}.
@@ -31,7 +29,7 @@ public class LectureController {
 
     private final Logger log = LoggerFactory.getLogger(LectureController.class);
 
-    private static final String ENTITY_NAME = "lecture";
+//    private static final String ENTITY_NAME = "lecture";
 
     private final MemberClient memberClient;
 
@@ -56,10 +54,7 @@ public class LectureController {
         this.memberClient = memberClient;
     }
 
-    /**
-     * {@code GET  /Leatures} : get all the Leatures.
-     *
-     */
+
 //    @GetMapping("/lectures")
 //    public ResponseEntity<List<LectureDTO>> getAllLeatures(Pageable pageable) {
 //        log.debug("REST request to get a page of Leatures");
@@ -71,12 +66,7 @@ public class LectureController {
 //        return ResponseEntity.ok().headers(headers).body(lecturePage.getContent());
 //    }
 
-    /**?.
-     * {@code GET  /Leatures/:id} : get the "id" Leature.
-     *
-     * @param id the id of the LeatureDTO to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the LeatureDTO, or with status {@code 404 (Not Found)}.
-     */
+
 //    @GetMapping("/Leatures/{id}")
 //    public ResponseEntity<LectureDTO> getLeature(@PathVariable Long id) {
 //        log.debug("REST request to get Leature : {}", id);
@@ -85,12 +75,7 @@ public class LectureController {
 //        return ResponseEntity.ok().body(lectureDTO);
 //    }
 
-    /**
-     * {@code DELETE  /Leatures/:id} : delete the "id" Leature.
-     *
-     * @param id the id of the LeatureDTO to delete.
-     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
-     */
+
 //    @DeleteMapping("/Leatures/{id}")
 //    public ResponseEntity<Void> deleteLeature(@PathVariable Long id) {
 //        log.debug("REST request to delete Leature : {}", id);

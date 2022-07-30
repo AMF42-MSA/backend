@@ -1,4 +1,4 @@
-package lecturemgt.web.rest.mapper;
+package lecturemgt.controller.mapper;
 
 
 import java.util.List;

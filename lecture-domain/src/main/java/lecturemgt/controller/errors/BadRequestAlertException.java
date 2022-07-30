@@ -1,4 +1,4 @@
-package lecturemgt.web.rest.errors;
+package lecturemgt.controller.errors;
 
 import java.net.URI;
 import java.util.HashMap;

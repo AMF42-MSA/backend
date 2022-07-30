@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import lecturemgt.config.feign.FeignConfiguration;
-import lecturemgt.web.rest.dto.MemberInfoDTO;
+import lecturemgt.controller.dto.MemberInfoDTO;
 
 @FeignClient(name= "member", configuration = {FeignConfiguration.class})
 public interface MemberClient {

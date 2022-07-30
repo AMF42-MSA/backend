@@ -1,4 +1,4 @@
-package lecturemgt.web.rest.dto;
+package lecturemgt.controller.dto;
 
 import lombok.Getter;
 import lombok.Setter;

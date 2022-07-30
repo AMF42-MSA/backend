@@ -1,4 +1,4 @@
-package lecturemgt.web.rest.errors;
+package lecturemgt.controller.errors;
 
 
 

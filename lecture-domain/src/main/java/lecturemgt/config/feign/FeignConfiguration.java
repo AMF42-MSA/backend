@@ -8,10 +8,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 import feign.codec.ErrorDecoder;
-import lecturemgt.web.rest.errors.FeignClientExceptionErrorDecoder;
+import lecturemgt.controller.errors.FeignClientExceptionErrorDecoder;
 
 @Configuration
-@EnableFeignClients(basePackages = "com.skcc.rental")
+@EnableFeignClients(basePackages = "lecturemgt")
 @Import(FeignClientsConfiguration.class)
 public class FeignConfiguration {
 

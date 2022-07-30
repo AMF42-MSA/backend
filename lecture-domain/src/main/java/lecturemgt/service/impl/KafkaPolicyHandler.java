@@ -1,4 +1,4 @@
-package lecturemgt.infra;
+package lecturemgt.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.StreamListener;
@@ -11,7 +11,7 @@ import lecturemgt.domain.CategoryChanged;
 import lecturemgt.domain.CategoryRepository;
 
 @Service
-public class PolicyHandler {
+public class KafkaPolicyHandler {
      @Autowired
      CategoryRepository categoryRepository;
 
