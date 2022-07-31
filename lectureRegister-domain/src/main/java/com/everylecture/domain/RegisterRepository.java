@@ -1,4 +1,4 @@
-package com.example.lectureRegister.domain;
+package com.everylecture.domain;
 
 import org.springframework.data.repository.CrudRepository;
 

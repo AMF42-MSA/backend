@@ -1,5 +1,5 @@
 server:
-  port: 8083
+  port: 8080
 ---
 spring:
   profiles: default
@@ -12,7 +12,7 @@ spring:
     stream:
       kafka:
         binder:
-          brokers: localhost:29092
+          brokers: localhost:9092
         streams:
           binder:
             configuration:
@@ -23,7 +23,7 @@ spring:
                   serde: org.apache.kafka.common.serialization.Serdes$StringSerde
       bindings:
         event-in:
-          group: lectureRegister
+          group: everylecture
           destination: lecture
           contentType: application/json
         event-out:
@@ -53,7 +53,7 @@ spring:
                   serde: org.apache.kafka.common.serialization.Serdes$StringSerde
       bindings:
         event-in:
-          group: lectureRegister
+          group: everylecture
           destination: lecture
           contentType: application/json
         event-out:

@@ -1,4 +1,4 @@
-package com.example.lectureRegister;
+package com.everylecture.lectureRegister;
 
 public class RegisterCancelled  {
     private Long id; 
