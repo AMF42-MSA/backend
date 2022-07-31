@@ -1,6 +1,7 @@
 version: '2'
 
 services:
+
   lecture:
     build: lecture
     mem_limit: 300m
@@ -10,11 +11,21 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
       - kafka
-  category:
-    build: lecturecategory-domain
+# category:
+#   build: lecturecategory-domain
+#   mem_limit: 300m
+#   ports:
+#     - 8082:8080
+#   environment:
+#     - SPRING_PROFILES_ACTIVE=docker
+#   depends_on:
+#     - kafka
+
+  customer:
+    build: customer
     mem_limit: 300m
     ports:
-      - 8082:8080
+      - 8088:8080
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:

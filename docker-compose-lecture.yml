@@ -13,7 +13,9 @@ services:
     environment:
       - SPRING_PROFILES_3ACTIVE=docker
     depends_on:
-      - kafka, mysql, gateway
+      - kafka
+      - mysql
+      - gateway
   lecture:
     build: lecture-domain
     mem_limit: 550M
@@ -23,7 +25,9 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
-      - kafka, mysql, gateway
+      - kafka
+      - mysql
+      - gateway
 
 #gateway설정: 8080에서 각각의 docker엔진으로 라우팅 설정 추가
 # 일단은 Member, lecture, category만 추가
