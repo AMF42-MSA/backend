@@ -1,10 +1,4 @@
-package lecturemgt.infra;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import lecturemgt.LectureApplication;
-import lecturemgt.config.kafka.KafkaProcessor;
+package lecturemgt.config.kafka;
 
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHeaders;
@@ -12,6 +6,11 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.transaction.support.TransactionSynchronizationAdapter;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.util.MimeTypeUtils;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import lecturemgt.LectureApplication;
 
 public class AbstractEvent {
 

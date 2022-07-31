@@ -2,10 +2,10 @@
 
 
 
-## 3.mysql 연동
+## 1.mysql 연동
 2022-07-24일
 
-### 3.1 환경설정 변경 내용
+### 1.1 환경설정 변경 내용
 1. lectured의 Application.yaml변경
    - Local테스트 없이 직접 docker기반 테스트만 함
    - 전체 내용은 소스 참조
@@ -13,7 +13,7 @@
         ```yaml
         # 추가된 내용
         spring.datasource:
-        url: jdbc:mysql://mysql/lecture-db
+        url: jdbc:mysql://mysql/lecture
         username: user
         password: pwd
 
@@ -38,7 +38,7 @@
             - "3306:3306"
             environment:
             - MYSQL_ROOT_PASSWORD=rootpwd
-            - MYSQL_DATABASE=lecture-db
+            - MYSQL_DATABASE=lecture
             - MYSQL_USER=user
             - MYSQL_PASSWORD=pwd
             healthcheck:
@@ -52,7 +52,7 @@
             depends_on:
             - kafka, mysql
         ```
-### 3.2 테스트
+### 1.2 테스트
 1. 실행
     ```bash
     cd lecture
@@ -83,3 +83,86 @@
         7	11	20	10	CLOSED	string
         8	11	20	10	CLOSED	string
         ```
+## 2. Multi DB 테스트
+- 하나의 MySQL에 2개 이상의 database만들기
+- 참조한 내용: https://namsieon.com/24
+
+### 2.1 shell파일 생성
+- docker-compose-mysql 파일과 동일한 위치에 "initialize_mysql_multiple_databases.sh"생성
+    ```sh
+    # initialize_mysql_multiple_databases.sh
+
+    if [ -n "$MYSQL_MULTIPLE_DATABASES" ]; then
+    for dbname in $(echo $MYSQL_MULTIPLE_DATABASES | tr ',' ' '); do
+        echo $dbname: $MYSQL_USER
+        mysql -u root -p$MYSQL_ROOT_PASSWORD <<-EOSQL
+            CREATE DATABASE $dbname;
+            GRANT ALL PRIVILEGES ON $dbname.* TO 'user'@'%';
+            EOSQL
+    done
+    fi
+    ```
+
+### 2.2 docker-compose 수정 내용
+- DB명에 '-'사용시 오류가 발생함
+- 'MYSQL_MULTIPLE_DATABASES' 추가
+- 'volumes' 부분 추가: sh수행
+  - 잘못 생성되었으면 vloumn을 삭제하고 다시 수행
+- volumn 추가
+    ```yaml
+    version: '2'
+    volumes:
+      mysql-volume: {}
+    services:
+    # $ mysql -uroot -h127.0.0.1 -p
+    mysql:
+        image: mysql:5.7
+        mem_limit: 350m
+        ports:
+        - "3306:3306"
+        environment:
+        - MYSQL_ROOT_PASSWORD=rootpwd
+        - MYSQL_MULTIPLE_DATABASES=lecture,member
+        - MYSQL_USER=user
+        - MYSQL_PASSWORD=pwd
+        volumes:
+        - ./initialize_mysql_multiple_databases.sh:/docker-entrypoint-initdb.d/initialize_mysql_multiple_databases.sh
+        - mysql-volume:/var/lib/mysql
+          healthcheck:
+          test: ["CMD", "mysqladmin" ,"ping", "-uuser", "-ppwd", "-h", "localhost"]
+          interval: 10s
+          timeout: 5s
+          retries: 10
+    ```
+
+## 3. MYSQL 한글입력을 위한 character set 설정
+
+- command 부분 추가
+    ```yml
+    version: '2'
+    volumes:
+    mysql-volume: {}
+    services:
+    # $ mysql -uroot -h127.0.0.1 -p
+    mysql:
+        image: mysql:5.7
+        mem_limit: 350m
+        ports:
+        - "3306:3306"
+        environment:
+        - MYSQL_ROOT_PASSWORD=rootpwd
+        - MYSQL_MULTIPLE_DATABASES=lecture,member
+        - MYSQL_USER=user
+        - MYSQL_PASSWORD=pwd
+        volumes:
+        - ./initialize_mysql_multiple_databases.sh:/docker-entrypoint-initdb.d/initialize_mysql_multiple_databases.sh
+        - mysql-volume:/var/lib/mysql
+        command:
+        - --character-set-server=utf8
+        - --collation-server=utf8_general_ci
+        healthcheck:
+          test: ["CMD", "mysqladmin" ,"ping", "-uuser", "-ppwd", "-h", "localhost"]
+          interval: 10s
+          timeout: 5s
+          retries: 10
+    ```

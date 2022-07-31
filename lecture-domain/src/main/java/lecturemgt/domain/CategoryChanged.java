@@ -1,6 +1,6 @@
 package lecturemgt.domain;
 
-import lecturemgt.infra.AbstractEvent;
+import lecturemgt.config.kafka.AbstractEvent;
 
 public class CategoryChanged extends AbstractEvent {
     String jobType;

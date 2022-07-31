@@ -4,7 +4,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource(
-    collectionResourceRel = "lectures",
+    collectionResourceRel = "entity/lectures",
     path = "lectures"
 )
 public interface LectureRepository

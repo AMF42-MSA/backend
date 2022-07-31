@@ -1,8 +1,7 @@
 package lecturemgt.domain;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
+import java.sql.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -36,15 +35,30 @@ public class Lecture {
     @Enumerated(EnumType.STRING)
     private LectureStatus status;
 
-    @Embedded
-    @AttributeOverride(
-        name = "id",
-        column = @Column(name = "categoryIdId", nullable = true)
-    )
-    private CategoryId categoryId;
+//    @Embedded
+//    @AttributeOverride(
+//        name = "id",
+//        column = @Column(name = "categoryIdId", nullable = true)
+//    )
+    private long 	categoryId;
+    private String  categoryName;
 
+
+    private Date 	startLectureDt;  	//강의시작일
+    private Date 	registerEndDt;  //수강마감일
+    private long 	lectureStatus;  //강의상태
+
+    private	String	memberId;		//강의등록자ID
+    private	String	opName;			//강의등록자
+    private	Date	endterDt;     //강의등록일
+    
+    
     public static LectureRepository repository() {
         LectureRepository rectureRepository = LectureApplication.applicationContext.getBean(LectureRepository.class);
         return rectureRepository;
     }
+    
+    //강의등록
+
 }
+
