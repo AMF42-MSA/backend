@@ -5,8 +5,46 @@
 ## 1.mysql 연동
 2022-07-24일
 
-### 1.1 환경설정 변경 내용
+### 1.1 MYSQL을 Docker로 기동하기
+1. Docker-compose 파일 생성
+   - docker-compose-mysql.yml
+    ```yaml
+    # $ mysql -uroot -h127.0.0.1 -p
+    mysql:
+        image: mysql:5.7
+        mem_limit: 350m
+        ports:
+        - "3306:3306"
+        environment:
+        - MYSQL_ROOT_PASSWORD=rootpwd
+        - MYSQL_DATABASE=lecture
+        - MYSQL_USER=user
+        - MYSQL_PASSWORD=pwd
+        healthcheck:
+        test: ["CMD", "mysqladmin" ,"ping", "-uuser", "-ppwd", "-h", "localhost"]
+        interval: 10s
+        timeout: 5s
+        retries: 10
+    ```
+### 1.2 테스트
+1. 실행
+    ```bash
+    cd .  (docker-compose-mysql.yml 파일이 있는 디렉토리)
+
+    docker-compose -f docker-compose-mysql.yml up
+
+    ```
+2. mysql 결과 확인
+   - DBeaver 다운로드 및 설치
+     - 접속정보 ![](images/01-connection.png)
+     - database에 'lecture'가 보이면 OK
+     - ![](images/01-mysql-01.png)
+3. 주의사항
+   - 로컬에 '3306'으로 서비스 중인 내역이 있으면 Skip
+   - 로컬에 MySQL 및 기타 유사한 DB가 있으면 uninstall 또는 서비스 중지후 실행 권고
+## 2 기존 서비스에서 MySQL 접속하기
 1. lectured의 Application.yaml변경
+   - 이 부분은 Mysql 기동이후 MySQL에 접속하기 위한 부분
    - Local테스트 없이 직접 docker기반 테스트만 함
    - 전체 내용은 소스 참조
    - 소스 수정은 별도 하지 않음
@@ -27,8 +65,9 @@
             format_sql: true
         ```
 2. Docker-compose 파일 변경
-   - 다른 사람과 테스트 독립성을 위하여 별도 compose 파일 생성
+   - 다른 사람과 테스트 독립성을 하여 별도 compose 파일 생성
    - docker-compose-lecture.yml(mysql 관련 추가)
+   - 1단계에서 테스트한 MYSQL 관련 설정을 추가
         ```yaml
         # $ mysql -uroot -h127.0.0.1 -p
         mysql:
@@ -52,27 +91,25 @@
             depends_on:
             - kafka, mysql
         ```
-### 1.2 테스트
-1. 실행
+3. 실행
     ```bash
     cd lecture
-    mvn package
+    mvn clean package
 
     cd  ..  #root 디렉토리로 이동
 
     docker-compose -f docker-compose-lecture.yml build
     docker-compose -f docker-compose-lecture.yml up
 
-
     # swagger로 테스트
     ```
-2. mysql 결과 확인
+4. mysql 결과 확인
    - DBeaver 다운로드 및 설치
      - 접속정보 ![](images/01-connection.png)
         ```bash
         # docker-desktop에서 CLI로 접근
         SELECT id, category_id_id, max_enrollment, min_enrollment, status, title, version
-            FROM `lecture-db`.lecture_table;
+            FROM `lecture`.lecture_table;
 
         1	11	20	10	CLOSED	string
         2	11	20	10	CLOSED	string
@@ -83,12 +120,15 @@
         7	11	20	10	CLOSED	string
         8	11	20	10	CLOSED	string
         ```
-## 2. Multi DB 테스트
+## 3. Multi DB 테스트
 - 하나의 MySQL에 2개 이상의 database만들기
 - 참조한 내용: https://namsieon.com/24
 
-### 2.1 shell파일 생성
-- docker-compose-mysql 파일과 동일한 위치에 "initialize_mysql_multiple_databases.sh"생성
+### 3.1 shell파일 생성
+- docker-compose-mysql 파일과 동일한 위치에 "initialize_mysql_multiple_databases.sh"생성 (끝문자가 unix 형식이어야 함)
+  - unix 형식으로 끝문자 변경하기
+  - ![](images/01-mysql-02.png)
+
     ```sh
     # initialize_mysql_multiple_databases.sh
 
@@ -103,7 +143,7 @@
     fi
     ```
 
-### 2.2 docker-compose 수정 내용
+### 3.2 docker-compose 수정 내용
 - DB명에 '-'사용시 오류가 발생함
 - 'MYSQL_MULTIPLE_DATABASES' 추가
 - 'volumes' 부분 추가: sh수행
@@ -135,7 +175,7 @@
           retries: 10
     ```
 
-## 3. MYSQL 한글입력을 위한 character set 설정
+## 4. MYSQL 한글입력을 위한 character set 설정
 
 - command 부분 추가
     ```yml

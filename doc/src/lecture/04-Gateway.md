@@ -67,10 +67,10 @@
 1. gateway, lecture 빌드
    ```bash
    cd ../lecture-domain
-   mvn clean package
+   mvn clean package -DskipTests=true
 
    cd ../gateway
-   mvn clean package
+   mvn clean package -DskipTests=true
    ```
 2. docker-compose 빌드 및 수행
    ```bash

@@ -26,4 +26,4 @@
    pattern.console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{-36}:%L - %msg%n"
    #https://www.bswen.com/2019/07/springboot-Show-logging-linenumber-in-springboot-applications.html
    ```
-2. 
+
