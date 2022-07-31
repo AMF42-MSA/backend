@@ -1,6 +1,6 @@
-package com.example.lectureBid.domain;
+package com.everylecture.domain;
 
-import com.example.lectureBid.AbstractEvent;
+import com.everylecture.AbstractEvent;
 
 public class LectureAuctioned extends AbstractEvent {
     Long id;

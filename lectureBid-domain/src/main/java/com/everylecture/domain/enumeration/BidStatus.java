@@ -1,4 +1,4 @@
-package com.example.lectureBid.domain;
+package com.everylecture.domain.enumeration;
 
 public enum BidStatus{
     BID, CANCEL, SUCCESS, FAIL;

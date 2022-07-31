@@ -1,4 +1,5 @@
-package com.example.lectureBid;
+package com.everylecture;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -11,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.lectureBid.domain.BidStatus;
-import com.example.lectureBid.domain.LectureBid;
-import com.example.lectureBid.domain.LectureBidRepository;
-import com.example.lectureBid.kafka.KafkaProcessor;
+import com.everylecture.domain.LectureBid;
+import com.everylecture.domain.LectureBidRepository;
+import com.everylecture.domain.enumeration.BidStatus;
+import com.everylecture.kafka.KafkaProcessor;
 
 
 /**

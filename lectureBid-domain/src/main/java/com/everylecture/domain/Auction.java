@@ -1,4 +1,5 @@
-package com.example.lectureBid.domain;
+package com.everylecture.domain;
+
 
 import java.util.Date;
 

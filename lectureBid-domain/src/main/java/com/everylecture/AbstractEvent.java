@@ -1,6 +1,8 @@
-package com.example.lectureBid;
+package com.everylecture;
 
-import com.example.lectureBid.kafka.KafkaProcessor;
+
+
+import com.everylecture.kafka.KafkaProcessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.messaging.MessageChannel;

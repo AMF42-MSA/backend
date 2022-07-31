@@ -1,13 +1,17 @@
-package com.example.lectureBid.domain;
+package com.everylecture.domain;
+
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import com.everylecture.domain.enumeration.BidStatus;
 
 @Entity
 
-public class LectureBid {     // Entity. Domain Class.
+public class LectureBid_bak {     // Entity. Domain Class.
 
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
@@ -17,12 +21,13 @@ public class LectureBid {     // Entity. Domain Class.
         }
 
 
-    Long auctionId;
-        public Long getAuctionId() {
-            return auctionId;
+    @ManyToOne
+    Auction auction;
+        public Auction getAuction() {
+            return auction;
         }
-        public void setAuctionId(Long auctionId) {
-            this.auctionId = auctionId;
+        public void setAuction(Auction auction) {
+            this.auction = auction;
         }
 
     Long memberId;
@@ -41,7 +46,7 @@ public class LectureBid {     // Entity. Domain Class.
             this.price = price;
         }
 
-    BidStatus status;
+    BidStatus status = BidStatus.BID;   //"BID"
         public BidStatus getStatus() {
             return status;
         }
