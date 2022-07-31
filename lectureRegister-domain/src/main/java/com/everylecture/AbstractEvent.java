@@ -1,4 +1,4 @@
-package com.exeverylectureample;
+package com.everylecture;
 
 import com.everylecture.kafka.KafkaProcessor;
 import com.fasterxml.jackson.core.JsonProcessingException;

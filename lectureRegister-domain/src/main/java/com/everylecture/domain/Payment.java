@@ -1,4 +1,4 @@
-package com.everylecture.domain.VO;
+package com.everylecture.domain;
 
 import javax.persistence.*;
 
