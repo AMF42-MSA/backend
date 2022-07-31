@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import lecturemgt.domain.Category;
 import lecturemgt.domain.Lecture;
 import lecturemgt.service.LectureService;
 
@@ -46,6 +47,12 @@ public class LectureServiceImpl implements LectureService {
 	public Lecture registerLecture(Lecture lecture)
 			throws InterruptedException, ExecutionException, JsonProcessingException {
         log.debug("registerLecture : {}", lecture,  lecture);
+        
+        //Category명 Search
+        Category category = Category.repository().findById(lecture.getCategoryId()).get();
+        lecture.setCategoryName(category.getTitle());
+        log.debug("Category Name : {}", category);
+        
         
         return Lecture.repository().save(lecture);
 	}

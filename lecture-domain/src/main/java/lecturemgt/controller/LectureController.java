@@ -113,5 +113,4 @@ public class LectureController {
         return ResponseEntity.ok().body(returnDto);
     }
 
-
 }

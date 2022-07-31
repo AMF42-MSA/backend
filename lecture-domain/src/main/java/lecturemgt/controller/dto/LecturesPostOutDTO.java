@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 @Getter
 @Setter
@@ -22,11 +23,11 @@ public class LecturesPostOutDTO implements Serializable {
     private Integer minEnrollment;  //최소수강인원
     private Integer maxEnrollment;  //최대수강인원
 
-    private long 	startLecture;  	//강의시작일
-    private long 	registerEndDt;  //수강마감일
+    private Date 	startLectureDt;  	//강의시작일
+    private Date 	registerEndDt;  //수강마감일
     private long 	lectureStatus;  //강의상태
 
     private	long	memberId;		//강의등록자ID
     private	String	opName;			//강의등록자
-    private	String	endterDate;     //강의등록일
+    private	Date	endterDt;     //강의등록일}
 }

@@ -1,5 +1,7 @@
 package lecturemgt.domain;
 
+import java.sql.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -42,13 +44,13 @@ public class Lecture {
     private String  categoryName;
 
 
-    private long 	startLecture;  	//강의시작일
-    private long 	registerEndDt;  //수강마감일
+    private Date 	startLectureDt;  	//강의시작일
+    private Date 	registerEndDt;  //수강마감일
     private long 	lectureStatus;  //강의상태
 
     private	String	memberId;		//강의등록자ID
     private	String	opName;			//강의등록자
-    private	String	endterDate;     //강의등록일
+    private	Date	endterDt;     //강의등록일
     
     
     public static LectureRepository repository() {
@@ -56,4 +58,7 @@ public class Lecture {
         return rectureRepository;
     }
     
+    //강의등록
+
 }
+
