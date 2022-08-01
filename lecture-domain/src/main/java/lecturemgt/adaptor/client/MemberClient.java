@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import lecturemgt.config.feign.FeignConfiguration;
 import lecturemgt.controller.dto.MemberInfoDTO;
 
-@FeignClient(name= "member", configuration = {FeignConfiguration.class})
+@FeignClient(name= "member", url="http://member:8080", configuration = {FeignConfiguration.class})
 public interface MemberClient {
     @GetMapping("/member/members/{memberId}")
     ResponseEntity<MemberInfoDTO> findById(@PathVariable("memberId") int id);
