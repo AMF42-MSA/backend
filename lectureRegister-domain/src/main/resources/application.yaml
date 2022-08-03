@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
 ---
 spring:
   profiles: default
@@ -8,11 +8,14 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+  h2:
+    console:
+      enabled: true
   cloud:
     stream:
       kafka:
         binder:
-          brokers: localhost:9092
+          brokers: localhost:29092
         streams:
           binder:
             configuration:

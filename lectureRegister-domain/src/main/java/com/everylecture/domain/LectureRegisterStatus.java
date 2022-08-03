@@ -1,5 +1,5 @@
 package com.everylecture.domain;
 
-public enum RegisterStatus {
+public enum LectureRegisterStatus {
     COMPLETED, CANCELED, CLOSED, FAILED;
 } 
