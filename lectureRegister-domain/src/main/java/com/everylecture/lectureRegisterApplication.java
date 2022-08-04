@@ -1,6 +1,6 @@
-package com.example.lectureRegister;
+package com.everylecture;
 
-import com.example.lectureRegister.kafka.KafkaProcessor;
+import com.everylecture.kafka.KafkaProcessor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.stream.annotation.EnableBinding;

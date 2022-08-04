@@ -1,4 +1,4 @@
-package main.java.com.example.lectureRegister.domain;
+package com.everylecture;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

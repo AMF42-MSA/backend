@@ -1,14 +1,16 @@
-package com.example.lectureRegister;
+package lecturemgt.config.kafka;
 
-import com.example.lectureRegister.kafka.KafkaProcessor;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.transaction.support.TransactionSynchronizationAdapter;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.util.MimeTypeUtils;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import lecturemgt.LectureApplication;
 
 public class AbstractEvent {
 
@@ -17,8 +19,7 @@ public class AbstractEvent {
 
     public AbstractEvent() {
         this.setEventType(this.getClass().getSimpleName());
-        // SimpleDateFormat defaultSimpleDateFormat = new
-        // SimpleDateFormat("YYYYMMddHHmmss");
+        // SimpleDateFormat defaultSimpleDateFormat = new SimpleDateFormat("YYYYMMddHHmmss");
         // this.timestamp = defaultSimpleDateFormat.format(new Date());
         this.timestamp = System.currentTimeMillis();
     }
@@ -38,18 +39,23 @@ public class AbstractEvent {
 
     public void publish(String json) {
         if (json != null) {
-
             /**
              * spring streams 방식
              */
-            KafkaProcessor processor = lectureRegisterApplication.applicationContext.getBean(KafkaProcessor.class);
+            KafkaProcessor processor = LectureApplication.applicationContext.getBean(
+                KafkaProcessor.class
+            );
             MessageChannel outputChannel = processor.outboundTopic();
 
-            outputChannel.send(MessageBuilder
+            outputChannel.send(
+                MessageBuilder
                     .withPayload(json)
-                    .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
-                    .build());
-
+                    .setHeader(
+                        MessageHeaders.CONTENT_TYPE,
+                        MimeTypeUtils.APPLICATION_JSON
+                    )
+                    .build()
+            );
         }
     }
 
@@ -58,13 +64,14 @@ public class AbstractEvent {
     }
 
     public void publishAfterCommit() {
-        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
-
-            @Override
-            public void afterCompletion(int status) {
-                AbstractEvent.this.publish();
+        TransactionSynchronizationManager.registerSynchronization(
+            new TransactionSynchronizationAdapter() {
+                @Override
+                public void afterCompletion(int status) {
+                    AbstractEvent.this.publish();
+                }
             }
-        });
+        );
     }
 
     public String getEventType() {
@@ -86,4 +93,6 @@ public class AbstractEvent {
     public boolean validate() {
         return getEventType().equals(getClass().getSimpleName());
     }
+    // keep
+
 }

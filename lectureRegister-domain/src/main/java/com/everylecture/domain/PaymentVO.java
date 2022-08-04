@@ -1,10 +1,10 @@
-package com.example.lectureRegister.domain;
+package com.everylecture.domain;
 
 import javax.persistence.*;
 
 //Payment ValueObject
 @Embeddable
-public class Payment { 
+public class PaymentVO { 
 
     private Long userId;
     private String userName;
