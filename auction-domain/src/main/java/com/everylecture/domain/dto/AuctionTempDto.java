@@ -3,7 +3,7 @@ package com.everylecture.domain.dto;
 import java.util.Date;
 
 public interface AuctionTempDto {
-   String getLectId();
+  String getLectId();
   String getLectName();
   String getLectureStatus();
   int getCntStudent();

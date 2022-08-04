@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.everylecture.domain.dto.AuctionDto;
@@ -27,10 +28,14 @@ public interface AuctionRepository extends CrudRepository<Auction, Long>{    // 
     "from                                   \n" +
     "    LectureVo lectureVo                        \n" +
 	"left join Auction auction                     \n" +
-	"on auction.lectId = lectureVo.lectId"
+	"on auction.lectId = lectureVo.lectId \n" +
+  "and (auction.auctionStatus = null or auction.auctionStatus != 'CANCEL') "
 
   )
   List<AuctionTempDto> findLectAuctionAll();
   //Optional<LectureVo> findByLectId(Long lectId);
 
+
+
+  public Auction findAuctionByAuctionStatusAndId(AuctionStatus auctionStatus, Long id);
 }

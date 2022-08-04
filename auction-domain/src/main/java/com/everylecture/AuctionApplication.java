@@ -1,5 +1,6 @@
 package com.everylecture;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,15 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.everylecture.domain.Auction;
 import com.everylecture.domain.AuctionRepository;
+import com.everylecture.domain.AuctionStatus;
 import com.everylecture.domain.LectureBid;
 import com.everylecture.domain.dto.AuctionDto;
 import com.everylecture.domain.dto.AuctionTempDto;
@@ -88,20 +92,39 @@ public class AuctionApplication {
 	AuctionRepository auctionRepository;
 	LectureRepository lectureRepository;
 
-	@RequestMapping(method = RequestMethod.PUT, path="auctions/{auctionId}/cancel")
-	public String cancelAuction(@PathVariable(value = "auctionId") Long auctionId){
-		System.out.println("###########################"+ auctionId);
-        Auction auction = auctionRepository.findById(auctionId).get();
-		auction.cancel();
-		auctionRepository.save(auction);
-		return "경매가 취소 되었습니다.";
+	@RequestMapping(method = RequestMethod.PUT, path="auctions/auctionCancel")
+	public String cancelAuction(@RequestBody Auction auction){
+
+		auction = auctionRepository.findAuctionByAuctionStatusAndId(AuctionStatus.AUCTION, auction.getId());
+
+
+
+
+		if(auction.getId() != null){	//이미 경매중인 것이 있으면
+			auction.setAuctionStatus(AuctionStatus.CANCEL);
+			auctionRepository.save(auction);
+			return "경매가 취소되었습니다.";
+
+		}else{
+			return "경매중이 아닙니다.";
+
+		}
+
 	}
 
-    @RequestMapping(method = RequestMethod.PUT, path="auctions/{auctionId}/startAuction")
-	public String startAuction(@PathVariable(value = "auctionId") Long auctionId){
-		System.out.println("###########################"+ auctionId);
-        Auction auction = auctionRepository.findById(auctionId).get();
-		auction.startAuction();
+  //@RequestMapping(method = RequestMethod.PUT, path="auctions/auctionRegister")
+	@RequestMapping(method = RequestMethod.PUT, path="auctions/auctionRegister")
+	public String startAuction(@RequestBody Auction auction){
+		System.out.println("###########################");
+    //     Auction auction = auctionRepository.findById(auctionId).get();
+		Long lectId = auction.getLectId();
+		Date startAuctionDate = auction.getStartAuctionDate();
+		Date endAuctionDate = auction.getEndAuctionDate();
+		auction.setAuctionStatus(AuctionStatus.AUCTION);
+
+
+		System.out.println(startAuctionDate);
+		// auction.startAuction();
 		auctionRepository.save(auction);
 		return "경매가 시작 되었습니다.";
 	}
