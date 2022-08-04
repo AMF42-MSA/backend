@@ -21,48 +21,62 @@ public class LectureCategoryController {
   @Autowired
   LectureCategoryRepository lectureCategoryRepository;
 
-  @RequestMapping(value="lectureCategories/registerCategory", method=RequestMethod.GET)
-  public Long registerLectureCategoryGet(@RequestParam String categoryName) {
-    Long result = Long.valueOf(-1);
+  @Autowired
+  LectureCategoryService lectureCategoryService;
 
-    //System.out.println("************GET******************** categoryName: " + categoryName);
-    Optional<LectureCategory> lectureCategory = lectureCategoryRepository.findByCategoryName(categoryName);
-    if(lectureCategory.isPresent()) {
-      // 이미 해당 카테고리명 존재할 경우, return -1
-      return result;
-    }
 
-    // 카테고리 등록
-    LectureCategory newLectureCategory = new LectureCategory();
-    newLectureCategory.setCategoryName(categoryName);
-    result = lectureCategoryRepository.save(newLectureCategory).getCategoryId();
-
-    return result;
-  }
-
+  /**
+   * 카테고리 등록
+   * @param paramMap
+   * @return
+   */
   @RequestMapping(value="lectureCategories/registerCategory", method=RequestMethod.POST)
   public Long registerLectureCategoryPOST(@RequestBody Map<String, String> paramMap) {
     Long result = Long.valueOf(-1);
 
     String categoryName = paramMap.get("categoryName");
     //System.out.println("************POST******************** categoryName: " + categoryName);
-    Optional<LectureCategory> lectureCategory = lectureCategoryRepository.findByCategoryName(categoryName);
-    if(lectureCategory.isPresent()) {
+
+    if(lectureCategoryService.existsCategoryName(categoryName)) {
       // 이미 해당 카테고리명 존재할 경우, return -1
       return result;
     }
 
-    // 카테고리 등록
-    LectureCategory newLectureCategory = new LectureCategory();
-    newLectureCategory.setCategoryName(categoryName);
-    result = lectureCategoryRepository.save(newLectureCategory).getCategoryId();
+    result = lectureCategoryService.registerCategory(categoryName);
 
     return result;
   }
 
-  // 카테고리 전체조회
+  /**
+   * 카테고리 전체 조회
+   * @return
+   */
   @RequestMapping(value="lectureCategories/searchAll")
   public List<LectureCategory> searchAllLectureCategory() {
     return lectureCategoryRepository.findAll();
   }
+
+  /**
+   * 카테고리명 수정
+   * @param paramMap
+   * @return
+   */
+  @RequestMapping(value="lectureCategories/modifyCategoryName", method=RequestMethod.PATCH)
+  public Long modifyLectureCategoryName(@RequestBody Map<String, String> paramMap) {
+    Long result = Long.valueOf(-1);
+
+    Long categoryId = Long.valueOf(paramMap.get("categoryId"));
+    String categoryName = paramMap.get("categoryName");
+    //System.out.println("************POST******************** categoryName: " + categoryName);
+
+    if(lectureCategoryService.existsCategoryName(categoryName)) {
+      // 이미 해당 카테고리명 존재할 경우, return -1
+      return result;
+    }
+
+    result = lectureCategoryService.modifyCategoryName(categoryId, categoryName);
+
+    return result;
+  }
+  
 }
