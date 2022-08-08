@@ -25,14 +25,22 @@ public class LectureCategory {
 
     @PostPersist
     public void onPostPersist(){
-        LectureCategoryRegistered categoryRegistered = new LectureCategoryRegistered();
+    	LectureCategoryChanged lectureCategoryChanged = new LectureCategoryChanged
+    			("INSERT", this.getCategoryId(), this.getCategoryName());
+//        LectureCategoryRegistered categoryRegistered = new LectureCategoryRegistered();
+//        
+//        
+//        categoryRegistered.setCategoryId(this.getCategoryId());
+//        categoryRegistered.setCategoryName(this.getCategoryName());
 
-        categoryRegistered.setCategoryId(this.getCategoryId());
-        categoryRegistered.setCategoryName(this.getCategoryName());
-
-        categoryRegistered.publishAfterCommit();
+    	lectureCategoryChanged.publishAfterCommit();
     }
 
-
+    @PostUpdate
+    public void onPostUpdate(){
+    	LectureCategoryChanged lectureCategoryChanged = new LectureCategoryChanged
+    			("UPDATE", this.getCategoryId(), this.getCategoryName());
+    	lectureCategoryChanged.publishAfterCommit();
+    }
 
 }

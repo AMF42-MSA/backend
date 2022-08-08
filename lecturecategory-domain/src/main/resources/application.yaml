@@ -1,5 +1,6 @@
 server:
   port: 8082
+server.servlet.context-path: /category
 
 ---
 
@@ -24,14 +25,16 @@ spring:
                 value:
                   serde: org.apache.kafka.common.serialization.Serdes$StringSerde
       bindings:
-        event-in:
-          group: lecturecategory
-          destination: lecture
+#        event-in:
+#          group: lecturecategory
+#          destination: lecture
+#          contentType: application/json
+        event-category-category-out:
+          destination: category-category
           contentType: application/json
-        event-out:
-          destination: lecture
+        event-category-한도-out:
+          destination: category-한도
           contentType: application/json
-
 logging:
   level:
     org.hibernate.type: trace
@@ -40,7 +43,7 @@ logging:
 ---
 
 server:
-  port: 8082
+  port: 8080
 
 spring:
   profiles: docker
@@ -49,19 +52,11 @@ spring:
       kafka:
         binder:
           brokers: kafka:9092
-        streams:
-          binder:
-            configuration:
-              default:
-                key:
-                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
-                value:
-                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
       bindings:
-        event-in:
-          group: lecturecategory
-          destination: lecture
-          contentType: application/json
-        event-out:
-          destination: lecture
+#       event-in:
+#         group: lecturecategory
+#         destination: lecture
+#         contentType: application/json
+        out-categoryChanged:  #producer의 이벤트 이름
+          destination: categoryChanged  #토픽이름
           contentType: application/json

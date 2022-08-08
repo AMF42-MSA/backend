@@ -48,7 +48,7 @@ spring:
     stream:
       kafka:
         binder:
-          brokers: my-kafka:9092
+          brokers: kafka:9092
         streams:
           binder:
             configuration:
@@ -58,10 +58,22 @@ spring:
                 value:
                   serde: org.apache.kafka.common.serialization.Serdes$StringSerde
       bindings:
-        event-in:
-          group: amf42
-          destination: lecture
-          contentType: application/json
+#        event-in:
+#          group: amf42
+#          destination: lecture
+#          contentType: application/json
         event-out:
           destination: lecture
           contentType: application/json
+
+spring.datasource:
+  url: jdbc:mysql://mysql/member
+  username: user
+  password: pwd
+
+spring.jpa.generate-ddl: true 
+spring.jpa.hibernate.ddl-auto: update 
+spring.jpa.properties:
+  hibernate:
+    show_sql: true
+    format_sql: true

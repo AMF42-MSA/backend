@@ -1,4 +1,4 @@
-package com.everylecture.domain.repository;
+package com.everylecture.repository;
 
 import com.everylecture.domain.Member;
 import org.springframework.data.repository.PagingAndSortingRepository;
