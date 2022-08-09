@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
@@ -27,7 +28,7 @@ public class MemberController {
     }
 
     @PostMapping("/members")
-    public ResponseEntity createUser(@RequestBody MemberDto member) {
+    public ResponseEntity createMember(@RequestBody MemberDto member) {
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
@@ -39,7 +40,7 @@ public class MemberController {
     }
 
     @GetMapping("/members")
-    public ResponseEntity<List<MemberDto>> getUsers() {
+    public ResponseEntity<List<MemberDto>> getMembers() {
         Iterable<MemberEntity> userList = memberService.getMemberByAll();
 
         List<MemberDto> result = new ArrayList<>();
@@ -49,6 +50,13 @@ public class MemberController {
         });
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    @GetMapping(value = "/members/{memberId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<MemberDto> getMember(@PathVariable("memberId") Long memberId) {
+        MemberDto memberDto = memberService.getMemberByMemberId(memberId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ModelMapper().map(memberDto, MemberDto.class));
     }
 
 }

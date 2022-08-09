@@ -58,4 +58,16 @@ public class MemberServiceImpl implements MemberService {
     public Iterable<MemberEntity> getMemberByAll() {
         return memberRepository.findAll();
     }
+
+    @Override
+    public MemberDto getMemberByMemberId(Long memberId) {
+
+        MemberEntity memberEntity = memberRepository.findByMemberId(memberId);
+
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        MemberDto ReturnMemberDto = mapper.map(memberEntity, MemberDto.class);
+
+        return ReturnMemberDto;
+    }
 }
