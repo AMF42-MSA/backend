@@ -1,6 +1,6 @@
-package com.everyoneslecture.lecturecategory.domain;
+package everyoneslecture.lecturecategory.domain.lecturecategory.event;
 
-import com.everyoneslecture.lecturecategory.AbstractEvent;
+import everyoneslecture.lecturecategory.AbstractEvent;
 
 public class LectureCategoryRegistered extends AbstractEvent {
     Long categoryId;

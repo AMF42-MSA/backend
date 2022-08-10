@@ -1,6 +1,8 @@
-package com.everyoneslecture.lecturecategory.domain;
+package everyoneslecture.lecturecategory.domain.lecturecategory.dto;
 
 import javax.persistence.*;
+
+import everyoneslecture.lecturecategory.domain.lecturecategory.event.LectureCategoryRegistered;
 
 @Entity
 public class LectureCategory {

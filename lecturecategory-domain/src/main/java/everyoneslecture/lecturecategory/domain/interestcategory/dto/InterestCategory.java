@@ -1,6 +1,9 @@
-package com.everyoneslecture.lecturecategory.domain;
+package everyoneslecture.lecturecategory.domain.interestcategory.dto;
 
 import javax.persistence.*;
+
+import everyoneslecture.lecturecategory.domain.interestcategory.vo.LectureCategoryVO;
+import everyoneslecture.lecturecategory.domain.interestcategory.vo.MemberVO;
 
 @Entity
 public class InterestCategory {
