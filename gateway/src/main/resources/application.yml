@@ -36,12 +36,16 @@ spring:
           enabled: false
 
 spring.cloud.gateway.routes:
+- id: category
+  uri: http://category:8080
+  predicates:
+  - Path=/category/**
 - id: member
-  uri: http://member:80
+  uri: http://member:8080
   predicates:
   - Path=/member/**
 - id: lecture
-  uri: http://lecture:80
+  uri: http://lecture:8080
   predicates:
   - Path=/lecture/**
 

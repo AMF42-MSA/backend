@@ -1,85 +1,15 @@
 version: '2'
 
-#mysql을 위하여 추가함:
-volumes:
-  mysql-volume: {}
-
 services:
-  member:
-    build: member-domain
-    mem_limit: 300m
-    ports:
-      - "8082:80"
-    environment:
-      - SPRING_PROFILES_3ACTIVE=docker
-    depends_on:
-      - kafka
-      - mysql
-      - gateway
   lecture:
     build: lecture-domain
     mem_limit: 550M
     ports:
       - "8000:8000"
-      - "8081:80"
+      - "8081:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-    depends_on:
-      - kafka
-      - mysql
-      - gateway
-
-#gateway설정: 8080에서 각각의 docker엔진으로 라우팅 설정 추가
-# 일단은 Member, lecture, category만 추가
-  gateway:
-    build: gateway
-    mem_limit: 200m
-    ports:
-      - 8080:8080
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-
-  zookeeper:
-    image: confluentinc/cp-zookeeper:latest
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-    ports:
-      - 22181:2181
-
-  kafka:
-    image: confluentinc/cp-kafka:latest
-    depends_on:
-      - zookeeper
-    ports:
-      - 9092:9092
-    environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_ADVERTISED_HOST_NAME: kafka
- # $ mysql -uroot -h127.0.0.1 -p
-  mysql:
-    image: mysql:5.7
-    mem_limit: 350m
-    ports:
-      - "3306:3306"
-    environment:
-      - MYSQL_ROOT_PASSWORD=rootpwd
-      - MYSQL_MULTIPLE_DATABASES=lecture,member
-      - MYSQL_USER=user
-      - MYSQL_PASSWORD=pwd
-    volumes:
-      - ./initialize_mysql_multiple_databases.sh:/docker-entrypoint-initdb.d/initialize_mysql_multiple_databases.sh
-      - mysql-volume:/var/lib/mysql
-    command:  #한글관련 추가
-      - --character-set-server=utf8
-      - --collation-server=utf8_general_ci
-    #healthcheck:
-    #  test: ["CMD", "mysqladmin" ,"ping", "-uuser", "-ppwd", "-h", "localhost"]
-    #  interval: 10s
-    #  timeout: 5s
-    #  retries: 10
+#    depends_on:
+#      - my-kafka
+#      - mysql
+#      - gateway
