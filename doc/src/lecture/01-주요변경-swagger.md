@@ -13,7 +13,7 @@
     </dependency>
     ```
 
-2. SwaggerCongig 작성
+2. SwaggerConfig 작성
     ```java
     package lecturemgt.config.swagger;
 
@@ -72,4 +72,5 @@
 
 
 2. 입출력 스키마 주석
+
 3. 1
