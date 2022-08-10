@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import everylecture.lecturemgt.adaptor.client.MemberClient;
+import everylecture.lecturemgt.adaptor.client.MemberFeignClient;
 import everylecture.lecturemgt.controller.dto.LecturesGetDetailOutDTO;
 import everylecture.lecturemgt.controller.dto.LecturesPostInDTO;
 import everylecture.lecturemgt.controller.dto.LecturesPostOutDTO;
@@ -40,7 +40,7 @@ public class LectureController {
 
 //    private static final String ENTITY_NAME = "lecture";
 
-    private final MemberClient memberClient;
+    private final MemberFeignClient memberClient;
 
     private final LectureService lectureService;
     private final LecturePostInMapper lecturePostInMapper;
@@ -60,7 +60,7 @@ public class LectureController {
     		LecturePostInMapper lecturePOSTInMapper, 
     		LecturePostOutMapper lecturePOSTOutMapper,
     		LectureGetDetailOutMapper lectureGetDetailOutMapper,
-    		MemberClient memberClient) {
+    		MemberFeignClient memberClient) {
     	log.debug("_START: {}", lectureService);
     	this.lectureService = lectureService;
         this.lecturePostInMapper = lecturePOSTInMapper;
