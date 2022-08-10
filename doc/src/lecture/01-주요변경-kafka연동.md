@@ -289,8 +289,8 @@ public class KafkaComsumerPolicyHandler {
 4.  kafka consumer 리스트
     ```bash
     $ /bin/kafka-consumer-groups \
-    >   --bootstrap-server localhost:9092 \
-    >   --list
+       --bootstrap-server localhost:9092 \
+       --list
     anonymous.00d8c045-d793-40e4-99cb-d7b7444b3b04
     anonymous.9f98f61d-9fd2-4a62-b792-1d1026e1c776
     CGR-lecture-categoryChanged
@@ -298,9 +298,9 @@ public class KafkaComsumerPolicyHandler {
 5. 특정 컨슈머의 처리 현황 조회
     ```bash
     $ /bin/kafka-consumer-groups \
-    >   --bootstrap-server localhost:9092 \
-    >   --group CGR-lecture-categoryChanged \
-    >   --describe
+       --bootstrap-server localhost:9092 \
+       --group CGR-lecture-categoryChanged \
+       --describe
 
     GROUP                       TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID                                                                 HOST            CLIENT-ID
     CGR-lecture-categoryChanged categoryChanged 0          1               1               0               consumer-CGR-lecture-categoryChanged-2-9e5a3e36-fb8f-4fbb-a2c9-98c1aef2ad33 /172.18.0.7     consumer-CGR-lecture-categoryChanged-2
@@ -309,8 +309,8 @@ public class KafkaComsumerPolicyHandler {
 6. 토픽 데이터 조회
     ```bash
     $ /bin/kafka-console-consumer \
-    >   --bootstrap-server localhost:9092 \
-    >   --topic categoryChanged \
-    >   --from-beginning
+       --bootstrap-server localhost:9092 \
+       --topic categoryChanged \
+       --from-beginning
     {"eventType":"LectureCategoryChanged","timestamp":"2022-08-08-12:12:37","jobType":"INSERT","categoryId":2,"categoryName":"최종테스트"}
     ```

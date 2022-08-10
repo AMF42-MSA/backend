@@ -1,10 +1,14 @@
 package everylecture.lecturemgt.controller;
 
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,11 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import everylecture.lecturemgt.adaptor.client.MemberClient;
+import everylecture.lecturemgt.controller.dto.LecturesGetDetailOutDTO;
 import everylecture.lecturemgt.controller.dto.LecturesPostInDTO;
 import everylecture.lecturemgt.controller.dto.LecturesPostOutDTO;
 import everylecture.lecturemgt.controller.dto.MemberInfoDTO;
-import everylecture.lecturemgt.controller.mapper.LecturePOSTInMapper;
-import everylecture.lecturemgt.controller.mapper.LecturePOSTOutMapper;
+import everylecture.lecturemgt.controller.mapper.LectureGetDetailOutMapper;
+import everylecture.lecturemgt.controller.mapper.LecturePostInMapper;
+import everylecture.lecturemgt.controller.mapper.LecturePostOutMapper;
 import everylecture.lecturemgt.domain.Lecture;
 import everylecture.lecturemgt.service.LectureService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -37,9 +43,12 @@ public class LectureController {
     private final MemberClient memberClient;
 
     private final LectureService lectureService;
-    private final LecturePOSTInMapper lecturePostInMapper;
-    private final LecturePOSTOutMapper lecturesPostOutMapper;
+    private final LecturePostInMapper lecturePostInMapper;
+    private final LecturePostOutMapper lecturesPostOutMapper;
+    private final LectureGetDetailOutMapper lectureGetDetailOutMapper;
 
+    
+    
     /**
      * 생성자를 통한  객체주입
      * @param lectureService
@@ -48,13 +57,17 @@ public class LectureController {
      * @param memberClient
      */
     public LectureController(LectureService lectureService, 
-    		LecturePOSTInMapper lecturePOSTInMapper, 
-    		LecturePOSTOutMapper lecturePOSTOutMapper,
+    		LecturePostInMapper lecturePOSTInMapper, 
+    		LecturePostOutMapper lecturePOSTOutMapper,
+    		LectureGetDetailOutMapper lectureGetDetailOutMapper,
     		MemberClient memberClient) {
-        this.lectureService = lectureService;
+    	log.debug("_START: {}", lectureService);
+    	this.lectureService = lectureService;
         this.lecturePostInMapper = lecturePOSTInMapper;
         this.lecturesPostOutMapper = lecturePOSTOutMapper;
+        this.lectureGetDetailOutMapper = lectureGetDetailOutMapper;
         this.memberClient = memberClient;
+    	log.debug("_END: {}");
     }
 
 
@@ -69,22 +82,36 @@ public class LectureController {
 //        return ResponseEntity.ok().headers(headers).body(lecturePage.getContent());
 //    }
 
+    /**
+     * 강의내역 조회(세부)
+     * @param id
+     * @return
+     */
+    @Tag(name = "leatures")    //swagger용
+    @GetMapping("/Leatures/{id}")
+    @Operation(summary = "신규 강의 세부내역 조회", 
+	description = "강의 내역1건에 대하여 전체 내역을 조회한다")    
+    public ResponseEntity<LecturesGetDetailOutDTO> getLeature(@PathVariable Long id) {
+    	log.debug("_START: {}", id);
 
-//    @GetMapping("/Leatures/{id}")
-//    public ResponseEntity<LectureDTO> getLeature(@PathVariable Long id) {
-//        log.debug("REST request to get Leature : {}", id);
-//
-//        LectureDTO lectureDTO = lectureMapper.toDto(lectureService.findOne(id).get());
-//        return ResponseEntity.ok().body(lectureDTO);
-//    }
+    	Optional<Lecture> lecture = lectureService.findOne(id);
+    	if (lecture.isEmpty()) {
+    		log.debug("해당 자료없음 id: {}", id);
+            return ResponseEntity.ok().body(null);
+    	}
+    	LecturesGetDetailOutDTO lectureGetDetailDTO = lectureGetDetailOutMapper.toDto(lecture.get());
+    	log.debug("_END: {}", lectureGetDetailDTO);
+        return ResponseEntity.ok().body(lectureGetDetailDTO);
+    }
 
 
-//    @DeleteMapping("/Leatures/{id}")
-//    public ResponseEntity<Void> deleteLeature(@PathVariable Long id) {
-//        log.debug("REST request to delete Leature : {}", id);
-//        LeatureService.delete(id);
-//        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
-//    }
+    @DeleteMapping("/Leatures/{id}")
+    public ResponseEntity<Void> deleteLeature(@PathVariable Long id) {
+    	log.debug("_START: {}", id);
+    	lectureService.delete(id);
+    	log.debug("_END: {}", id);
+    	return ResponseEntity.ok().body(null);
+    }
 
 
     /**
@@ -98,13 +125,13 @@ public class LectureController {
      */
     @Tag(name = "leatures")
     @PostMapping("/leatures")
-    @Operation(summary = "긴규 강의 신청(등록)", 
+    @Operation(summary = "신규 강의 신청(등록)", 
     			description = "강의 분류, 강의명, 최소 필요 수강인원등을 등록한다")
     public ResponseEntity<LecturesPostOutDTO> registerLecture(@RequestBody LecturesPostInDTO lecturesPostInDTO)
         throws InterruptedException, ExecutionException, JsonProcessingException {
-    	log.debug("registerLecture-강의등록하기: {}", lecturesPostInDTO);
+    	log.debug("_START: {}", lecturesPostInDTO);
 
-        ResponseEntity<MemberInfoDTO> memberInfoResult = memberClient.findById(1); //feign - 책 정보 가져오기
+        ResponseEntity<MemberInfoDTO> memberInfoResult = memberClient.findById(lecturesPostInDTO.getMemberId()); //feign - 책 정보 가져오기
         MemberInfoDTO memberInfoDTO = memberInfoResult.getBody();
         log.debug("member info: {}", memberInfoDTO);
         
@@ -115,7 +142,7 @@ public class LectureController {
         LecturesPostOutDTO returnDto = lecturesPostOutMapper.toDto(returnLecture);
         
         
-    	log.debug("강의등록하기-end: {}" , returnDto);
+    	log.debug("_END: {}" , returnDto);
         return ResponseEntity.ok().body(returnDto);
     }
 

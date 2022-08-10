@@ -25,6 +25,7 @@ parts:
     - file: 개발표준/00_개발표준
       sections:
       - file: 개발표준/01-backend-Package구조
+      - file: 개발표준/99-잡동사니.md
 
     - file: 00_PetStore.md
       sections:

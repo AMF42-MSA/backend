@@ -3,8 +3,12 @@ package everylecture.lecturemgt.config.kafka;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.MessageHeaders;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.transaction.support.TransactionSynchronizationAdapter;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
+import org.springframework.util.MimeTypeUtils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,7 +24,7 @@ public class AbstractEvent {
     public AbstractEvent() {
         this.setEventType(this.getClass().getSimpleName());
         //Event에 String 형식으로 시간 저장
-        SimpleDateFormat defaultSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
+        SimpleDateFormat defaultSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.timestamp = defaultSimpleDateFormat.format(new Date());
 //        this.timestamp = System.currentTimeMillis();
     }
@@ -43,20 +47,19 @@ public class AbstractEvent {
             /**
              * spring streams 방식
              */
-            KafkaProcessor processor = LectureApplication.applicationContext.getBean(
-                KafkaProcessor.class
+            KafkaProcessor processor = LectureApplication.applicationContext
+            											.getBean(KafkaProcessor.class);
+            MessageChannel outputChannel = processor.outboundTopic();
+
+            outputChannel.send(
+                MessageBuilder
+                    .withPayload(json)
+                    .setHeader(
+                        MessageHeaders.CONTENT_TYPE,
+                        MimeTypeUtils.APPLICATION_JSON
+                    )
+                    .build()
             );
-//            MessageChannel outputChannel = processor.outboundTopic();
-//
-//            outputChannel.send(
-//                MessageBuilder
-//                    .withPayload(json)
-//                    .setHeader(
-//                        MessageHeaders.CONTENT_TYPE,
-//                        MimeTypeUtils.APPLICATION_JSON
-//                    )
-//                    .build()
-//            );
         }
     }
 
@@ -95,5 +98,4 @@ public class AbstractEvent {
         return getEventType().equals(getClass().getSimpleName());
     }
     // keep
-
 }

@@ -19,12 +19,13 @@ public class LecturesPostInDTO implements Serializable {
 
     // @NotNull(message="writer is null.")		// NULL 체크
 	// @NotEmpty(message="writer is empty.")	// 공백 체크
-	@Schema(description = "강의분류ID", defaultValue = "", allowableValues = {"게시물1", "게시물2"})
+	@Schema(description = "강의분류ID", defaultValue = "1")
 	private long    categoryId;		//강의분류ID
 
     // @NotNull(message="writer is null.")		// NULL 체크
 	// @NotEmpty(message="writer is empty.")	// 공백 체크
-    private String  title;			//강의명
+	@Schema(description = "강의명")
+	private String  title;			
 
 	// @NotNull(message="writer is null.")		// NULL 체크
 	// @NotEmpty(message="writer is empty.")	// 공백 체크
@@ -46,6 +47,6 @@ public class LecturesPostInDTO implements Serializable {
     private long 	lectureStatus;  //강의상태
 
 	
-    private	long	memberId;		//강의등록자ID
+    private	int	memberId;		//강의등록자ID
     private	Date	endterDt;     //강의등록일
 }

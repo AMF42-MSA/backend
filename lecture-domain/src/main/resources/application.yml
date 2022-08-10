@@ -50,13 +50,15 @@ spring:
         binder:
           brokers: kafka:9092
       bindings:
-        in-categoryChanged:   #이벤트 이름 (consumer-MSA이름-토픽이름)
+        # 강의 분류 내역 비동기 처리
+        in-categoryChanged:   #입력(Consumer) 채널 (in-토픽이름)
           destination: categoryChanged   #토픽이름
           contentType: application/json    #데이터형식
           group: CGR-lecture-categoryChanged  #consumer 그룹: CGR-MSA이름-토픽이름
-#        event-out:
-#          destination: lecture-lecture
-#          contentType: application/json
+        # 강의 변경 내역 공유
+        out-lectureChanged:   #출력(Producer) 채널 (consumer-MSA이름-토픽이름)
+          destination: lectureChanged   #토픽이름
+          contentType: application/json    #데이터형식
 
 spring.datasource:
   url: jdbc:mysql://mysql/lecture
@@ -78,11 +80,7 @@ logging:
     org.springframework.cloud: debug    
     everylecture: debug    
   pattern.level: "user:%X{user} %5p"
-  #출처: https://luvstudy.tistory.com/133 [파란하늘의 지식창고:티스토리]    
-#  pattern.console: "%d{HH:mm:ss.SSS} [%6t] %-5level %36logger{36}:%L - %msg%n"
-#  pattern.console: "%d{HH:mm:ss.SSS} [%t] %-5level %C:%M:%L - %msg%n"
-  pattern.console: "%d{HH:mm:ss.SSS} [%-5level] %C{36}-%M (%L)-%msg%n"
-  #https://www.bswen.com/2019/07/springboot-Show-logging-linenumber-in-springboot-applications.html
+  pattern.console: "%clr(%d{MM-dd HH:mm:ss.SSS}){blue}, %-5level, %clr(%-8.15t){cyan}, %clr(%c{5}. %M){blue}%clr(,%-4L){blue} %clr(,){red} %clr(%m){faint}%n"
 member:
   ribbon:
     listOfServers: http://member:8080

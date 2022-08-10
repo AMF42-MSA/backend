@@ -9,7 +9,7 @@ import everylecture.lecturemgt.domain.Lecture;
 
 
 @Mapper(componentModel = "spring", uses = {})
-public interface LecturePOSTOutMapper extends EntityMapper<LecturesPostOutDTO, Lecture> {
+public interface LecturePostOutMapper extends EntityMapper<LecturesPostOutDTO, Lecture> {
 
 
     @Mapping(target = "status", ignore = true)

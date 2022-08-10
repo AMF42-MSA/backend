@@ -10,27 +10,35 @@ import org.springframework.stereotype.Service;
 import everylecture.lecturemgt.config.kafka.KafkaProcessor;
 import everylecture.lecturemgt.domain.Category;
 import everylecture.lecturemgt.domain.CategoryRepository;
+import everylecture.lecturemgt.service.KafkaComsumerPolicyHandler;
 import everylecture.lecturemgt.service.vo.CategoryChanged;
 
 @Service
-public class KafkaComsumerPolicyHandler {
-    private final Logger log = LoggerFactory.getLogger(KafkaComsumerPolicyHandler.class);
+public class KafkaComsumerPolicyHandlerImpl implements KafkaComsumerPolicyHandler {
+	private final Logger log = LoggerFactory.getLogger(KafkaComsumerPolicyHandlerImpl.class);
 
 	@Autowired
-     CategoryRepository categoryRepository;
+	CategoryRepository categoryRepository;
 
-    @StreamListener(KafkaProcessor.IN_categoryChanged)
-    public void whatever(@Payload String eventString){
-    	log.debug("whatever:{}",eventString);
-    	log.debug("whatever:  한글로그");
-    	
-    }
+	@Override
+	@StreamListener(KafkaProcessor.IN_categoryChanged)
+	public void whateverCategoryChanged(@Payload String eventString) {
+		log.debug("_START: {}", eventString);
+		log.debug("whatever:  한글로그");
+		log.debug("_END: {}");
+	}
 
-    @StreamListener(KafkaProcessor.IN_categoryChanged)
-    public void wheneverPetReserved_displayOnTheStore(@Payload CategoryChanged categoryChanged){
-    	log.debug("wheneverPetReserved_displayOnTheStore:{}",categoryChanged.toJson());
+	/**
+	 * 강의분류 변경 비동기 처리
+	 * - (TODO):MultiThread, 유량처리를 고민
+	 */
+	@Override
+	@StreamListener(KafkaProcessor.IN_categoryChanged)
+	public void wheneverCategoryChanged(@Payload CategoryChanged categoryChanged) {
+		log.debug("_START: {}", categoryChanged);
+		log.debug("_Start:whenever_강의분류(VO):{}", categoryChanged);
 
-    	//임시로 누가 호출하는지 확인하기 위한 stacktrace 출력
+		// 임시로 누가 호출하는지 확인하기 위한 stacktrace 출력
 //    	try {
 //    		throw new Exception("테스트");
 //    	} catch (Exception e) {
@@ -63,91 +71,27 @@ public class KafkaComsumerPolicyHandler {
 //    		        at org.springframework.integration.endpoint.MessageProducerSupport.sendMessage(MessageProducerSupport.java:208) ~[spring-integration-core-5.3.1.RELEASE.jar!/:5.3.1.RELEASE]
 //    		        at org.springframework.integration.kafka.inbound.KafkaMessageDrivenChannelAdapter.sendMessageIfAny(KafkaMessageDrivenChannelAdapter.java:390) ~[spring-integration-kafka-3.3.1.RELEASE.jar!/:3.3.1.RELEASE]
 //    	}
-    	// if(!petReserved.validate())
-        //     return;
+		// if(!petReserved.validate())
+		// return;
 
-        Category category = new Category();
-        category.setCategoryId(categoryChanged.getCategoryId());
-        category.setCategoryName(categoryChanged.getCategoryName());
+		Category category = new Category();
+		category.setCategoryId(categoryChanged.getCategoryId());
+		category.setCategoryName(categoryChanged.getCategoryName());
 
-        if ("INSERT".equals(categoryChanged.getJobType())) {
-            categoryRepository.save(category);
-        } else if ("UPDATE".equals(categoryChanged.getJobType())) {
-            categoryRepository.save(category);
-        } else if ("DELETE".equals(categoryChanged.getJobType())) {
-            categoryRepository.delete(category);
-        }     
-        log.debug("ENd:{}",categoryChanged);
-    }
-
-    // @StreamListener(KafkaProcessor.INPUT)
-    // public void wheneverPetUpdate_updateItem(@Payload PetUpdated petUpdated){
-    //     if(!petUpdated.validate())
-    //         return;
-
-    //     itemRepository.findByPetId(petUpdated.getId()).ifPresent(item->{
-    //         item.setAppearance(petUpdated.getAppearance());
-    //         item.setHealth(petUpdated.getEnergy());
-    //         itemRepository.save(item);
-
-
-
-
-    //     });
-      
-    // }
-
-    ///// *** Example ****
-
-    // @StreamListener(KafkaProcessor.INPUT)
-    // public void wheneverChargeStarted_recordHistory(@Payload ChargeStarted chargeStarted){
-    //     if(!chargeStarted.validate())
-    //         return;
-
-    //     ChargedHistory chargedHistory = new ChargedHistory();
-
-    //     chargedHistory.setChargedCustomer(new ChargedCustomer());
-    //     chargedHistory.getChargedCustomer().setCustomerId(chargeStarted.getCustomerId());
-    //     chargedHistory.getChargedCustomer().setCustomerName(chargeStarted.getCustomerName());
-
-    //     chargedHistory.setChargerId(chargeStarted.getChargerId());
-    //     chargedHistory.setStartTime(chargeStarted.getTimestamp());
-
-
-    //     chargedHistoryRepository.save(chargedHistory);
-    // }
-
-
-    // @StreamListener(KafkaProcessor.INPUT)
-    // public void wheneverChargeEnded_recordHistory(@Payload ChargeEnded chargeEnded){
-    //     if(!chargeEnded.validate())
-    //         return;
-
-    //     //변경 case
-    //     chargedHistoryRepository.findChargerId(chargeEnded.getId()).ifPresent(chargedHistory->{
-    //         chargedHistory.setEndTime(chargeEnded.getTimestamp());
-    //         chargedHistory.setStatus(ChargeStatus.ENDED);
-    //         chargedHistoryRepository.save(item);
-    //     });
-
-
-    //     // 계속 누적
-
-    //     ChargedHistory chargedHistory = new ChargedHistory();
-
-    //     chargedHistory.setChargedCustomer(new ChargedCustomer());
-    //     chargedHistory.getChargedCustomer().setCustomerId(chargeStarted.getCustomerId());
-    //     chargedHistory.getChargedCustomer().setCustomerName(chargeStarted.getCustomerName());
-
-    //     chargedHistory.setChargerId(chargeStarted.getChargerId());
-    //     chargedHistory.setTime(chargeStarted.getTimestamp());
-    //     chargedHistory.setHistoryType(HistoryType.CHARGE_ENDED);
-
-
-    //     chargedHistoryRepository.save(chargedHistory);
-      
-    // }
-
-
+		if ("INSERT".equals(categoryChanged.getJobType())) {
+			//JPA SAVE는 Select을 해보고 있으면 Update, 없으면 Insert하네요
+			categoryRepository.save(category);
+		} else if ("UPDATE".equals(categoryChanged.getJobType())) {
+			categoryRepository.save(category);
+		} else if ("DELETE".equals(categoryChanged.getJobType())) {
+			categoryRepository.delete(category);
+		} else {
+			log.error("데이터 변경 유형 오류, 관리자 확인 필요: {}", categoryChanged);
+			// TODO: 이 부분 처리 가이드 필요(2022-08-09)
+			//관리자 확인이 필요한 내역을 NO-SQL을 이용하여 관리해 보자
+			// throw new Exception("데이터 변경 유형 오류, 관리자 확인 필요");
+		}
+		log.debug("_END: {}", categoryChanged);
+	}
 
 }

@@ -1,12 +1,7 @@
 package everylecture.lecturemgt.controller.errors;
 
-
-
 import java.util.Collection;
 import java.util.Map;
-
-
-
 
 public class FeignClientException extends RuntimeException {
     private static final long serialVersionUID = 1L;

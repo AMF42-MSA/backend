@@ -12,8 +12,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Getter
 @Setter
 @ToString
-@Schema(description = "강의 등록 처리결과 OutputDTO")
-public class LecturesPostOutDTO implements Serializable {
+@Schema(description = "강의상세내역조회 OutputDTO")
+public class LecturesGetDetailOutDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
