@@ -210,50 +210,83 @@
      }
      ```
 3. 데이터 수신 처리 반영
--  여기 까지 했는데 어떻게 반영 프로그램이 호출될까?
-```java
-@Service
-public class KafkaComsumerPolicyHandler {
-    private final Logger log = LoggerFactory.getLogger(KafkaComsumerPolicyHandler.class);
+   -  여기 까지 했는데 어떻게 반영 프로그램이 호출될까?
+      ```java
+      @Service
+      public class KafkaComsumerPolicyHandler {
+          private final Logger log = LoggerFactory.getLogger(KafkaComsumerPolicyHandler.class);
 
-	@Autowired
-     CategoryRepository categoryRepository;
+      	@Autowired
+           CategoryRepository categoryRepository;
 
-    @StreamListener(KafkaProcessor.IN_categoryChanged)
-    public void whatever(@Payload String eventString){
-    	log.debug(eventString);
-    }
+          @StreamListener(KafkaProcessor.IN_categoryChanged)
+          public void whatever(@Payload String eventString){
+          	log.debug(eventString);
+          }
 
-    @StreamListener(KafkaProcessor.IN_categoryChanged)
-    public void wheneverPetReserved_displayOnTheStore(@Payload CategoryChanged categoryChanged){
-    	log.debug(categoryChanged.toJson());
+          @StreamListener(KafkaProcessor.IN_categoryChanged)
+          public void wheneverPetReserved_displayOnTheStore(@Payload CategoryChanged categoryChanged){
+          	log.debug(categoryChanged.toJson());
 
-    	//임시로 누가 호출하는지 확인하기 위한 stacktrace 출력
+          	//임시로 누가 호출하는지 확인하기 위한 stacktrace 출력
 
-    	try {
-    		new Exception("테스트");
-    	} catch (Exception e) {
-    		log.debug("호출결로확인", e);
-    	}
-    	// if(!petReserved.validate())
-        //     return;
+          	try {
+          		new Exception("테스트");
+          	} catch (Exception e) {
+          		log.debug("호출결로확인", e);
+          	}
+          	// if(!petReserved.validate())
+              //     return;
 
-        Category category = new Category();
-        category.setCategoryId(categoryChanged.getCategoryId());
-        category.setCategoryName(categoryChanged.getCategoryName());
+              Category category = new Category();
+              category.setCategoryId(categoryChanged.getCategoryId());
+              category.setCategoryName(categoryChanged.getCategoryName());
 
-        if ("INSERT".equals(categoryChanged.getJobType())) {
-            categoryRepository.save(category);
-        } else if ("UPDATE".equals(categoryChanged.getJobType())) {
-            categoryRepository.save(category);
-        } else if ("DELETE".equals(categoryChanged.getJobType())) {
-            categoryRepository.delete(category);
-        }
-        log.debug(categoryChanged.toJson());
-    }
+              if ("INSERT".equals(categoryChanged.getJobType())) {
+                  categoryRepository.save(category);
+              } else if ("UPDATE".equals(categoryChanged.getJobType())) {
+                  categoryRepository.save(category);
+              } else if ("DELETE".equals(categoryChanged.getJobType())) {
+                  categoryRepository.delete(category);
+              }
+              log.debug(categoryChanged.toJson());
+          }
 
-```
-
+      ```
+      ```console
+      //    	try {
+      //    		throw new Exception("테스트");
+      //    	} catch (Exception e) {
+      //    		log.debug("호출결로확인", e);
+      //    		16:33:23.198 [KafkaConsumerDestination{consumerDestinationName='categoryChanged', partitions=1, dlqName='null'}.container-0-C-1] DEBUG e.l.s.i.KafkaComsumerPolicyHandler  :36 - 호출결로확인
+      //    		java.lang.Exception: 테스트
+      //    		        at everylecture.lecturemgt.service.impl.KafkaComsumerPolicyHandler.wheneverPetReserved_displayOnTheStore(KafkaComsumerPolicyHandler.java:34) ~[classes!/:0.0.1-SNAPSHOT]
+      //    		        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+      //    		        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64) ~[na:na]
+      //    		        at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+      //    		        at java.base/java.lang.reflect.Method.invoke(Method.java:564) ~[na:na]
+      //    		        at org.springframework.messaging.handler.invocation.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:171) ~[spring-messaging-5.2.7.RELEASE.jar!/:5.2.7.RELEASE]
+      //    		        at org.springframework.messaging.handler.invocation.InvocableHandlerMethod.invoke(InvocableHandlerMethod.java:120) ~[spring-messaging-5.2.7.RELEASE.jar!/:5.2.7.RELEASE]
+      //    		        at org.springframework.cloud.stream.binding.StreamListenerMessageHandler.handleRequestMessage(StreamListenerMessageHandler.java:55) ~[spring-cloud-stream-3.0.13.RELEASE.jar!/:3.0.13.RELEASE]
+      //    		        at org.springframework.integration.handler.AbstractReplyProducingMessageHandler.handleMessageInternal(AbstractReplyProducingMessageHandler.java:134) ~[spring-integration-core-5.3.1.RELEASE.jar!/:5.3.1.RELEASE]
+      //    		        at org.springframework.integration.handler.AbstractMessageHandler.handleMessage(AbstractMessageHandler.java:69) ~[spring-integration-core-5.3.1.RELEASE.jar!/:5.3.1.RELEASE]
+      //    		        at org.springframework.cloud.stream.binding.DispatchingStreamListenerMessageHandler.handleRequestMessage(DispatchingStreamListenerMessageHandler.java:88) ~[spring-cloud-stream-3.0.13.RELEASE.jar!/:3.0.13.RELEASE]
+      //    		        at org.springframework.integration.handler.AbstractReplyProducingMessageHandler.handleMessageInternal(AbstractReplyProducingMessageHandler.java:134) ~[spring-integration-core-5.3.1.RELEASE.jar!/:5.3.1.RELEASE]
+      //    		        at org.springframework.integration.handler.AbstractMessageHandler.handleMessage(AbstractMessageHandler.java:62) ~[spring-integration-core-5.3.1.RELEASE.jar!/:5.3.1.RELEASE]
+      //    		        at org.springframework.integration.dispatcher.AbstractDispatcher.tryOptimizedDispatch(AbstractDispatcher.java:115) ~[spring-integration-core-5.3.1.RELEASE.jar!/:5.3.1.RELEASE]
+      //    		        at org.springframework.integration.dispatcher.UnicastingDispatcher.doDispatch(UnicastingDispatcher.java:133) ~[spring-integration-core-5.3.1.RELEASE.jar!/:5.3.1.RELEASE]
+      //    		        at org.springframework.integration.dispatcher.UnicastingDispatcher.dispatch(UnicastingDispatcher.java:106) ~[spring-integration-core-5.3.1.RELEASE.jar!/:5.3.1.RELEASE]
+      //    		        at org.springframework.integration.channel.AbstractSubscribableChannel.doSend(AbstractSubscribableChannel.java:72) ~[spring-integration-core-5.3.1.RELEASE.jar!/:5.3.1.RELEASE]
+      //    		        at org.springframework.integration.channel.AbstractMessageChannel.send(AbstractMessageChannel.java:570) ~[spring-integration-core-5.3.1.RELEASE.jar!/:5.3.1.RELEASE]
+      //    		        at org.springframework.integration.channel.AbstractMessageChannel.send(AbstractMessageChannel.java:520) ~[spring-integration-core-5.3.1.RELEASE.jar!/:5.3.1.RELEASE]
+      //    		        at org.springframework.messaging.core.GenericMessagingTemplate.doSend(GenericMessagingTemplate.java:187) ~[spring-messaging-5.2.7.RELEASE.jar!/:5.2.7.RELEASE]
+      //    		        at org.springframework.messaging.core.GenericMessagingTemplate.doSend(GenericMessagingTemplate.java:166) ~[spring-messaging-5.2.7.RELEASE.jar!/:5.2.7.RELEASE]
+      //    		        at org.springframework.messaging.core.GenericMessagingTemplate.doSend(GenericMessagingTemplate.java:47) ~[spring-messaging-5.2.7.RELEASE.jar!/:5.2.7.RELEASE]
+      //    		        at org.springframework.messaging.core.AbstractMessageSendingTemplate.send(AbstractMessageSendingTemplate.java:109) ~[spring-messaging-5.2.7.RELEASE.jar!/:5.2.7.RELEASE]
+      //    		        at org.springframework.integration.endpoint.MessageProducerSupport.sendMessage(MessageProducerSupport.java:208) ~[spring-integration-core-5.3.1.RELEASE.jar!/:5.3.1.RELEASE]
+      //    		        at org.springframework.integration.kafka.inbound.KafkaMessageDrivenChannelAdapter.sendMessageIfAny(KafkaMessageDrivenChannelAdapter.java:390) ~[spring-integration-kafka-3.3.1.RELEASE.jar!/:3.3.1.RELEASE]
+      //    	}
+      ```
 
 ## 5. 테스트
 

@@ -1,25 +1,30 @@
 package com.everyoneslecture.lecturecategory;
 
-import com.everyoneslecture.lecturecategory.kafka.KafkaProcessor;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.support.MessageBuilder;
-import org.springframework.util.MimeTypeUtils;
 import org.springframework.transaction.support.TransactionSynchronizationAdapter;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
+import org.springframework.util.MimeTypeUtils;
+
+import com.everyoneslecture.lecturecategory.kafka.KafkaProcessor;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class AbstractEvent {
 
     String eventType;
-    Long timestamp;
+    String timestamp;
 
     public AbstractEvent(){
         this.setEventType(this.getClass().getSimpleName());
-        // SimpleDateFormat defaultSimpleDateFormat = new SimpleDateFormat("YYYYMMddHHmmss");
-        // this.timestamp = defaultSimpleDateFormat.format(new Date());
-        this.timestamp = System.currentTimeMillis();
+         SimpleDateFormat defaultSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
+         this.timestamp = defaultSimpleDateFormat.format(new Date());
+//        this.timestamp = System.currentTimeMillis();
     }
 
     public String toJson(){
@@ -75,11 +80,11 @@ public class AbstractEvent {
         this.eventType = eventType;
     }
 
-    public Long getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Long timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 

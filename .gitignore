@@ -12,3 +12,6 @@ buildNumber.properties
 
 #JB로 자동 생성
 doc/html/
+.project
+.classpath
+.settings/

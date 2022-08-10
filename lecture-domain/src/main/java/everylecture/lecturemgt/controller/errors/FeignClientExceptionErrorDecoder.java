@@ -1,15 +1,16 @@
 package everylecture.lecturemgt.controller.errors;
 
 
-import feign.Response;
-import feign.codec.ErrorDecoder;
-import feign.codec.StringDecoder;
+import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 
-import java.io.IOException;
+import feign.Response;
+import feign.codec.ErrorDecoder;
+import feign.codec.StringDecoder;
 
 public class FeignClientExceptionErrorDecoder implements ErrorDecoder {
     private static final Logger LOGGER = LoggerFactory.getLogger(FeignClientExceptionErrorDecoder.class);
