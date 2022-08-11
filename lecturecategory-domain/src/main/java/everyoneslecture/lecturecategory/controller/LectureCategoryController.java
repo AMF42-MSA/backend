@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import everyoneslecture.lecturecategory.domain.lecturecategory.dto.LectureCategory;
+import everyoneslecture.lecturecategory.domain.lecturecategory.entity.LectureCategory;
 import everyoneslecture.lecturecategory.domain.lecturecategory.repository.LectureCategoryRepository;
 import everyoneslecture.lecturecategory.service.LectureCategoryService;
 

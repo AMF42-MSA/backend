@@ -3,7 +3,7 @@ package everyoneslecture.lecturecategory.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import everyoneslecture.lecturecategory.domain.lecturecategory.dto.LectureCategory;
+import everyoneslecture.lecturecategory.domain.lecturecategory.entity.LectureCategory;
 import everyoneslecture.lecturecategory.domain.lecturecategory.repository.LectureCategoryRepository;
 
 @Service

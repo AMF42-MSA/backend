@@ -3,6 +3,7 @@ server:
 
 ---
 
+---
 spring:
   profiles: default
   jpa:
@@ -11,32 +12,43 @@ spring:
         show_sql: true
         format_sql: true
   cloud:
+    azure:
+      eventhubs:
+        connection-string: Endpoint=sb://everyonelecture.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=J0LEjdntSXqKkbMEFQGda6nXVVH6bGe/HeSkSkBhuQE=
+        processor:
+          checkpoint-store:
+            account-name: lecturestorage
+            account-key: th4FyEPKzcvukEoISaGEb+ejyLoO40ne0QVPk6vUV/6zLXlXqLrslrqWXs3dR9RjGejQzDFho/eK+ASti8ercA==
+            container-name: lecturestoragecontainer
     stream:
-      kafka:
-        binder:
-          brokers: localhost:29092
-        streams:
-          binder:
-            configuration:
-              default:
-                key:
-                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
-                value:
-                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      default-binder: eventhubs
+      # kafka:
+      #   binder:
+      #     brokers: everyonelecture.servicebus.windows.net:9093
+
       bindings:
         event-in:
-          group: amf42
-          destination: lecture
+          destination: lecture_local
+          group: amf42_local
           contentType: application/json
         event-out:
-          destination: lecture
+          destination: lecture_local
           contentType: application/json
-
+      eventhubs:
+        bindings:
+          event-in:
+            consumer:
+              checkpoint:
+                mode: MANUAL
+      function:
+        definition: consume;supply;
+      poller:
+        initial-delay: 0
+        fixed-delay: 1000
 logging:
   level:
     org.hibernate.type: trace
     org.springframework.cloud: debug
-
 ---
 spring:
   profiles: docker
