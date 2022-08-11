@@ -12,3 +12,9 @@ buildNumber.properties
 
 #JB로 자동 생성
 doc/html/
+bin/
+.project
+.classpath
+.settings/
+.idea
+.vscode
