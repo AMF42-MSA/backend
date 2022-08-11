@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
-import feign.codec.ErrorDecoder;
 import everylecture.lecturemgt.controller.errors.FeignClientExceptionErrorDecoder;
+import feign.codec.ErrorDecoder;
 
 @Configuration
 @EnableFeignClients(basePackages = "everylecture.lecturemgt")

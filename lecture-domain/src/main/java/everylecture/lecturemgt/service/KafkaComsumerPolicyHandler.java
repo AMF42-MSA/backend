@@ -1,9 +1,5 @@
 package everylecture.lecturemgt.service;
 
-import org.springframework.cloud.stream.annotation.StreamListener;
-import org.springframework.messaging.handler.annotation.Payload;
-
-import everylecture.lecturemgt.config.kafka.KafkaProcessor;
 import everylecture.lecturemgt.service.vo.CategoryChanged;
 
 /**

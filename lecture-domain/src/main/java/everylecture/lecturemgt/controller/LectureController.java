@@ -20,12 +20,16 @@ import everylecture.lecturemgt.controller.dto.LecturesGetDetailOutDTO;
 import everylecture.lecturemgt.controller.dto.LecturesPostInDTO;
 import everylecture.lecturemgt.controller.dto.LecturesPostOutDTO;
 import everylecture.lecturemgt.controller.dto.MemberInfoDTO;
+import everylecture.lecturemgt.controller.errors.BadRequestAlertException;
 import everylecture.lecturemgt.controller.mapper.LectureGetDetailOutMapper;
 import everylecture.lecturemgt.controller.mapper.LecturePostInMapper;
 import everylecture.lecturemgt.controller.mapper.LecturePostOutMapper;
 import everylecture.lecturemgt.domain.Lecture;
 import everylecture.lecturemgt.service.LectureService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
@@ -82,15 +86,15 @@ public class LectureController {
 //        return ResponseEntity.ok().headers(headers).body(lecturePage.getContent());
 //    }
 
-    /**
-     * 강의내역 조회(세부)
-     * @param id
-     * @return
-     */
     @Tag(name = "leatures")    //swagger용
     @GetMapping("/Leatures/{id}")
-    @Operation(summary = "신규 강의 세부내역 조회", 
-	description = "강의 내역1건에 대하여 전체 내역을 조회한다")    
+
+    @Operation(summary = "신규 강의 세부내역 조회", description = "\"강의 내역1건에 대하여 전체 내역을 조회한다\"",
+    responses = {
+            @ApiResponse(responseCode = "200", description = "회원 조회 성공", 
+            		content = @Content(schema = @Schema(implementation = LecturesGetDetailOutDTO.class))),
+            @ApiResponse(responseCode = "404", description = "존재하지 않는 리소스 접근", 
+            		content = @Content(schema = @Schema(implementation = BadRequestAlertException.class))) })
     public ResponseEntity<LecturesGetDetailOutDTO> getLeature(@PathVariable Long id) {
     	log.debug("_START: {}", id);
 
@@ -106,6 +110,11 @@ public class LectureController {
 
 
     @DeleteMapping("/Leatures/{id}")
+    @Tag(name = "leatures")    //swagger용
+    @Operation(summary = "강의 내역 조회", description = "\"수강신청 이전의 강의 내역은 삭제 가능\"",
+    responses = {
+            @ApiResponse(responseCode = "200", description = "회원 삭제 성공") })
+
     public ResponseEntity<Void> deleteLeature(@PathVariable Long id) {
     	log.debug("_START: {}", id);
     	lectureService.delete(id);
