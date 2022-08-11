@@ -1,7 +1,12 @@
-package com.everylecture.domain;
+package everyoneslecture.lectureRegister.domain.LectureRegister.dto;
 
 import javax.persistence.*;
 import org.springframework.beans.BeanUtils;
+
+import everyoneslecture.lectureRegister.domain.LectureRegister.event.LectureRegisterCancelled;
+import everyoneslecture.lectureRegister.domain.LectureRegister.event.LectureRegisterPlaced;
+import everyoneslecture.lectureRegister.domain.LectureRegister.vo.LectureVO;
+import everyoneslecture.lectureRegister.domain.LectureRegister.vo.PaymentVO;
 
 @Entity
 @Table(name = "LECTURE_REGISTER")

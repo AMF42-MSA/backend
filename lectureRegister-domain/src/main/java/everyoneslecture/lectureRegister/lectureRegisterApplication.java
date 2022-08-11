@@ -1,4 +1,4 @@
-package com.everylecture;
+package everyoneslecture.lectureRegister;
 
 import com.everylecture.kafka.KafkaProcessor;
 import org.springframework.boot.SpringApplication;
