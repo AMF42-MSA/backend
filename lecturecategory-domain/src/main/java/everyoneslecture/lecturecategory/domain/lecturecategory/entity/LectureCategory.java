@@ -1,4 +1,4 @@
-package everyoneslecture.lecturecategory.domain.lecturecategory.dto;
+package everyoneslecture.lecturecategory.domain.lecturecategory.entity;
 
 import javax.persistence.*;
 
