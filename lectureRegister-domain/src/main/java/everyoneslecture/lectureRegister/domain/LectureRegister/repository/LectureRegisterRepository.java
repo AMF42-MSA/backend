@@ -1,4 +1,4 @@
-package com.everylecture.domain;
+package everyoneslecture.lectureRegister.domain.LectureRegister.repository;
 
 import java.util.Optional;
 
@@ -8,6 +8,8 @@ import java.util.Optional;
 //  Optional<LectureRegister> findByRegisterName(String RegisterName);
 //}
 import org.springframework.data.repository.CrudRepository;
+
+import everyoneslecture.lectureRegister.domain.LectureRegister.dto.LectureRegister;
 
 public interface LectureRegisterRepository extends CrudRepository<LectureRegister, Long> {
 }

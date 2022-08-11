@@ -1,4 +1,4 @@
-package com.everylecture.domain;
+package everyoneslecture.lectureRegister.domain.LectureRegister.event;
 
 import com.everylecture.AbstractEvent;
 
