@@ -1,4 +1,4 @@
-package everyoneslecture.lectureRegister.domain.LectureRegister.dto;
+package everyoneslecture.lectureRegister.domain.LectureRegister.entity;
 
 import javax.persistence.*;
 import org.springframework.beans.BeanUtils;
