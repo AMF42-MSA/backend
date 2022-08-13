@@ -4,7 +4,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'cd lecture-domain'
-                sh './mvnw compile'
+                sh './mvn compile'
             }
         }
     }
