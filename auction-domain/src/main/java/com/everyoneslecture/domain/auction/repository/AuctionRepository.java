@@ -29,8 +29,8 @@ public interface AuctionRepository extends CrudRepository<Auction, Long>{    // 
 	"	, auction.id as auctionId                        \n" +
 	"	, auction.endAuctionDate      as endAuctionDate    \n" +
 	"	, auction.startAuctionDate     as startAuctionDate   \n" +
-  ", (select coalesce(min(lectureBid.price), 0) from LectureBid lectureBid where lectureBid.auctionId = auction.id and lectureBid.status = 0)  as bidMinPrice  \n" +
-  ", (select count(0) from LectureBid lectureBid where lectureBid.auctionId = auction.id and lectureBid.status = 0)  as lectureBidCnt  \n" +
+  ", (select coalesce(min(lectureBid.price), 0) from LectureBid lectureBid where lectureBid.auctionId = auction.id and lectureBid.status = 'BID')  as bidMinPrice  \n" +
+  ", (select count(0) from LectureBid lectureBid where lectureBid.auctionId = auction.id and lectureBid.status = 'BID')  as lectureBidCnt  \n" +
     "from                                   \n" +
     "    LectureVo lectureVo                        \n" +
 	"left join Auction auction                     \n" +
@@ -43,5 +43,5 @@ public interface AuctionRepository extends CrudRepository<Auction, Long>{    // 
 
 
 
-  public Auction findAuctionByAuctionStatusAndId(com.everyoneslecture.domain.auction.enums.AuctionStatus auction, Long id);
+  public Auction findAuctionByAuctionStatusAndLectId(com.everyoneslecture.domain.auction.enums.AuctionStatus auction, Long lectId);
 }

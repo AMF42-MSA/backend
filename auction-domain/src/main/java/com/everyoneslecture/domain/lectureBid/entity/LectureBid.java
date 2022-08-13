@@ -43,13 +43,14 @@ public class LectureBid {     // Entity. Domain Class.
             this.price = price;
         }
 
+    @Enumerated(EnumType.STRING)
     BidStatus status;
-        public BidStatus getStatus() {
-            return status;
-        }
-        public void setStatus(BidStatus status) {
-            this.status = status;
-        }
+    public BidStatus getStatus() {
+        return status;
+    }
+    public void setStatus(BidStatus status) {
+        this.status = status;
+    }
 
     @Override
     public String toString() {
