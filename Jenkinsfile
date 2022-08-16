@@ -16,6 +16,9 @@ pipeline {
             steps {
                 sh 'mvn -f lecture-domain/pom.xml  clean package -Dskiptests=true'
             }
+            steps {
+                sh 'docker build -t lecture-domain  lecture-domain/.'
+            }
         }
     }
 } 
