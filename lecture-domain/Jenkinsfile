@@ -17,10 +17,10 @@ pipeline {
                 echo "(myinno)Docker Build **************************"
 //                sh "docker build -t lecture-domain-docker  lecture-domain" 
                 sh """
-                  docker build -t lecture-domain-docker  lecture-domain
+                  docker build -t jcscom13/lecture-domain-docker:v1  lecture-domain
                   docker ps
                   docker image ls
-                  docker push  jcscom13/lecture-domain-docker:latest 
+                  docker push  jcscom13/lecture-domain-docker:v1 
                   
                 """
             }
