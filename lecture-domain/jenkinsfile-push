@@ -1,8 +1,8 @@
 pipeline {
   environment {
-    imagename = "jcscom13/lecture-domain-docker"
-		dockerDir = "lecture-domain"
-    registryCredential = 'jcscom13-docker'
+    imagename = "jcscom13/lecture-domain-docker"  //도커이미지 이름
+		dockerDir = "lecture-domain"    //DockerFile 위치
+    registryCredential = 'docker-jcscom13'   //도커 허브 접속 계정 정보
     dockerImage = ''
   }
   
