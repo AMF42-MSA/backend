@@ -20,7 +20,7 @@ pipeline {
                   docker build -t lecture-domain-docker  lecture-domain
                   docker ps
                   docker image ls
-                  docker push  jcscom13/lecture-domain-dockern 
+                  docker push  jcscom13/lecture-domain-dockern:latest 
                   
                 """
             }
