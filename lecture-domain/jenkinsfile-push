@@ -8,9 +8,9 @@ node {
 		  reuseNode true
 		}
 	}
-	steps {	
+//	steps {	
 	  sh 'mvn -f lecture-domain/pom.xml  clean package -Dskiptests=true'
-	}    
+//	}    
      }
      stage('Build image') {
          app = docker.build("jcscom13/lecture-domain-docker")
