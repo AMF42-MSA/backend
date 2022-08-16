@@ -1,7 +1,17 @@
 node {
-//     stage('Clone repository') {
+     stage('Clone repository') {
 //         checkout scm
-//     }
+	agent {
+		docker {
+		  image 'maven:3.8.1-adoptopenjdk-11' 
+		  args '-v /root/.m2:/root/.m2' 
+		  reuseNode true
+		}
+	}
+	steps {	
+	  sh 'mvn -f lecture-domain/pom.xml  clean package -Dskiptests=true'
+	}    
+     }
      stage('Build image') {
          app = docker.build("jcscom13/lecture-domain-docker")
      }
