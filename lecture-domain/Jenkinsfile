@@ -18,7 +18,7 @@ pipeline {
 //                sh 'mvn -f lecture-domain/pom.xml  clean package -Dskiptests=true'
 
                 echo "(myinno)Docker Build **************************"
-                docker build -t lecture-domain-docker  lecture-domain
+                "docker build -t lecture-domain-docker  lecture-domain"
 //                sh """
 //                  docker build -t lecture-domain-docker  lecture-domain
 //                """
