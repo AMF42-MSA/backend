@@ -91,7 +91,7 @@ public class LectureController {
 
     @Operation(summary = "신규 강의 세부내역 조회", description = "\"강의 내역1건에 대하여 전체 내역을 조회한다\"",
     responses = {
-            @ApiResponse(responseCode = "200", description = "회원 조회 성공(Jenkins빌드 점검)", 
+            @ApiResponse(responseCode = "200", description = "회원 조회 성공(Jenkins빌드 점검1)", 
             		content = @Content(schema = @Schema(implementation = LecturesGetDetailOutDTO.class))),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 리소스 접근", 
             		content = @Content(schema = @Schema(implementation = BadRequestAlertException.class))) })
