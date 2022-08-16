@@ -35,7 +35,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 /**
  * REST controller for managing {@link lecturemgt.domain.Lecture}.
  */
-@Tag(name = "leatures", description = "강의등록하기: 신규 강의를 개설하기 위하여 강의 요청내역을 입력")
+@Tag(name = "leatures", description = "강의등록하기: 신규 강의를 개설하기 위하여 강의 요청내역을 입력(빌드점검")
 @RestController
 //@RequestMapping("/lectures")
 public class LectureController {

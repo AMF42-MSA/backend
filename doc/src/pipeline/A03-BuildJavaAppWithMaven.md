@@ -56,16 +56,19 @@ Windows에서
 4. 컨테이너로 자체 이미지를 실행(CMD창)
     -   --volume "%HOMEDRIVE%%HOMEPATH%":/home ^
     - /home 에 추가 volumn 설정
-
+    - CMD창에서 수행하지 않으면 'DOCKER_CERT_PATH' 설정이 다른 값으로 됨
+    - '--privileged' : docker 빌드하기 위해
+      - (https://forums.docker.com/t/docker-not-found-in-jenkins-pipeline/31683/2)
     ```bash
-    docker run --name jenkins-blueocean --detach \
-    --network jenkins --env DOCKER_HOST=tcp://docker:2376 \
-    --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 \
-    --volume jenkins-data:/var/jenkins_home \
-    --volume jenkins-docker-certs:/certs/client:ro \
-    --volume "d:/APP/GIT-AMF3/jenkins":/home \
-    --restart=on-failure \
-    --env JAVA_OPTS="-Dhudson.plugins.git.GitSCM.ALLOW_LOCAL_CHECKOUT=true" \
+    docker run -u 0 --privileged -m 512m ^
+    --name jenkins-blueocean --detach ^
+    --network jenkins --env DOCKER_HOST=tcp://docker:2376 ^
+    --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 ^
+    --volume jenkins-data:/var/jenkins_home ^
+    --volume jenkins-docker-certs:/certs/client:ro ^
+    --volume "d:/APP/GIT-AMF3/jenkins":/home ^
+    --restart=on-failure ^
+    --env JAVA_OPTS="-Dhudson.plugins.git.GitSCM.ALLOW_LOCAL_CHECKOUT=true" ^
     --publish 8099:8080 --publish 50000:50000 myjenkins-blueocean:2.346.3-1
      ```
 5. Git 소스 다운로드
