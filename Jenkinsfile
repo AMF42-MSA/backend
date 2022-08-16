@@ -14,11 +14,13 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                echo "(myinno)maven ....."
+                echo "(myinno)maven *********************************"
                 sh 'mvn -f lecture-domain/pom.xml  clean package -Dskiptests=true'
 
-                echo "(myinno)Docker Build ...."
-                sh 'docker build -t lecture-domain  lecture-domain/.'
+                echo "(myinno)Docker Build **************************"
+                sh """
+                  docker build -t lecture-domain-docker  lecture-domain/Dockerfile
+                """
             }
         }
     }
