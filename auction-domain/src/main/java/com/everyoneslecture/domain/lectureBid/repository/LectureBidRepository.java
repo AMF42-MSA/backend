@@ -23,14 +23,13 @@ public interface LectureBidRepository extends CrudRepository<LectureBid, Long>{ 
 	"	, auction.id as auctionId                        \n" +
 	"	, auction.endAuctionDate      as endAuctionDate    \n" +
 	"	, auction.startAuctionDate     as startAuctionDate   \n" +
-  ", (select count(0) from LectureBid lectureBid where lectureBid.auctionId = auction.id)  as lectureBidCnt  \n" +
-  ", (select min(lectureBid.price) from LectureBid lectureBid where lectureBid.auctionId = auction.id)  as bidMinPrice  \n" +
-
+  ", (select coalesce(min(lectureBid.price), 0) from LectureBid lectureBid where lectureBid.auctionId = auction.id and lectureBid.status = 'BID')  as bidMinPrice  \n" +
+  ", (select count(0) from LectureBid lectureBid where lectureBid.auctionId = auction.id and lectureBid.status = 'BID')  as lectureBidCnt  \n" +
     "from                                   \n" +
-    "    LectureVo lectureVo                        \n" +
-	"left join Auction auction                     \n" +
-	"on auction.lectId = lectureVo.lectId \n" +
-  "and (auction.auctionStatus = null or auction.auctionStatus != 'CANCEL') "
+    "     LectureVo lectureVo                        \n" +
+	"     , Auction auction                     \n" +
+	"where auction.lectId = lectureVo.lectId \n" +
+  "and auction.auctionStatus = 'AUCTION'"
 
   )
   List<LectureBidDto> findAuctionLectureBidList();

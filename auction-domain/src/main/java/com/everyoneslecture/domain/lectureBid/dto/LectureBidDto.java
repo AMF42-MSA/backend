@@ -14,4 +14,5 @@ public interface LectureBidDto {
   Date getEndAuctionDate();
   Date getStartAuctionDate();
   int getLectureBidCnt();
+  int getBidMinPrice();
 }

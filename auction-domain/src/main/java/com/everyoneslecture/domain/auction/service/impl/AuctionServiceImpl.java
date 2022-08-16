@@ -56,7 +56,7 @@ public class AuctionServiceImpl implements AuctionService {
       throws InterruptedException, ExecutionException, JsonProcessingException {
     log.debug("cancel Auction : {}", auction,  auction);
 
-    auction = Auction.repository().findAuctionByAuctionStatusAndId(AuctionStatus.AUCTION, auction.getId());
+    auction = Auction.repository().findAuctionByAuctionStatusAndLectId(AuctionStatus.AUCTION, auction.getLectId());
 
 		if(auction.getId() != null){	//이미 경매중인 것이 있으면
 			auction.setAuctionStatus(AuctionStatus.CANCEL);

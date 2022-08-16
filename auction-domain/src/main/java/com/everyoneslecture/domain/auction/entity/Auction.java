@@ -24,14 +24,15 @@ import javax.persistence.*;
 
 public class Auction {     // Entity. Domain Class.
 
-    public Auction(Long lectId){
+    // public Auction(Long lectId){
 
-        this.lectId = lectId;
-    }
+    //     this.lectId = lectId;
+    // }
 
-    public Auction(){
+    // public Auction(){
 
-    }
+    // }
+
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
     Long id;
         public Long getId() {
