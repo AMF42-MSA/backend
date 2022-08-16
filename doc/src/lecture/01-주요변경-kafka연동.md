@@ -17,7 +17,7 @@
    - 토픽을 기준으로 메시지 관리
    - 메시지를 Produce/Consume 하기 위한 단위
    - 하나 이상의 파티션으로 구성
-      - ![](images/realtime_08.png)
+      ![](images/realtime_08.png)
 3. 파티션
    - <span class="burk"> 메시지가 실제 저장되는 단위 그룹 </span>
    - 메시지는 오프셋이라는 <span class="burk">순번에</span> 따라 저장
@@ -69,7 +69,7 @@
    - spring.cloud.stream.binders 이하 부분
      - channel-name = out-categoryChanged
      - 토픽: categoryChanged
-    ```yml
+    ```yaml
     spring:
       profiles: docker
       cloud:
@@ -95,7 +95,8 @@
           @Output("out-categoryChanged")
           MessageChannel outboundTopic();
 
-      }```
+      }
+	  ```
 
    - KafkaProcessor.java가 Binding을 하기 위해서 해당 소스를 Application.java에서 아래와 같이 추가 되어 있음
       ```java
@@ -174,7 +175,7 @@
 ## 4. Consumer(IN) 구현하기
 1. 환경설정(application.yaml)
    - application.yaml`
-     ```yml
+     ```yaml
      spring.profiles: docker
 
      server.port: 8080

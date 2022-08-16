@@ -17,7 +17,7 @@ To save time, 실습에 필요한 모든 Azure 리소스를 만들기 위한 ARM
 
 [![Deploy to Azure](images/0-deploybutton.svg)](https://portal.azure.com/#create/Microsoft.Template?WT.mc_id=azurespringcloud-github-judubois)
 - 아래 화면에서 꼭 설정해야함
-  ![](images/0-10-확인.png)
+  [](images/0-10.png)
   위 이미지와 같은 화면이 열리지 않음(왜,  일단 원본에서 처리해보자)
 >⏱ 리소스 프로비저닝에는 시간이 걸립니다. 기다리지 마! 워크샵을 계속합니다.
 

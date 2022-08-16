@@ -101,5 +101,3 @@ az spring app set-deployment -n weather-service --deployment green
 
 배치를 교환하고 green활성화된 것을 확인하면 Spring Cloud Service Registry가 애플리케이션에서 이 새 버전을 동기화하고 사용할 때까지 몇 초를 기다려야 합니다 gateway. 그러면 새로 수정된 데이터를 볼 수 있습니다.
 ![Green deployment](images/10-01-green-deployment.png)
-
----

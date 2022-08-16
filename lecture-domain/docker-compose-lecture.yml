@@ -2,7 +2,7 @@ version: '2'
 
 services:
   lecture:
-    build: lecture-domain
+    build: .
     mem_limit: 550M
     ports:
       - "8000:8000"

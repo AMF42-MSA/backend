@@ -151,7 +151,7 @@ Kafka 운영자가 말하는 Kafka Consumer Group
           destination: lecture
           contentType: application/json
 ```
-```yml
+```yaml
 #https://sup2is.github.io/2020/04/21/spring-cloud-stream-example.html
 spring:
   application:

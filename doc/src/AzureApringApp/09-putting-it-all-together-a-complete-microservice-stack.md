@@ -64,5 +64,3 @@ Azure Portal의 "Application Insights" 메뉴에서 이제 전체 애플리케�
   - 서비스를 수동으로 확장하려면 인스턴스 수를 수정하십시오. 메트릭을 기반으로 사용자 지정 Auto Scaling을 설정할 수도 있습니다.
 
   ![Application scaling](images/9-04-scale-out.png)
-
----

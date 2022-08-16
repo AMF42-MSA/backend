@@ -83,9 +83,4 @@ az configure --defaults spring=$AZ_SPRING_APPS_NAME
     az configure --defaults spring=$AZ_SPRING_APPS_NAME
    ```
 - 참고: Create Web Application
-  ![](images/00-CreateWebApp.png)
----
-
-⬅️ Previous guide: [00-환경설정](./00-setup-your-environment.md)
-
-➡️ Next guide: [02-Build a simple Spring Boot microservice](./02-build-a-simple-spring-boot-microservice.md)
+  ![](images/0-00-CreateWebApp.png)

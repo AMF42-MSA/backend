@@ -218,4 +218,3 @@ Here is the response you should receive:
 {"city":"Paris, France","description":"Very cloudy!","icon":"weather-fog"}
 ```
 
----

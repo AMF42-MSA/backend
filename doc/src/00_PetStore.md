@@ -134,7 +134,7 @@
       @OneToOne
       ```
   - UML: https://labs.msaez.io/#/uml/nZJ2QhwVc4NlVJPbtTkZ8x9jclF2/753c8c71fe98338c75b8325f90ebb496
-    - ![](images/00-01modeling.png)
+    
 - Step8 - Resource Firstly 한 REST API 선언과 Input Adaptor 생성, Aggregate Port Method 의 호출
   - 영상: https://youtu.be/8AxL_5q0Zeg
     - REST 개념 설명 동영상

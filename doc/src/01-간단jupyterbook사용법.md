@@ -23,13 +23,6 @@ jupyter-book --help
 jb --help  # JB는 축약형
 ```
 
-```{code-cell}
-:tags: [remove-input]
-
-!jupyter-book --help
-```
-
-
 ## 3 생성절차
 doc 아래에 있는 문서를 HTML 형식으로 일괄 변경하기
 

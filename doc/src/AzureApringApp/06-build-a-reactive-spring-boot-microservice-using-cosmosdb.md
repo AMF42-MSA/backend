@@ -175,5 +175,3 @@ cd ..
 ```json
 [[{"name":"Paris, France"},{"name":"London, UK"}]]
 ```
-
----

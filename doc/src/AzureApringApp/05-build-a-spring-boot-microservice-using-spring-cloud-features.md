@@ -183,4 +183,3 @@ AppPlatformLogsforSpring
 
 >💡 It can also take 1-2 minutes for the console output of an Azure Spring Apps microservice to be read into Log Analytics.
 
----

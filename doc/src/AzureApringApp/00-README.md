@@ -35,7 +35,7 @@ Prerequisites and environment setup.
 
 Basics on creating a cluster and configuring the CLI to work efficiently.
 
-## [02-간단한 Spring Boot 마이크로서비스 빌드](02-build-a-simple-spring-boot-microservice.md)
+## [02-간단한 Spring Boot 마이크로서비스 빌드](./02-build-a-simple-spring-boot-microservice.md)
 
 Build the simplest possible Spring Boot microservice using the Spring Initializer.
 
@@ -79,10 +79,3 @@ GitHub Actions를 사용하여 통합/지속적 배포 플랫폼을 구성하면
 
 서비스와 연결.
 
-## [Conclusion](./99-conclusion.md)
-
----
-
-## Legal Notices
-
----

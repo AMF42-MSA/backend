@@ -44,7 +44,7 @@
 4. kafka + lecture를 하나의 docker-compose로 Run
    - docker-compose 파일을 root로 이동 헸음(향후 kafka, RDBMS등이 추가 대비)
    - 각각의 마이크로 서비스 추가
-      ```yml
+      ```yaml
       version: '2'
 
       services:

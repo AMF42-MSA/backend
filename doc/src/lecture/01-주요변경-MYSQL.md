@@ -178,7 +178,7 @@
 ## 4. MYSQL 한글입력을 위한 character set 설정
 
 - command 부분 추가
-    ```yml
+    ```yaml
     version: '2'
     volumes:
     mysql-volume: {}

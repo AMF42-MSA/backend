@@ -26,6 +26,20 @@ parts:
       sections:
       - file: 개발표준/01-backend-Package구조
       - file: 개발표준/99-잡동사니.md
+    - file: pipeline/00_pipeline.md
+      sections:
+#      - file: pipeline/01-MYINNO-SP-Create-VM.md
+#      - file: pipeline/02-MYINNO-Getting-started-with-Git-GitHub.md
+#      - file: pipeline/03-MYINNO-Getting-Started-with-Spring-Boot.md
+#      - file: pipeline/04-MYINNO-Building-Basic-CI-Pipeline-with-Jenkins.md
+      - file: pipeline/05-MYINNO-Building-Advanced-CI-Pipeline.md
+      - file: pipeline/A01-jenkins-docker.md
+      - file: pipeline/A02-jenkins-Pipeline.md
+      - file: pipeline/A03-BuildJavaAppWithMaven.md
+      - file: pipeline/A04-BuildNode.jsReactAppWithNpm.md
+      - file: pipeline/A05-JenkinsGoogleCloud.md      
+      
+      
 
     - file: 00_PetStore.md
       sections:
