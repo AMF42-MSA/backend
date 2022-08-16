@@ -1,15 +1,21 @@
+//일단 lecture-domain 부분을 빌드해보자(2022-08-16)
 pipeline {
-    agent any
-    tools {
-        maven 'Maven 3.3.9'
-        jdk 'jdk11'
-    }    
+    agent {
+        any
+        tools {
+          maven 'MavenTest'
+        }
+        docker {
+            image 'maven:3.8.1-adoptopenjdk-11' 
+            args '-v /root/.m2:/root/.m2' 
+            reuseNode true
+        }
+    }
     stages {
-        stage('Build') {
+        stage('Build') { 
             steps {
-                sh 'cd lecture-domain'
-                sh 'mvn compile'
+                sh 'mvn -f lecture-domain/pom.xml  clean package -Dskiptests=true'
             }
         }
     }
-}
+} 
