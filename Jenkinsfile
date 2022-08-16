@@ -1,7 +1,7 @@
 //일단 lecture-domain 부분을 빌드해보자(2022-08-16)
 pipeline {
     agent {
-        any
+//        any
 //        tools {
 //          maven 'MavenTest'
 //        }
