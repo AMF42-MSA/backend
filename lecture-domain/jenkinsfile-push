@@ -1,5 +1,6 @@
 pipeline {
      agent any
+     stages {
      stage('Clone repository') {
 //         checkout scm
 	agent {
@@ -9,9 +10,9 @@ pipeline {
 		  reuseNode true
 		}
 	}
-//	steps {	
+	steps {	
 	  sh 'mvn -f lecture-domain/pom.xml  clean package -Dskiptests=true'
-//	}    
+	}    
      }
      stage('Build image') {
          app = docker.build("jcscom13/lecture-domain-docker")
@@ -23,4 +24,5 @@ pipeline {
 			app.push("v1")
          }
      }
+  }
 }
