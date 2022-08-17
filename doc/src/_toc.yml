@@ -32,7 +32,8 @@ parts:
 #      - file: pipeline/02-MYINNO-Getting-started-with-Git-GitHub.md
 #      - file: pipeline/03-MYINNO-Getting-Started-with-Spring-Boot.md
 #      - file: pipeline/04-MYINNO-Building-Basic-CI-Pipeline-with-Jenkins.md
-      - file: pipeline/05-MYINNO-Building-Advanced-CI-Pipeline.md
+#       - file: pipeline/05-MYINNO-Building-Advanced-CI-Pipeline.md
+      - file: pipeline/99-LectureBuild.md
       - file: pipeline/A01-jenkins-docker.md
       - file: pipeline/A02-jenkins-Pipeline.md
       - file: pipeline/A03-BuildJavaAppWithMaven.md

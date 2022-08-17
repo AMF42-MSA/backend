@@ -6,9 +6,9 @@
 }
 </style>
 
-# Jenkins
+# Jenkins(공식설치가이드정리)
 - https://github.com/jenkinsci/docker/blob/master/README.md
-- Docker기반으로 jenkins 설치
+- Docker기반으로 jenkins 설치(Jenkins공식 가이드)
 - docker pull jenkins/jenkins:2.346.3-lts-jdk11
 
 
@@ -87,7 +87,6 @@ https://www.jenkins.io/doc/book/installing/docker/
     - "Install suggwsted plugins" 선택
 2. Creating the first administrator user
   - 계정 생성
-### 1.3 자격 증명 구성
 
 
 ### 1.3 Jenkins와 GitHub 연동
@@ -130,29 +129,7 @@ https://github.com/myinno/skcc-devops-lecture/blob/master/04-MYINNO-Building-Bas
 - Jenkins Pipeline은 String interpolation(문자열 보간)을 위한 Groovy와 동일한 규칙을 사용
   - 작은 따옴표 또는 큼 따옴표로 문자열 선언을 지원
   - 큰 따옴표로 문자열 선언만 String interpolation을 지원
-## A. 기타
-1. docker 메모리 관리
-   - 속도가 너무 떨어짐
-   - 아래 설정값 이하에서만 수해되도록 수정
-   - 'c:\Users\Administrator\.wslconfig'
-    ```console
-    [wsl2]
-    memory=6GB
-    swap=0
-    ```
-2. docker에 VIM 설치
-   1. root 계정으로 접속(power shell로 접속)
-      ```bash
-      PS C:\Users\Administrator> docker exec -u 0 -it jenkins-blueocean bash
 
-      root@b1b5c4c5d51b:/# apt-get update
 
-      root@b1b5c4c5d51b:/# apt-get viinstall vim
-      ```
-3. vim에서 paste 하기
-    ```bash
-    #vim aaa.txt
 
-    :set mouse=v
-    ```
 
