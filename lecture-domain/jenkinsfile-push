@@ -5,7 +5,7 @@ pipeline {
 	    registryCredential = 'docker-jcscom13'   //도커 허브 접속 계정 정보
 	    dockerImage = ''
 	}
-  
+
 	agent any
   
 	stages {
