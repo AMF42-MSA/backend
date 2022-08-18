@@ -1,4 +1,4 @@
-package com.everylecture;
+package com.everyoneslecture.member;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,8 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-
-import com.everylecture.kafka.KafkaProcessor;
+import com.everyoneslecture.member.adapter.KafkaProcessor;
 
 
 /**

@@ -1,4 +1,4 @@
-package com.everylecture.domain.dto;
+package com.everyoneslecture.member.domain.dto;
 
 import javax.annotation.processing.Generated;
 
@@ -15,7 +15,8 @@ public class MemberDto {
 
     private String memberId;
     private String loginId;
-    private String password;
+    private String pwd;
+    private String email;
     private String name;
     private String birth;
     private String mobile;

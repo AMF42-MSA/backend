@@ -1,8 +1,9 @@
-package com.everylecture.service;
+package com.everyoneslecture.member.service;
 
-import com.everylecture.domain.dto.MemberDto;
-import com.everylecture.domain.entity.MemberEntity;
 import org.springframework.security.core.userdetails.UserDetailsService;
+
+import com.everyoneslecture.member.domain.dto.MemberDto;
+import com.everyoneslecture.member.domain.entity.MemberEntity;
 
 public interface MemberService extends UserDetailsService {
     MemberDto createMember(MemberDto memberDto) ;

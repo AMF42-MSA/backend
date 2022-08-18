@@ -1,22 +1,19 @@
-package com.everylecture.service;
+package com.everyoneslecture.member.service;
+
+import java.util.ArrayList;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import com.everylecture.domain.entity.MemberEntity;
-import com.everylecture.domain.repository.MemberRepository;
-
-import com.everylecture.domain.dto.MemberDto;
-import com.everylecture.service.MemberService;
-
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import com.everyoneslecture.member.domain.dto.MemberDto;
+import com.everyoneslecture.member.domain.entity.MemberEntity;
+import com.everyoneslecture.member.domain.repository.MemberRepository;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -35,7 +32,7 @@ public class MemberServiceImpl implements MemberService {
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         MemberEntity memberEntity = mapper.map(memberDto, MemberEntity.class);
-        memberEntity.setEncryptedPwd(passwordEncoder.encode(memberDto.getPassword()));
+        memberEntity.setEncryptedPwd(passwordEncoder.encode(memberDto.getPwd()));
 
         memberRepository.save(memberEntity);
 
@@ -44,13 +41,13 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
-        MemberEntity memberEntity  = memberRepository.findByLoginId(loginId);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        MemberEntity memberEntity  = memberRepository.findByEmail(email);
         if (memberEntity == null) {
-            throw new UsernameNotFoundException(loginId);
+            throw new UsernameNotFoundException(email);
         }
 
-        return new User(memberEntity.getLoginId(), memberEntity.getEncryptedPwd(),
+        return new User(memberEntity.getEmail(), memberEntity.getEncryptedPwd(),
                 true, true, true, true, new ArrayList<>());
     }
 

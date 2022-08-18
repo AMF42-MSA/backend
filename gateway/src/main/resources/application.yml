@@ -8,12 +8,18 @@ spring:
   cloud:
     config.import-check.enabled: false
     gateway:
+      default-filters:
+        - name: GlobalFilter
+          args:
+            baseMessage: Spring Cloud Gateway Global GlobalFilter
+            preLogger: true
+            postLogger: true
       discovery:
         locator:
           enabled: true
       routes:
         - id: member
-          uri: http://localhost:8082
+          uri: http://localhost:8080
           predicates:
             - Path=/member/**
         - id: lecture

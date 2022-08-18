@@ -17,7 +17,7 @@ pip install httpie
 1. Kafka 의 실행 (Docker Compose) (-d는 Background 모드)
     ```bash
     cd kafka
-    docker-compose up -d     # docker-compose 가 모든 kafka 관련 리소스를 받고 실행할 때까지 기다림
+    cc     # docker-compose 가 모든 kafka 관련 리소스를 받고 실행할 때까지 기다림
     ```
 2. Kafka 정상 실행 확인
    - window 환경에서는 GitBash에서 수행 
