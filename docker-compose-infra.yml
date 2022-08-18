@@ -9,7 +9,8 @@ services:
 # 일단은 Member, lecture, category만 추가
   gateway:
     build: gateway
-    mem_limit: 200m
+    mem_limit: 300m
+    mem_reservation: 200m
     ports:
       - 8080:8080
     environment:
@@ -17,6 +18,8 @@ services:
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
+    mem_limit: 100m
+    mem_reservation: 90m
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
@@ -25,6 +28,8 @@ services:
 
   kafka:
     image: confluentinc/cp-kafka:latest
+    mem_limit: 512m
+    mem_reservation: 400m
     depends_on:
       - zookeeper
     ports:
@@ -37,12 +42,13 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_HEAP_OPT: "-Xmx512M -Xms512M"
 
  # $ mysql -uroot -h127.0.0.1 -p
  # show databases;
   mysql:
     image: mysql:5.7
-    mem_limit: 350m
+    mem_limit: 300m
     ports:
       - "3306:3306"
     environment:
@@ -56,8 +62,8 @@ services:
     command:  #한글관련 추가
       - --character-set-server=utf8
       - --collation-server=utf8_general_ci
-    #healthcheck:
-    #  test: ["CMD", "mysqladmin" ,"ping", "-uuser", "-ppwd", "-h", "localhost"]
-    #  interval: 10s
-    #  timeout: 5s
-    #  retries: 10
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-uuser", "-ppwd", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 10

@@ -27,6 +27,7 @@ Docker기반으로 Jenkins 설정
     ```
 2. docker:dind Docker 이미지 실행
    - Pipeline상에서 Maven등을 별도 설치하지 않고 Docker로 실행할떄 이용하는 도커
+   - "docker:dind"을 별도 부록으로 추가 정리하자(TODO)
     ```bash
     docker run --name jenkins-docker --rm --detach ^
       --privileged --network jenkins --network-alias docker ^
