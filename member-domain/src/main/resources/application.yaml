@@ -5,6 +5,12 @@ server:
 
 spring:
   profiles: default
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+      path: /h2-console  
   jpa:
     properties:
       hibernate:
@@ -48,7 +54,7 @@ spring:
     stream:
       kafka:
         binder:
-          brokers: my-kafka:9092
+          brokers: my-kafka.kafka.svc.cluster.local:9092
         streams:
           binder:
             configuration:

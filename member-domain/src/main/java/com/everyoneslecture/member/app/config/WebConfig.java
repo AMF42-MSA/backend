@@ -1,4 +1,4 @@
-package com.everylecture;
+package com.everyoneslecture.member.app.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
