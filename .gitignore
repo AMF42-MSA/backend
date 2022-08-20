@@ -18,3 +18,7 @@ bin/
 .settings/
 .idea
 .vscode
+/.metadata/
+.factorypath
+*/.settings
+
