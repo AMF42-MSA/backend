@@ -7,7 +7,7 @@ ENV TZ=Asia/Seoul
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-ENV JAVA_OPTS="-Xmx500m"
+ENV JAVA_OPTS="-Xmx400m"
 
-ENTRYPOINT ["java","-Xmx500m -agentlib:jdwp=transport=dt_socket,address=*:8000,server=y,suspend=n","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar","--spring.profiles.active=docker"]
+ENTRYPOINT ["java","-Xmx400m -agentlib:jdwp=transport=dt_socket,address=*:8000,server=y,suspend=n","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar","--spring.profiles.active=docker"]
 #-Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=docker
