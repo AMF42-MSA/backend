@@ -6,7 +6,7 @@ services:
 #    build: lecture
     image: jcscom13/lecture-domain-docker:latest
 
-    mem_limit: 400m
+    mem_limit: 512m
     ports:
       - 8000:8000
       - 8081:8080

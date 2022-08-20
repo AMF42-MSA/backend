@@ -18,8 +18,8 @@ services:
 
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
-    mem_limit: 100m
-    mem_reservation: 90m
+    mem_limit: 150m
+    mem_reservation: 120m
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000

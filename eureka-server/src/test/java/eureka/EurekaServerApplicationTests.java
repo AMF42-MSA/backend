@@ -1,4 +1,4 @@
-package se.magnus.springcloud.eurekaserver;
+package eureka;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
