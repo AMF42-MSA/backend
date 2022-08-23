@@ -10,7 +10,8 @@
 - 주요 참조 문서
   - https://www.jenkins.io/doc/tutorials/build-a-java-app-with-maven/
 - 설치 환경:노트북, window10
-
+- <span class=burk>회사 네크워크 확경에서 발생하는 "x509" 오류는 "https://auth.docker.io"예외 등록 후 정상 처리됨</span>
+  - 이수정(20009791@partner.....) 현장대리인에게 요청함
 ## 1. 환경 설정
 
 Docker기반으로 Jenkins 설정
@@ -21,9 +22,12 @@ Docker기반으로 Jenkins 설정
     ```bash
     # 생성 스크립트
     docker network create jenkins
-
-    # 삭제 스크립트
+    ```
+    ```bash
+    # (참고)삭제 스크립트
     docker network rm jenkins
+    # 리스트
+    docker network ls
     ```
 2. docker:dind Docker 이미지 실행
    - Pipeline상에서 Maven등을 별도 설치하지 않고 Docker로 실행할떄 이용하는 도커
@@ -55,6 +59,10 @@ Docker기반으로 Jenkins 설정
         https://download.docker.com/linux/debian \
         $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
         RUN apt-get update && apt-get install -y docker-ce-cli
+		#Time Zone 변경
+	    ENV TZ=Asia/Seoul
+        RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
         USER jenkins
         RUN jenkins-plugin-cli --plugins "blueocean:1.25.6 docker-workflow:1.29"
         ```
@@ -66,6 +74,7 @@ Docker기반으로 Jenkins 설정
     - /home 에 추가 volumn 설정
       -   --volume "d:/APP/GIT-AMF3/jenkins":/home ^
       -   로컬 PC와 공유 목적
+	  - "--env TZ=Asia/Seoul" 추가
     - CMD창에서 수행하지 않으면 'DOCKER_CERT_PATH' 설정이 다른 값으로 됨
     ```bash
     docker run --privileged -m 512m ^
@@ -77,6 +86,7 @@ Docker기반으로 Jenkins 설정
     --volume "d:/APP/GIT-AMF3/jenkins":/home ^
     --restart=on-failure ^
     --env JAVA_OPTS="-Dhudson.plugins.git.GitSCM.ALLOW_LOCAL_CHECKOUT=true" ^
+    --env TZ=Asia/Seoul ^
     --publish 8099:8080 --publish 50000:50000 myjenkins-blueocean:2.346.3-1
      ```
 
