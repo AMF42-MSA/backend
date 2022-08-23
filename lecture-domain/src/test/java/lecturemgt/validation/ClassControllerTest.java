@@ -20,7 +20,7 @@ public class ClassControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    public void validURL() throws Exception {
+    void validURL() throws Exception {
         mockMvc.perform(post("")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"url\":\"http://www.naver.com\"}"))
@@ -29,7 +29,7 @@ public class ClassControllerTest {
 
 
     @Test
-    public void invalidURL() throws Exception {
+    void invalidURL() throws Exception {
         mockMvc.perform(post("")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"url\":\"naver\"}"))
@@ -37,7 +37,7 @@ public class ClassControllerTest {
     }
 
     @Test
-    public void validGithubURL() throws Exception {
+    void validGithubURL() throws Exception {
         mockMvc.perform(post("")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"githubUrl\":\"https://github.com/HyeranShin\"}"))
@@ -45,7 +45,7 @@ public class ClassControllerTest {
     }
 
     @Test
-    public void invalidGithubURL() throws Exception {
+    void invalidGithubURL() throws Exception {
         mockMvc.perform(post("")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"githubUrl\":\"http://www.naver.com\"}"))

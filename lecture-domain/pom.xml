@@ -40,13 +40,12 @@
 			<artifactId>spring-boot-starter-hateoas</artifactId>
 		</dependency>
 
-		<!-- h2database-Test
+		<!-- h2database-Test -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>test</scope>
 		</dependency>
-		 -->
 
 		<!-- MYSQL -->
 		<dependency>
