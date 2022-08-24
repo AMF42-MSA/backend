@@ -10,7 +10,7 @@ import lombok.ToString;
 @ToString
 //@AllArgsConstructor
 public class CategoryChanged extends AbstractEvent {
-    String jobType;
+//    String jobType;
 
     private Long categoryId;
 
