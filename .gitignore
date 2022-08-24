@@ -13,12 +13,24 @@ buildNumber.properties
 #JB로 자동 생성
 doc/html/
 bin/
+.project
+.classpath
 */.project
 */.classpath
-*/.settings/
-*/.idea
-*/.vscode
-/.metadata/
-.factorypath
-*/.settings
+.settings
+**/.settings/
+.settings/
 
+.idea
+.vscode
+.metadata/
+.factorypath
+
+hs_err_pid*
+*/.idea
+lectureBid-domain/.settings/org.eclipse.jdt.core.prefs
+lecturecategory-domain/.classpath
+lecturecategory-domain/.project
+lecturecategory-domain/.settings/org.eclipse.jdt.apt.core.prefs
+lecturecategory-domain/.settings/org.eclipse.jdt.core.prefs
+lectureBid-domain/.settings/org.eclipse.jdt.core.prefs

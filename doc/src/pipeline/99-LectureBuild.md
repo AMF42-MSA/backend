@@ -96,6 +96,68 @@ Docker기반으로 Jenkins 설정
     - 도커의 환경설정 정보 확인
     - ![](images/jenkins-99-02.png)
 
+## (추가). 1번 과정을 docker-compose 설정으로 변경
+- dDockerfile 생성은 동일
+    ```yaml
+    version: '2'
+
+    services:
+    jenkins-blueocean:
+        build: ./
+        mem_limit: 512m
+        mem_reservation: 300m
+        privileged: true
+        networks:
+        - jenkins
+        networks:
+        default:
+            aliases:
+            - docker
+        ports:
+        - 8099:8080
+        - 50000:50000
+        environment:
+        - DOCKER_HOST=tcp://docker:2376
+        - DOCKER_CERT_PATH=/certs/client
+        - DOCKER_TLS_VERIFY=1
+        - JAVA_OPTS="-Dhudson.plugins.git.GitSCM.ALLOW_LOCAL_CHECKOUT=true"
+        - TZ=Asia/Seoul
+        volumes:
+        - jenkins-docker-certs:/certs/client
+        - jenkins-data:/var/jenkins_home
+        - /d/APP/GIT-AMF3/jenkins:/home
+        restart: on-failure
+    #
+    jenkins-docker:
+        image: docker:dind
+        mem_limit: 120m
+        mem_reservation: 100m
+        privileged: true
+    #    detach: true
+    #    rm: true
+        volumes:
+        - jenkins-docker-certs:/certs/client
+        - jenkins-data:/var/jenkins_home
+        ports:
+        - 2376:2376
+        networks:
+        - jenkins
+        networks:
+        default:
+            aliases:
+            - docker
+        environment:
+        - DOCKER_TLS_CERTDIR=/certs
+
+    ##
+
+
+    volumes:
+    jenkins-docker-certs:
+        external: true
+    jenkins-data:
+        external: true
+    ```
 
 ## 2. Pipeline 구성
 lecture-domain을 빌드, docker 이미지 생성, docker-hub에 등록 까지 처리
