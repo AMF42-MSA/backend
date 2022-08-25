@@ -52,18 +52,40 @@ public class AuctionController {
 	LectureRepository lectureRepository;
 
 	@RequestMapping(method = RequestMethod.PUT, path="auctions/auctionCancel")
-	public String cancelAuction(@RequestBody Auction auction) throws JsonProcessingException, InterruptedException, ExecutionException{
-
-		return auctionService.cancelAuction(auction);
+	public String cancelAuction(@RequestBody AuctionDto auctionDto) throws JsonProcessingException, InterruptedException, ExecutionException{
+		List lectIds = auctionDto.getLectIds();
+		Long lectId;
+		for(int i = 0 ; i < lectIds.size(); i++){
+			Auction auction = new Auction();
+			System.out.println(lectIds.get(i));
+			lectId = Long.parseLong((String) lectIds.get(i));
+			auction.setLectId(lectId);	
+			auctionService.cancelAuction(auction);
+		}
+		return "경매가 취소되었습니다.";
 
 	}
 
   //@RequestMapping(method = RequestMethod.PUT, path="auctions/auctionRegister")
 	@RequestMapping(method = RequestMethod.PUT, path="auctions/auctionRegister")
-	public String registerAuction(@RequestBody Auction auction) throws JsonProcessingException, InterruptedException, ExecutionException{
+	public String registerAuction(@RequestBody AuctionDto auctionDto) throws JsonProcessingException, InterruptedException, ExecutionException{
 		System.out.println("###########################");
-    //     Auction auction = auctionRepository.findById(auctionId).get();
-		auctionService.registerAuction(auction);
+		System.out.println(auctionDto.getLectIds());
+
+		List lectIds = auctionDto.getLectIds();
+		Long lectId;
+
+
+		for(int i = 0 ; i < lectIds.size(); i++){
+			Auction auction = new Auction();
+			auction.setEndAuctionDate(auctionDto.getEndAuctionDate());
+			auction.setStartAuctionDate(auctionDto.getStartAuctionDate());
+			
+			System.out.println(lectIds.get(i));
+			lectId = Long.parseLong((String) lectIds.get(i));
+			auction.setLectId(lectId);	
+			auctionService.registerAuction(auction);
+		}
 		return "경매가 시작 되었습니다.";
 	}
 

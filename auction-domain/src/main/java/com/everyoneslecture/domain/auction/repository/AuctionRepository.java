@@ -2,6 +2,8 @@ package com.everyoneslecture.domain.auction.repository;
 
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder.Case;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -25,12 +27,26 @@ public interface AuctionRepository extends CrudRepository<Auction, Long>{    // 
     "    , lectureVo.lectName      as lectName       \n" +
     "    , lectureVo.lectStatus    as lectStatus       \n" +
     "    , lectureVo.startLecture   as startLecture      \n" +
-	"	, auction.auctionStatus       as auctionStatus     \n" +
+
+    ", CASE                                  \n" +
+    "   WHEN                                \n" +
+    " 	to_char(auction.startAuctionDate, 'YYYYMMDD') > to_char(now(), 'YYYYMMDD')      \n" +
+    "   THEN                                \n" +
+    " 	'BEFORE_AUCTION'                     \n" +
+    "   WHEN                                \n" +
+    " 	to_char(auction.endAuctionDate, 'YYYYMMDD') < to_char(now(), 'YYYYMMDD')      \n" +
+    "   THEN                                \n" +
+    " 	'AFTER_AUCTION'                      \n" +
+    "   ELSE                                \n" +
+    "     auction.auctionStatus             \n" +
+    " END as auctionStatus                  \n" +
+
+	// "	, auction.auctionStatus       as auctionStatus     \n" +
 	"	, auction.id as auctionId                        \n" +
 	"	, auction.endAuctionDate      as endAuctionDate    \n" +
 	"	, auction.startAuctionDate     as startAuctionDate   \n" +
-  ", (select coalesce(min(lectureBid.price), 0) from LectureBid lectureBid where lectureBid.auctionId = auction.id and lectureBid.status = 'BID')  as bidMinPrice  \n" +
-  ", (select count(0) from LectureBid lectureBid where lectureBid.auctionId = auction.id and lectureBid.status = 'BID')  as lectureBidCnt  \n" +
+  ", (select coalesce(min(lectureBid.price), 0) from LectureBid lectureBid where lectureBid.auctionId = auction.id and lectureBid.status != 'CANCEL')  as bidMinPrice  \n" +
+  ", (select count(0) from LectureBid lectureBid where lectureBid.auctionId = auction.id and lectureBid.status != 'CANCEL')  as lectureBidCnt  \n" +
     "from                                   \n" +
     "    LectureVo lectureVo                        \n" +
 	"left join Auction auction                     \n" +

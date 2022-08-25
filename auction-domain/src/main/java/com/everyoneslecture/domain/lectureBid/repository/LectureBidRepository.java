@@ -5,7 +5,10 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
+import com.everyoneslecture.domain.lectureBid.enums.BidStatus;
+import com.everyoneslecture.domain.lectureBid.dto.LectureBidDetailDto;
 import com.everyoneslecture.domain.lectureBid.dto.LectureBidDto;
 import com.everyoneslecture.domain.lectureBid.entity.LectureBid;
 @Repository
@@ -23,8 +26,8 @@ public interface LectureBidRepository extends CrudRepository<LectureBid, Long>{ 
 	"	, auction.id as auctionId                        \n" +
 	"	, auction.endAuctionDate      as endAuctionDate    \n" +
 	"	, auction.startAuctionDate     as startAuctionDate   \n" +
-  ", (select coalesce(min(lectureBid.price), 0) from LectureBid lectureBid where lectureBid.auctionId = auction.id and lectureBid.status = 'BID')  as bidMinPrice  \n" +
-  ", (select count(0) from LectureBid lectureBid where lectureBid.auctionId = auction.id and lectureBid.status = 'BID')  as lectureBidCnt  \n" +
+  ", (select coalesce(min(lectureBid.price), 0) from LectureBid lectureBid where lectureBid.auctionId = auction.id and lectureBid.status != 'CANCEL')  as bidMinPrice  \n" +
+  ", (select count(0) from LectureBid lectureBid where lectureBid.auctionId = auction.id and lectureBid.status != 'CANCEL')  as lectureBidCnt  \n" +
     "from                                   \n" +
     "     LectureVo lectureVo                        \n" +
 	"     , Auction auction                     \n" +
@@ -35,8 +38,32 @@ public interface LectureBidRepository extends CrudRepository<LectureBid, Long>{ 
   List<LectureBidDto> findAuctionLectureBidList();
 
 
-  public LectureBid findLectureBidByAuctionIdAndMemberId(Long auctionId, Long memberId);
+  public LectureBid findLectureBidByAuctionIdAndMemberIdAndStatus(Long auctionId, Long memberId, BidStatus status);
+
+  @Query(
+    " select 																									\n" +
+    "   id as lectureBidId 																									\n" +
+    "   , memberId as memberId 																									\n" +
+    "		, (select memberVo.name from MemberVo memberVo where memberVo.memberId = lectureBid.memberId) as memberName    \n" +
+    "		, lectureBid.price as price                                                                         \n" +
+    "		, lectureBid.status as status                                                                       \n" +
+    "  from                                                                                                     \n" +
+    "	 LectureBid lectureBid                                                                                  \n" +
+    "	where lectureBid.status != 'CANCEL'                                                                            \n" +
+    "	  and (:#{#lectureBid.auctionId} is null or lectureBid.auctionId = :#{#lectureBid.auctionId}   )            "
+  )
+  List<LectureBidDetailDto> findLectureBidList(@Param("lectureBid") LectureBid lectureBid);
+
+  @Query(
+    "  update LectureBid lectureBid					\n" +
+    "    set lectureBid.status = 'FAIL'             \n" +
+    "   where lectureBid.id != :id                  \n" +
+    "     and lectureBid.auctionId = :auctionId       "
+
+  )
+  void updateLectureBidWithoutId(Long id, long auctionId);
+
+  public LectureBid findLectureBidByIdAndAuctionId(Long id, Long auctionId);
 
 }
-
 
