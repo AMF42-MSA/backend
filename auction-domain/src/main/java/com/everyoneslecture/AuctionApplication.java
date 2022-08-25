@@ -1,29 +1,11 @@
 package com.everyoneslecture;
 
-import java.util.Date;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.everyoneslecture.domain.AuctionStatus;
-import com.everyoneslecture.domain.lectureBid.entity.LectureBid;
-import com.everyoneslecture.domain.auction.dto.AuctionDto;
-import com.everyoneslecture.domain.auction.dto.AuctionTempDto;
-import com.everyoneslecture.domain.auction.entity.Auction;
-import com.everyoneslecture.domain.auction.repository.AuctionRepository;
-import com.everyoneslecture.domain.auction.vo.LectureRepository;
-import com.everyoneslecture.kafka.KafkaProcessor;
 
 
 /**
@@ -71,9 +53,10 @@ import com.everyoneslecture.kafka.KafkaProcessor;
 
 
 @SpringBootApplication
-@RestController
-@EnableAspectJAutoProxy
-@EnableBinding(KafkaProcessor.class)
+//@RestController
+//@EnableAspectJAutoProxy
+//@EnableBinding(KafkaProcessor.class)
+@EnableAutoConfiguration
 public class AuctionApplication {
 
 //	static HashMap<String, Pet> pets = new HashMap<String, Pet>();

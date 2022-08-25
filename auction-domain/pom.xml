@@ -5,13 +5,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.2</version>
+		<version>2.3.1.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
 	<groupId>com.example</groupId>
-	<artifactId>banking</artifactId>
+	<artifactId>auction</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>banking</name>
+	<name>auction</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
@@ -66,13 +67,13 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+<!--
 		<dependency>
 			<groupId>com.azure.spring</groupId>
 			<artifactId>spring-cloud-azure-stream-binder-eventhubs</artifactId>
 			<version>4.3.0</version>
 		</dependency>
-
+-->
 		      <!-- lombok -->
 		<dependency>
 				<groupId>org.projectlombok</groupId>
@@ -87,6 +88,12 @@
 			<artifactId>modelmapper</artifactId>
 			<version>2.4.0</version>
 		</dependency>
+		<dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-boot-starter</artifactId>
+		    <version>3.0.0</version>
+		</dependency>
+		
 	</dependencies>
 
 	<dependencyManagement>

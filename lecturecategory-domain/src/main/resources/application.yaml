@@ -1,3 +1,4 @@
+server.servlet.context-path: /category
 server:
   port: 8082
 
@@ -40,7 +41,7 @@ logging:
 ---
 
 server:
-  port: 8082
+  port: 8080
 
 spring:
   profiles: docker
