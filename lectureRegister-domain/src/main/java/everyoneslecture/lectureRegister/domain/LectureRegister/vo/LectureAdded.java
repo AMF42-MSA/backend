@@ -1,19 +1,11 @@
 package everyoneslecture.lectureRegister.domain.LectureRegister.vo;
 
-import org.springframework.beans.BeanUtils;
-
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.*;
+import everyoneslecture.lectureRegister.AbstractEvent;
 
-@Entity
-@Table(name = "lecture_vo")
+public class LectureAdded extends AbstractEvent {
 
-public class LectureVo { // Entity. Domain Class.
-
-    @Id
     private Long lectId;
 
     private String lectName;

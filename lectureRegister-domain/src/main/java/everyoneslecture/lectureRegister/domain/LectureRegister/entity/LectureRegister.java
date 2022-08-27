@@ -1,63 +1,115 @@
 package everyoneslecture.lectureRegister.domain.LectureRegister.entity;
 
+import java.util.Date;
 import javax.persistence.*;
 import org.springframework.beans.BeanUtils;
 
-import everyoneslecture.lectureRegister.domain.LectureRegister.event.LectureRegisterCancelled;
-import everyoneslecture.lectureRegister.domain.LectureRegister.event.LectureRegisterPlaced;
-import everyoneslecture.lectureRegister.domain.LectureRegister.vo.LectureVO;
-import everyoneslecture.lectureRegister.domain.LectureRegister.vo.PaymentVO;
+import everyoneslecture.lectureRegister.domain.LectureRegister.enums.LectureRegisterStatus;
+import everyoneslecture.lectureRegister.lectureRegisterApplication;
+import everyoneslecture.lectureRegister.domain.LectureRegister.repository.LectureRegisterRepository;
 
-@Entity
+@Entity()
 @Table(name = "LECTURE_REGISTER")
 public class LectureRegister {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    Long id;
 
-    private Long registerId;
-
-    public Long getRegisterId() {
-        return registerId;
+    public Long getId() {
+        return id;
     }
 
-    public void setRegisterId(Long registerId) {
-        this.registerId = registerId;
+    // 강의 ID
+    Long lectId;
+
+    public Long getLectId() {
+        return lectId;
     }
 
-    @Embedded
-    private LectureVO LectureVO;
-
-    public LectureVO getLectureVO() {
-        return LectureVO;
+    public void setLectId(Long lectId) {
+        this.lectId = lectId;
     }
 
-    public void setLectureVO(LectureVO LectureVO) {
-        this.LectureVO = LectureVO;
+    // 강의명
+    String lectName;
+
+    public String getLectName() {
+        return lectName;
     }
 
-    @Embedded
-    private PaymentVO PaymentVO;
-
-    public PaymentVO getPaymentVO() {
-        return PaymentVO;
+    public void setLectName(String lectName) {
+        this.lectName = lectName;
     }
 
-    public void setPaymentVO(PaymentVO PaymentVO) {
-        this.PaymentVO = PaymentVO;
+    // 강의상태
+    String lectStatus;
+
+    public String getLectStatus() {
+        return lectStatus;
     }
 
-    @PostPersist // PostUpdate는 제거
-    public void onPersist() {
-        LectureRegisterPlaced lectureRegisterPlaced = new LectureRegisterPlaced();
-        BeanUtils.copyProperties(this, lectureRegisterPlaced);
-        lectureRegisterPlaced.publishAfterCommit();
+    public void setLectStatus(String lectStatus) {
+        this.lectStatus = lectStatus;
     }
 
-    @PostRemove
-    public void onRemoved() {
-        LectureRegisterCancelled orderCanceled = new LectureRegisterCancelled();
-        BeanUtils.copyProperties(this, orderCanceled);
-        orderCanceled.publishAfterCommit();
+    // 강의신청시작일
+    Date startLectRegistDate;
+
+    public Date getStartLectRegistDate() {
+        return startLectRegistDate;
+    }
+
+    public void setStartLectRegistDate(Date startLectRegistDate) {
+        this.startLectRegistDate = startLectRegistDate;
+    }
+
+    // 강의신청마감일
+    Date endLectRegistDate;
+
+    public Date getEndLectRegistDate() {
+        return endLectRegistDate;
+    }
+
+    public void setEndLectRegistDate(Date endLectRegistDate) {
+        this.endLectRegistDate = endLectRegistDate;
+    }
+
+    @Enumerated(EnumType.STRING)
+    private LectureRegisterStatus lectRegistStatus;
+
+    public LectureRegisterStatus getLectRegistStatus() {
+        return lectRegistStatus;
+    }
+
+    public void setLectRegistStatus(LectureRegisterStatus lectRegistStatus) {
+        this.lectRegistStatus = lectRegistStatus;
+    }
+
+    public String cancel() {
+        // answer must be obtained by UI
+
+        setLectRegistStatus(lectRegistStatus.CANCELED); // 취소
+        return "강의 신청이 취소되었습니다.";
+    }
+
+    public String startLectureRegister() {
+        // answer must be obtained by UI
+
+        setLectRegistStatus(lectRegistStatus.COMPLETED); // 취소
+        return "강의 신청이 완료 되었습니다.";
+    }
+
+    @Override
+    public String toString() {
+
+        return "<a href='./" + this.getClass().getSimpleName().toLowerCase() + "'" + ">"
+                + this.getClass().getSimpleName() + "</a>";
+    }
+
+    public static LectureRegisterRepository repository() {
+        LectureRegisterRepository lectRegistRepository = lectureRegisterApplication.applicationContext
+                .getBean(LectureRegisterRepository.class);
+        return lectRegistRepository;
     }
 
 }
