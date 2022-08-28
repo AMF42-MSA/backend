@@ -45,12 +45,31 @@ public class LectureCategoryService {
   public Long modifyCategoryName(Long categoryId, String categoryName) {
     Long result = Long.valueOf(-1);
 
-    LectureCategory newLectureCategory = lectureCategoryRepository.findByCategoryId(categoryId);
-    newLectureCategory.setCategoryName(categoryName);
-    result = lectureCategoryRepository.save(newLectureCategory).getCategoryId();
+    LectureCategory lectureCategory = lectureCategoryRepository.findByCategoryId(categoryId);
+    lectureCategory.setCategoryName(categoryName);
+    result = lectureCategoryRepository.save(lectureCategory).getCategoryId();
 
     return result;
   }
 
+  /**
+   * 카테고리 삭제
+   * @param categoryId
+   * @return
+   */
+  public Long deleteCategory(Long categoryId) {
+    Long result = Long.valueOf(-1);
+
+    //if()
+    try {
+      LectureCategory lectureCategory = lectureCategoryRepository.findByCategoryId(categoryId);
+      lectureCategoryRepository.delete(lectureCategory);
+      result = categoryId;
+    } catch(Exception e) {
+
+    }
+
+    return result;
+  }
 
 }
