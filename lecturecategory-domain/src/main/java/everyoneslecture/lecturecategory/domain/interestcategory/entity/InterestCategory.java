@@ -32,4 +32,10 @@ public class InterestCategory {
             this.memberVO = memberVO;
         }
 
+
+    public InterestCategory() {
+        this.categoryVO = new LectureCategoryVO();
+        this.memberVO = new MemberVO();
+    }
+
 }
