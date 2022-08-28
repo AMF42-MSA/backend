@@ -19,6 +19,9 @@ public class AuctionDto {
   private Long auctionId;
   private Date endAuctionDate;
   private Date startAuctionDate;
+  private Long id;
+
+
 
   public AuctionDto(){
 
@@ -76,6 +79,15 @@ public class AuctionDto {
   public void setAuctionId(Long auctionId) {
     this.auctionId = auctionId;
   }
+
+  public Long getId() {
+    return id;
+  }
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+
   public Date getEndAuctionDate() {
     return endAuctionDate;
   }

@@ -1,6 +1,7 @@
 package com.everyoneslecture.domain.lectureBid.controller;
 
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -17,6 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.everyoneslecture.domain.auction.dto.AuctionInfoResultDto;
+import com.everyoneslecture.domain.auction.entity.Auction;
+import com.everyoneslecture.domain.auction.enums.AuctionStatus;
+import com.everyoneslecture.domain.auction.service.AuctionService;
 import com.everyoneslecture.domain.lectureBid.dto.LectureBidDetailDto;
 import com.everyoneslecture.domain.lectureBid.dto.LectureBidDto;
 import com.everyoneslecture.domain.lectureBid.dto.LectureBidPostInDto;
@@ -36,13 +41,15 @@ import com.everyoneslecture.domain.lectureBid.service.LectureBidService;
 public class LectureBidController {
 
 	private final LectureBidService lectureBidService;
+	private final AuctionService auctionService;
 
 	/**
 	 * 생성자를 통한  객체주입
 	 * @param lectureBidService
 	 */
-	public LectureBidController(LectureBidService lectureBidService) {
+	public LectureBidController(LectureBidService lectureBidService, AuctionService auctionService) {
 			this.lectureBidService = lectureBidService;
+			this.auctionService = auctionService;
 	}
 
 	/**
@@ -58,6 +65,25 @@ public class LectureBidController {
 		List auctionIds = lectureBidPostInDto.getAuctionIds();
 		Long auctionId;
 
+		//경매 유효성 체크 시작
+		for(int i = 0; i<auctionIds.size(); i++){
+			auctionId = ((Number)auctionIds.get(i)).longValue();
+			AuctionInfoResultDto auctionInfoResultDto = auctionService.searchAuction(auctionId);
+			System.out.println("auctionInfoResultDto.getAuctionStatus() : " + auctionInfoResultDto.getAuctionStatus());
+			System.out.println("AuctionStatus.AUCTION: " + AuctionStatus.AUCTION);
+			if(!AuctionStatus.AUCTION.toString().equals(auctionInfoResultDto.getAuctionStatus().toString())){
+				return auctionInfoResultDto.getAuctionStatus();
+			}
+			
+			//AuctionStatus auctionStatus = auction.getAuctionStatus();
+			//System.out.println(auction.getAuctionStatus());
+			//System.out.println("endend");
+			// if(AuctionStatus.CANCEL.equals(auctionStatus)){
+
+			// }
+
+		}
+
 		for(int i = 0 ; i < auctionIds.size(); i++){
 			LectureBid lectureBid = new LectureBid();
 			System.out.println(auctionIds.get(i));
@@ -69,7 +95,7 @@ public class LectureBidController {
 			lectureBid = lectureBidService.registerLectureBid(lectureBid);
 		}
 		
-		return "경매가 입찰 되었습니다.";
+		return "입찰이 완료 되었습니다.";
 	}
 
 
@@ -82,6 +108,26 @@ public class LectureBidController {
 		
 		Long auctionId;
 		int bidNotCnt = 0;
+
+		//입찰취소 유효성 체크 시작 ==> 낙찰된 경매는 취소하면 안된다.
+		for(int i = 0; i<auctionIds.size(); i++){
+			auctionId = ((Number)auctionIds.get(i)).longValue();
+			AuctionInfoResultDto auctionInfoResultDto = auctionService.searchAuction(auctionId);
+			System.out.println("auctionInfoResultDto.getAuctionStatus() : " + auctionInfoResultDto.getAuctionStatus());
+			System.out.println("AuctionStatus.BID_SUCCESS: " + AuctionStatus.BID_SUCCESS);
+			if(AuctionStatus.BID_SUCCESS.toString().equals(auctionInfoResultDto.getAuctionStatus().toString())){
+				return auctionInfoResultDto.getAuctionStatus();
+			}
+			
+			//AuctionStatus auctionStatus = auction.getAuctionStatus();
+			//System.out.println(auction.getAuctionStatus());
+			//System.out.println("endend");
+			// if(AuctionStatus.CANCEL.equals(auctionStatus)){
+
+			// }
+
+		}
+
 		
 
 		for(int i = 0 ; i < auctionIds.size(); i++){
@@ -131,14 +177,26 @@ public class LectureBidController {
 	@RequestMapping(method = RequestMethod.PUT, path="lectureBids/successLectureBid")
 	public String bidSuccessRegister(@RequestBody LectureBid lectureBid) throws JsonProcessingException, InterruptedException, ExecutionException{
 
+
+		//입찰취소 유효성 체크 시작 ==> 낙찰된 경매는 낙찰진행을 막아야 한다.
+		Long auctionId = lectureBid.getAuctionId();
+		AuctionInfoResultDto auctionInfoResultDto = auctionService.searchAuction(auctionId);
+		System.out.println("auctionInfoResultDto.getAuctionStatus() : " + auctionInfoResultDto.getAuctionStatus());
+		System.out.println("AuctionStatus.BID_SUCCESS: " + AuctionStatus.BID_SUCCESS);
+		if(AuctionStatus.BID_SUCCESS.toString().equals(auctionInfoResultDto.getAuctionStatus().toString())){
+			return auctionInfoResultDto.getAuctionStatus();
+		}
+
 		System.out.println("###########################"+ lectureBid);
-		Long lectureBidId = lectureBid.getId();
 		//유찰
-		//lectureBidService.failLectureBid(lectureBid);
+		lectureBidService.failLectureBid(lectureBid);
 		//낙찰
 		lectureBid = lectureBidService.successLectureBid(lectureBid);
 
+		//경매상태 변경 (AUCTION -> BID_SUCCESS (낙찰완료))
+		auctionService.updateAuctionStatusById(auctionId, AuctionStatus.BID_SUCCESS);
 
+		//경매상태 변경완료
 
 		return "낙찰이 완료되었습니다.";
 	}

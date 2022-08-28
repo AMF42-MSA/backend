@@ -17,19 +17,17 @@ public class PolicyHandler {
     @StreamListener(KafkaProcessor.INPUT)
     public void whatever(@Payload String eventString){}
 
-    @Autowired
-    AuctionRepository auctionRepository;
+    // @Autowired
+    // AuctionRepository auctionRepository;
 
-    @StreamListener(KafkaProcessor.INPUT)
-    public void wheneverLectureAuctioned_displayOnTheStore(@Payload LectureAuctioned lectureAuctioned){
-        if(!lectureAuctioned.validate())
-            return;
-        Auction auction = new Auction();
-        auction.setLectId(lectureAuctioned.getLectId());
-        auction.setLectName(lectureAuctioned.getLectName());
-        auction.setLectStatus(lectureAuctioned.getLectStatus());
-        auctionRepository.save(auction);
-    }
+    // @StreamListener(KafkaProcessor.INPUT)
+    // public void wheneverLectureAuctioned_displayOnTheStore(@Payload LectureAuctioned lectureAuctioned){
+    //     if(!lectureAuctioned.validate())
+    //         return;
+    //     Auction auction = new Auction();
+    //     auction.setLectId(lectureAuctioned.getLectId());
+    //     auctionRepository.save(auction);
+    // }
 
     //회원 정보 변경시 업데이트
     @Autowired

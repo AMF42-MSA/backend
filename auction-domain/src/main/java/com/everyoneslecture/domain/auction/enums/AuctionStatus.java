@@ -1,5 +1,5 @@
 package com.everyoneslecture.domain.auction.enums;
 
 public enum AuctionStatus{
-    REGIST, CANCEL, AUCTION, BEFORE_AUCTION, AFTER_AUCTION
+    CANCEL, AUCTION, BEFORE_AUCTION, AFTER_AUCTION, BID_SUCCESS
 }

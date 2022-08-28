@@ -3,6 +3,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -22,7 +23,20 @@ public interface LectureBidRepository extends CrudRepository<LectureBid, Long>{ 
     "    , lectureVo.lectName      as lectName       \n" +
     "    , lectureVo.lectStatus    as lectStatus       \n" +
     "    , lectureVo.startLecture   as startLecture      \n" +
-	"	, auction.auctionStatus       as auctionStatus     \n" +
+
+    ", CASE                                  \n" +
+    "   WHEN                                \n" +
+    " 	to_char(auction.startAuctionDate, 'YYYYMMDD') > to_char(now(), 'YYYYMMDD')      \n" +
+    "   THEN                                \n" +
+    " 	'BEFORE_AUCTION'                     \n" +
+    "   WHEN                                \n" +
+    " 	to_char(auction.endAuctionDate, 'YYYYMMDD') < to_char(now(), 'YYYYMMDD')      \n" +
+    "   THEN                                \n" +
+    " 	'AFTER_AUCTION'                      \n" +
+    "   ELSE                                \n" +
+    "     auction.auctionStatus             \n" +
+    " END as auctionStatus                  \n" +
+
 	"	, auction.id as auctionId                        \n" +
 	"	, auction.endAuctionDate      as endAuctionDate    \n" +
 	"	, auction.startAuctionDate     as startAuctionDate   \n" +
@@ -32,7 +46,7 @@ public interface LectureBidRepository extends CrudRepository<LectureBid, Long>{ 
     "     LectureVo lectureVo                        \n" +
 	"     , Auction auction                     \n" +
 	"where auction.lectId = lectureVo.lectId \n" +
-  "and auction.auctionStatus = 'AUCTION'"
+  "and (auction.auctionStatus = 'AUCTION' OR auction.auctionStatus = 'BID_SUCCESS')"
 
   )
   List<LectureBidDto> findAuctionLectureBidList();
@@ -54,14 +68,17 @@ public interface LectureBidRepository extends CrudRepository<LectureBid, Long>{ 
   )
   List<LectureBidDetailDto> findLectureBidList(@Param("lectureBid") LectureBid lectureBid);
 
+  @Modifying
   @Query(
     "  update LectureBid lectureBid					\n" +
     "    set lectureBid.status = 'FAIL'             \n" +
-    "   where lectureBid.id != :id                  \n" +
-    "     and lectureBid.auctionId = :auctionId       "
-
+    "   where lectureBid.id!=:id                  \n" +
+    "     and lectureBid.auctionId=:auctionId       "
   )
   void updateLectureBidWithoutId(Long id, long auctionId);
+
+
+
 
   public LectureBid findLectureBidByIdAndAuctionId(Long id, Long auctionId);
 
