@@ -48,7 +48,7 @@ public class LectureRegisterController {
   }
 
   @RequestMapping(method = RequestMethod.GET, path = "lectureRegisters/searchLectureList")
-  public List<LectureRegisterTempDto> searchLectList()
+  public List<LectureRegister> searchLectList()
       throws JsonProcessingException, InterruptedException, ExecutionException {
     return lectureRegisterService.searchLectList();
 

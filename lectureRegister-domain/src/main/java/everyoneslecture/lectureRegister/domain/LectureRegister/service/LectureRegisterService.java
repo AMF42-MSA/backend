@@ -33,7 +33,7 @@ public interface LectureRegisterService {
          * Business Logic
          * 강의 조회
          **/
-        List<LectureRegisterTempDto> searchLectList()
+        List<LectureRegister> searchLectList()
                         throws InterruptedException, ExecutionException, JsonProcessingException;
 
         Iterable<LectureRegister> searchLectureRegistList(LectureRegister lectureRegister)
