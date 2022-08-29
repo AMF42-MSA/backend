@@ -7,7 +7,3 @@
 3. domain 터미널 실행
 
 4. mvn spring-boot:run 실행
-
-5. update
-
-  http PUT localhost:8081/lectureRegisters/RegistLect lectId=2342, lectName="CLOUD", lectRegistStatus="ING"
