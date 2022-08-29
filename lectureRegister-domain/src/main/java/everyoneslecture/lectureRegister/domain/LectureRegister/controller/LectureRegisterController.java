@@ -27,10 +27,6 @@ import everyoneslecture.lectureRegister.kafka.KafkaProcessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import everyoneslecture.lectureRegister.domain.LectureRegister.service.LectureRegisterService;
 
-/**
- * REST controller for managing {@link lecturemgt.domain.Lecture}.
- */
-
 @RestController
 public class LectureRegisterController {
 
@@ -48,7 +44,7 @@ public class LectureRegisterController {
   public String registerLecture(@RequestBody LectureRegister lectureRegister)
       throws JsonProcessingException, InterruptedException, ExecutionException {
     lectureRegisterService.registerLecture(lectureRegister);
-    return "강의가 등록되었습니다.";
+    return "강의 등록";
   }
 
   @RequestMapping(method = RequestMethod.GET, path = "lectureRegisters/searchLectureList")

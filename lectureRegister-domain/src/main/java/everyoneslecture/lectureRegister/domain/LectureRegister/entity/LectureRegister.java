@@ -41,15 +41,48 @@ public class LectureRegister {
         this.lectName = lectName;
     }
 
-    // 강의상태
-    String lectStatus;
+    // 강의내용
+    String lectContent;
 
-    public String getLectStatus() {
-        return lectStatus;
+    public String getLectContent() {
+        return lectContent;
     }
 
-    public void setLectStatus(String lectStatus) {
-        this.lectStatus = lectStatus;
+    public void setLectContent(String lectContent) {
+        this.lectContent = lectContent;
+    }
+
+    // 강의최소인원
+    int lectMINUser;
+
+    public int getLectMINUser() {
+        return lectMINUser;
+    }
+
+    public void setLectMINUser(int lectMinUser) {
+        this.lectMINUser = lectMinUser;
+    }
+
+    // 강의최대인원
+    int lectMAXUser;
+
+    public int getLectMAXUser() {
+        return lectMAXUser;
+    }
+
+    public void setLectMAXUser(int lectMAXUser) {
+        this.lectMAXUser = lectMAXUser;
+    }
+
+    // 강의료
+    int lectFee;
+
+    public int getLectFee() {
+        return lectFee;
+    }
+
+    public void setLectFee(int lectFee) {
+        this.lectFee = lectFee;
     }
 
     // 강의신청시작일

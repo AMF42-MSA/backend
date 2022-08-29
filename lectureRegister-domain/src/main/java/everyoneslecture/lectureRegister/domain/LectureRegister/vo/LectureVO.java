@@ -10,7 +10,6 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "lecture_vo")
-
 public class LectureVo { // Entity. Domain Class.
 
     @Id
