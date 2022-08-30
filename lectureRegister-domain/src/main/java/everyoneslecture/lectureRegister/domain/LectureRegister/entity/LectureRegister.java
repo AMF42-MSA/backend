@@ -11,15 +11,9 @@ import everyoneslecture.lectureRegister.domain.LectureRegister.repository.Lectur
 @Entity()
 @Table(name = "LECTURE_REGISTER")
 public class LectureRegister {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+ 
 
-    public Long getId() {
-        return id;
-    }
-
-    // 강의 ID
+    @Id @GeneratedValue
     Long lectId;
 
     public Long getLectId() {

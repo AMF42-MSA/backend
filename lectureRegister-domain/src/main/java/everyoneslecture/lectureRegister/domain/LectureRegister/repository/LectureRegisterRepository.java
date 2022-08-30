@@ -9,14 +9,20 @@ import everyoneslecture.lectureRegister.domain.LectureRegister.entity.LectureReg
 public interface LectureRegisterRepository extends CrudRepository<LectureRegister, Long> {
 
         @Query("select									\n" +
-                        "      lectId                                           \n" +
-                        "    , lectName                                         \n" +
-                        "    , startLectRegistDate                              \n" +
-                        "    , endLectRegistDate                                \n" +
+                        "    lectRegist.lectId  as  lectId                                       \n" +
+                        "    , lectRegist.lectName  as    lectName                                      \n" +
+                        "    , lectRegist.lectContent  as     lectContent                          \n" +
+                        "    , lectRegist.lectMINUser  as lectMINUser                                \n" +
+                        "    , lectRegist.lectMAXUser  as lectMAXUser                                \n" +
+                        "    , lectRegist.lectFee  as lectFee                                \n" +
+                        "    , lectRegist.startLectRegistDate  as startLectRegistDate                                \n"
+                        +
+                        "    , lectRegist.endLectRegistDate  as endLectRegistDate                               \n" +
+                        "    , lectRegist.lectRegistStatus  as lectRegistStatus                                \n" +
                         "from                                                   \n" +
-                        "    LectureRegister                                    \n"
+                        "    LectureRegister lectRegist                                   \n"
 
         )
-        List<LectureRegisterTempDto> findLectLectureAll();
+        List<LectureRegister> findLectureAll();
 
 }
