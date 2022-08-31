@@ -21,7 +21,7 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private Environment env;
 
-    
+
 
     public SpringSecurity(MemberService memberService, BCryptPasswordEncoder bCryptPasswordEncoder, Environment env) {
         this.memberService = memberService;
@@ -40,22 +40,22 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable();
-        http.authorizeRequests().antMatchers("/h2-console/*", "/login**", "/members**").permitAll()
+        http.authorizeRequests().antMatchers("/h2-console/*", "/signup", "/login").permitAll();
         // http.authorizeRequests().antMatchers("**").denyAll();
-        // http.authorizeRequests().antMatchers("/**")
-        //     //    .access("hasIp÷Address('" + IP_ADDRESS + "')")
-        //     //    .hasIpAddress(env.getProperty("spring.cloud.client.ip-address"))
-        //         // .access("permitAll")
-                .anyRequest().authenticated()
+        http.authorizeRequests()
+                .antMatchers("/admin/**").hasAnyRole("ADMIN")
                 .and()
                 .addFilter(getAuthenticationFilter());
+                // .hasIpAddress("192.168.75.17")
+        //     //    .access("hasIp÷Address('" + IP_ADDRESS + "')")
+        //     //    .hasIpAddress(env.getProperty("spring.cloud.client.ip-address"))
+                // .access("permitAll")
 
         http.headers().frameOptions().disable();
     }
 
     private AuthenticationFilter getAuthenticationFilter() throws Exception {
-        AuthenticationFilter authFilter = new AuthenticationFilter();
-        authFilter.setAuthenticationManager(authenticationManager());
+        AuthenticationFilter authFilter = new AuthenticationFilter(authenticationManager(), memberService, env);
         return authFilter;
     }
 

@@ -91,7 +91,14 @@
 			<artifactId>springfox-boot-starter</artifactId>
 			<version>3.0.0</version>
 		</dependency>
-		
+
+		<!-- json web token //-->
+		<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt</artifactId>
+				<version>0.9.1</version>
+		</dependency>
+
 		<!-- azure eventhub -->
 		<!-- <dependency>
 			<groupId>com.azure</groupId>

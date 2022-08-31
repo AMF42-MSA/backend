@@ -13,6 +13,8 @@ import com.everyoneslecture.member.domain.entity.MemberEntity;
 import com.everyoneslecture.member.service.MemberService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import io.micrometer.core.annotation.Timed;
+
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -31,7 +33,7 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-    @PostMapping("/members")
+    @PostMapping("/signup")
     public ResponseEntity createMember(@RequestBody RequestMember requestMember) throws URISyntaxException, JsonProcessingException, InterruptedException, ExecutionException {
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
@@ -65,5 +67,13 @@ public class MemberController {
 
         return ResponseEntity.status(HttpStatus.OK).body(new ModelMapper().map(memberDto, MemberDto.class));
     }
+
+    @GetMapping("/welcome")
+    @Timed(value = "users.welcome", longTask = true)
+    public String welcome() {
+//        return env.getProperty("greeting.message");
+        return "Welcome 모두의강의!!";
+    }
+
 
 }

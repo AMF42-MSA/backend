@@ -9,4 +9,5 @@ public interface MemberService extends UserDetailsService {
     MemberDto createMember(MemberDto memberDto) ;
     Iterable<MemberEntity> getMemberByAll();
     MemberDto getMemberByMemberId(Long memberId) ;
+    MemberDto getMemberByEmail(String email);
 }

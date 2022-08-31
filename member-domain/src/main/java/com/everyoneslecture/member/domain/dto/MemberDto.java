@@ -13,11 +13,13 @@ import lombok.Setter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MemberDto {
 
-    private Long memberId;
+    private Long id;
+    private String memberId;
     private String pwd;
     private String email;
     private String name;
     private String birth;
     private String mobile;
+    private String memberType;
 
 }

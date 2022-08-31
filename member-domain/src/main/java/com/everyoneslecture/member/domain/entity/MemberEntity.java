@@ -12,8 +12,8 @@ public class MemberEntity {     // Entity. Domain Class.
 
 
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long memberId;
-    private String loginId;
+    private Long id;
+    private String memberId;
     private String encryptedPwd;
     private String email;
     private String name;
