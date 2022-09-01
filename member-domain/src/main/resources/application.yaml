@@ -6,6 +6,12 @@ server:
 
 spring:
   profiles: default
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+      path: /h2-console
   jpa:
     properties:
       hibernate:
@@ -38,6 +44,9 @@ logging:
     org.hibernate.type: trace
     org.springframework.cloud: debug
 
+token:
+  expiration_time: 86400000
+  secret: amf42_token
 ---
 
 server:
@@ -66,3 +75,6 @@ spring:
         event-out:
           destination: lecture
           contentType: application/json
+token:
+  expiration_time: 86400000
+  secret: amf42_token
