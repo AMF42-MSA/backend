@@ -40,8 +40,12 @@ public class MemberServiceImpl implements MemberService {
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         MemberEntity memberEntity = mapper.map(memberDto, MemberEntity.class);
         memberEntity.setEncryptedPwd(passwordEncoder.encode(memberDto.getPwd()));
-        memberEntity.setMemberType(MemberType.ROLE_USER);
-
+        String memberType = memberDto.getMemberType();
+        if ("ROLE_ADMIN".equals(memberType)){
+            memberEntity.setMemberType(MemberType.ROLE_ADMIN);
+        } else {
+            memberEntity.setMemberType(MemberType.ROLE_USER);
+        }
         memberRepository.save(memberEntity);
 
         MemberDto ReturnMemberDto = mapper.map(memberEntity, MemberDto.class);
