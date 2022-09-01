@@ -52,7 +52,9 @@ spring:
       bindings:
         # 강의 분류 내역 비동기 처리
         in-categoryChanged:   #입력(Consumer) 채널 (in-토픽이름)
-          destination: categoryChanged   #토픽이름
+#         destination: categoryChanged   #토픽이름 (category의 이름으로 일단 진행)
+          destination: lecture   #토픽이름
+          
           contentType: application/json    #데이터형식
           group: CGR-lecture-categoryChanged  #consumer 그룹: CGR-MSA이름-토픽이름
         # 강의 변경 내역 공유

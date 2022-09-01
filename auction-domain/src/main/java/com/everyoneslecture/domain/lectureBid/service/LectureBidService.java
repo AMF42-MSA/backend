@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.everyoneslecture.domain.lectureBid.dto.LectureBidDetailDto;
 import com.everyoneslecture.domain.lectureBid.dto.LectureBidDto;
 import com.everyoneslecture.domain.lectureBid.dto.LectureBidPostInDto;
 import com.everyoneslecture.domain.lectureBid.entity.LectureBid;
@@ -66,7 +67,13 @@ public interface LectureBidService {
      * Business Logic
      * 낙찰요청
      **/
-    LectureBid successLectureBid(Long lectureBid) throws InterruptedException, ExecutionException, JsonProcessingException;
+    LectureBid successLectureBid(LectureBid lectureBid) throws InterruptedException, ExecutionException, JsonProcessingException;
+
+    /**
+     * Business Logic
+     * 유찰요청
+     **/
+    void failLectureBid(LectureBid lectureBid) throws InterruptedException, ExecutionException, JsonProcessingException;
 
     /**
      * Business Logic
@@ -79,5 +86,11 @@ public interface LectureBidService {
      * 입찰정보 조회
      **/
     LectureBid searchLectureBid(LectureBidPostInDto lectureBidPostInDto) throws InterruptedException, ExecutionException, JsonProcessingException;
+
+    /**
+     * Business Logic
+     * 입찰리스트 조회(선택 경매건 기준)
+     **/
+    List<LectureBidDetailDto> searchLectureBidList(LectureBid lectureBid) throws InterruptedException, ExecutionException, JsonProcessingException;
 
 }

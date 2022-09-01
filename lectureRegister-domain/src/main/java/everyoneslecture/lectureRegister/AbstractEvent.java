@@ -1,5 +1,6 @@
 package everyoneslecture.lectureRegister;
-import com.everylecture.kafka.KafkaProcessor;
+
+import everyoneslecture.lectureRegister.kafka.KafkaProcessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.messaging.MessageChannel;
@@ -10,7 +11,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 import org.springframework.util.MimeTypeUtils;
 
 public class AbstractEvent {
-    //이벤트 발행 로직을 담당하는 EventPublisher 클래스
+    // 이벤트 발행 로직을 담당하는 EventPublisher 클래스
 
     String eventType;
     Long timestamp;

@@ -57,7 +57,7 @@ spring:
           uri: http://localhost:8081
           predicates:
             - Path=/lecture/**
-        - id: pet-front
+        - id: category
           uri: http://localhost:8084
           predicates:
             - Path=/**

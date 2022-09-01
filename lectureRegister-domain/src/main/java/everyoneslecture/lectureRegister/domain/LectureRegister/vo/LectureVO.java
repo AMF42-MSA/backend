@@ -1,55 +1,72 @@
 package everyoneslecture.lectureRegister.domain.LectureRegister.vo;
 
+import org.springframework.beans.BeanUtils;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import javax.persistence.*;
 
-//Lecture ValueObject
-@Embeddable
-public class LectureVO {
+@Entity
+@Table(name = "lecture_vo")
+public class LectureVo { // Entity. Domain Class.
 
-    Long id;            // 강의ID
-    String lectureName; // 강의명
-    long minEnrollment; // 최소인원
-    long maxEnrollment; // 최대인원
-    long lectureCost;   // 강의료
+    @Id
+    private Long lectId;
 
-    public Long getId() {
-        return id;
+    private String lectName;
+    private String lectStatus;
+    private int lectCost;
+    private int cntStudent;
+    private Date startLecture;
+
+    public Long getLectId() {
+        return lectId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setLectId(Long lectId) {
+        this.lectId = lectId;
     }
 
-    public String getLectureName() {
-        return lectureName;
+    public String getLectName() {
+        return lectName;
     }
 
-    public void setlLectureName(String lectureName) {
-        this.lectureName = lectureName;
+    public void setLectName(String lectName) {
+        this.lectName = lectName;
     }
 
-    public Long getMinEnrollment() {
-        return minEnrollment;
+    public String getLectStatus() {
+        return lectStatus;
     }
 
-    public void setMinEnrollment(Long minEnrollment) {
-        this.minEnrollment = minEnrollment;
+    public void setLectStatus(String lectStatus) {
+        this.lectStatus = lectStatus;
     }
 
-    public Long getMaxEnrollment() {
-        return maxEnrollment;
+    public int getLectCost() {
+        return lectCost;
     }
 
-    public void setMaxEnrollment(Long maxEnrollment) {
-        this.maxEnrollment = maxEnrollment;
+    public void setLectCost(int lectCost) {
+        this.lectCost = lectCost;
     }
 
-    public Long getLectureCost() {
-        return lectureCost;
+    public int getCntStudent() {
+        return cntStudent;
     }
 
-    public void setLectureCost(Long lectureCost) {
-        this.lectureCost = lectureCost;
+    public void setCntStudent(int cntStudent) {
+        this.cntStudent = cntStudent;
+    }
+
+    public Date getStartLecture() {
+        return startLecture;
+    }
+
+    public void setStartLecture(Date startLecture) {
+        this.startLecture = startLecture;
     }
 
 }

@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.everyoneslecture.domain.auction.service.AuctionService;
+import com.everyoneslecture.domain.auction.dto.AuctionDto;
+import com.everyoneslecture.domain.auction.dto.AuctionInfoResultDto;
+import com.everyoneslecture.domain.auction.dto.AuctionResultDto;
 import com.everyoneslecture.domain.auction.dto.AuctionTempDto;
 import com.everyoneslecture.domain.auction.entity.Auction;
 import com.everyoneslecture.domain.auction.enums.AuctionStatus;
@@ -86,6 +89,18 @@ public class AuctionServiceImpl implements AuctionService {
         return Auction.repository().save(auction);
 	}
 
+    /**
+   * Business Logic
+   * 경매상태정보 수정
+   **/
+	@Override
+  @Transactional
+	public void updateAuctionStatusById(Long auctionId, AuctionStatus auctionStaus)
+			throws InterruptedException, ExecutionException, JsonProcessingException {
+        log.debug("registerLecture : {}", auctionId,  auctionStaus);
+        Auction.repository().updateAuctionStatusById(auctionStaus, auctionId);
+	}
+  
   /**
    * Business Logic
    * 강좌별 경매정보 조회
@@ -104,6 +119,28 @@ public class AuctionServiceImpl implements AuctionService {
     return null;
   }
 
+  /**
+   * Business Logic
+   * 경매정보 조회
+   **/
+  @Override
+  public AuctionInfoResultDto searchAuction(Long auctionId)
+      throws InterruptedException, ExecutionException, JsonProcessingException {
+      AuctionInfoResultDto AuctionInfoResultDto = Auction.repository().findAuctionById(auctionId);
+      return AuctionInfoResultDto;
+  }
+
+    /**
+   * Business Logic
+   * 강좌코드로 경매정보 조회()
+   **/
+  @Override
+  public List<AuctionResultDto> searchAuctionByLectId(Long lectId)
+      throws InterruptedException, ExecutionException, JsonProcessingException {
+      List<AuctionResultDto> auction = Auction.repository().findAuctionByLectId(lectId);
+      return auction;
+  }
+  
 
   // /**
   //  * Business Logic
