@@ -31,8 +31,17 @@ public class MemberController {
     @Autowired
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
+
+        MemberDto memberDto = new MemberDto();
+        memberDto.setEmail("admin@sk.com");
+        memberDto.setPwd("1111");
+        memberDto.setMemberType("ROLE_ADMIN");
+        memberDto.setName("테스트관리자");
+        memberService.createMember(memberDto);
+
     }
 
+    //@PostMapping(value = {"/signup", "/admin/members"})
     @PostMapping("/signup")
     public ResponseEntity createMember(@RequestBody RequestMember requestMember) throws URISyntaxException, JsonProcessingException, InterruptedException, ExecutionException {
         ModelMapper mapper = new ModelMapper();
