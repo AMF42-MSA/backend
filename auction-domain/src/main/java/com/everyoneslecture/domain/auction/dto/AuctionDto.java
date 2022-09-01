@@ -1,6 +1,7 @@
 package com.everyoneslecture.domain.auction.dto;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -8,6 +9,7 @@ import lombok.Data;
 
 public class AuctionDto {
   private Long lectId;
+  private List lectIds;
   private String lectName;
   private String lectureStatus;
   private int cntStudent;
@@ -17,6 +19,9 @@ public class AuctionDto {
   private Long auctionId;
   private Date endAuctionDate;
   private Date startAuctionDate;
+  private Long id;
+
+
 
   public AuctionDto(){
 
@@ -74,6 +79,15 @@ public class AuctionDto {
   public void setAuctionId(Long auctionId) {
     this.auctionId = auctionId;
   }
+
+  public Long getId() {
+    return id;
+  }
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+
   public Date getEndAuctionDate() {
     return endAuctionDate;
   }
@@ -85,6 +99,13 @@ public class AuctionDto {
   }
   public void setStartAuctionDate(Date startAuctionDate) {
     this.startAuctionDate = startAuctionDate;
+  }
+
+  public List getLectIds() {
+  return lectIds;
+  }
+  public void setLectIds(List lectIds) {
+    this.lectIds = lectIds;
   }
 
 

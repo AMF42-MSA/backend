@@ -7,7 +7,6 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
-# https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
 
 #JB로 자동 생성
@@ -16,5 +15,17 @@ bin/
 .project
 .classpath
 .settings/
+
 .idea
 .vscode
+.metadata/
+.factorypath
+
+hs_err_pid*
+*/.idea
+lectureBid-domain/.settings/org.eclipse.jdt.core.prefs
+lecturecategory-domain/.classpath
+lecturecategory-domain/.project
+lecturecategory-domain/.settings/org.eclipse.jdt.apt.core.prefs
+lecturecategory-domain/.settings/org.eclipse.jdt.core.prefs
+lectureBid-domain/.settings/org.eclipse.jdt.core.prefs

@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  auction:
+    build: auction-domain
+    mem_limit: 520m
+    ports:
+      - "8084:8084"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+

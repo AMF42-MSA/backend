@@ -40,13 +40,12 @@
 			<artifactId>spring-boot-starter-hateoas</artifactId>
 		</dependency>
 
-		<!-- h2database-Test
+		<!-- h2database-Test -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>test</scope>
 		</dependency>
-		 -->
 
 		<!-- MYSQL -->
 		<dependency>
@@ -139,10 +138,10 @@
             <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
         </dependency>
 	  <!-- Validate 관련 추가-->
-        <!-- <dependency>
-            <groupId>oorg.springframework.boot</groupId>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency> -->
+        </dependency>
 
 	</dependencies>
 

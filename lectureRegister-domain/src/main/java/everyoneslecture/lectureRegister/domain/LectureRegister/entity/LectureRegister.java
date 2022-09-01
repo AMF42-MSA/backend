@@ -1,63 +1,142 @@
 package everyoneslecture.lectureRegister.domain.LectureRegister.entity;
 
+import java.util.Date;
 import javax.persistence.*;
 import org.springframework.beans.BeanUtils;
 
-import everyoneslecture.lectureRegister.domain.LectureRegister.event.LectureRegisterCancelled;
-import everyoneslecture.lectureRegister.domain.LectureRegister.event.LectureRegisterPlaced;
-import everyoneslecture.lectureRegister.domain.LectureRegister.vo.LectureVO;
-import everyoneslecture.lectureRegister.domain.LectureRegister.vo.PaymentVO;
+import everyoneslecture.lectureRegister.domain.LectureRegister.enums.LectureRegisterStatus;
+import everyoneslecture.lectureRegister.lectureRegisterApplication;
+import everyoneslecture.lectureRegister.domain.LectureRegister.repository.LectureRegisterRepository;
 
-@Entity
+@Entity()
 @Table(name = "LECTURE_REGISTER")
 public class LectureRegister {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+ 
 
-    private Long registerId;
+    @Id @GeneratedValue
+    Long lectId;
 
-    public Long getRegisterId() {
-        return registerId;
+    public Long getLectId() {
+        return lectId;
     }
 
-    public void setRegisterId(Long registerId) {
-        this.registerId = registerId;
+    public void setLectId(Long lectId) {
+        this.lectId = lectId;
     }
 
-    @Embedded
-    private LectureVO LectureVO;
+    // 강의명
+    String lectName;
 
-    public LectureVO getLectureVO() {
-        return LectureVO;
+    public String getLectName() {
+        return lectName;
     }
 
-    public void setLectureVO(LectureVO LectureVO) {
-        this.LectureVO = LectureVO;
+    public void setLectName(String lectName) {
+        this.lectName = lectName;
     }
 
-    @Embedded
-    private PaymentVO PaymentVO;
+    // 강의내용
+    String lectContent;
 
-    public PaymentVO getPaymentVO() {
-        return PaymentVO;
+    public String getLectContent() {
+        return lectContent;
     }
 
-    public void setPaymentVO(PaymentVO PaymentVO) {
-        this.PaymentVO = PaymentVO;
+    public void setLectContent(String lectContent) {
+        this.lectContent = lectContent;
     }
 
-    @PostPersist // PostUpdate는 제거
-    public void onPersist() {
-        LectureRegisterPlaced lectureRegisterPlaced = new LectureRegisterPlaced();
-        BeanUtils.copyProperties(this, lectureRegisterPlaced);
-        lectureRegisterPlaced.publishAfterCommit();
+    // 강의최소인원
+    int lectMINUser;
+
+    public int getLectMINUser() {
+        return lectMINUser;
     }
 
-    @PostRemove
-    public void onRemoved() {
-        LectureRegisterCancelled orderCanceled = new LectureRegisterCancelled();
-        BeanUtils.copyProperties(this, orderCanceled);
-        orderCanceled.publishAfterCommit();
+    public void setLectMINUser(int lectMinUser) {
+        this.lectMINUser = lectMinUser;
+    }
+
+    // 강의최대인원
+    int lectMAXUser;
+
+    public int getLectMAXUser() {
+        return lectMAXUser;
+    }
+
+    public void setLectMAXUser(int lectMAXUser) {
+        this.lectMAXUser = lectMAXUser;
+    }
+
+    // 강의료
+    int lectFee;
+
+    public int getLectFee() {
+        return lectFee;
+    }
+
+    public void setLectFee(int lectFee) {
+        this.lectFee = lectFee;
+    }
+
+    // 강의신청시작일
+    Date startLectRegistDate;
+
+    public Date getStartLectRegistDate() {
+        return startLectRegistDate;
+    }
+
+    public void setStartLectRegistDate(Date startLectRegistDate) {
+        this.startLectRegistDate = startLectRegistDate;
+    }
+
+    // 강의신청마감일
+    Date endLectRegistDate;
+
+    public Date getEndLectRegistDate() {
+        return endLectRegistDate;
+    }
+
+    public void setEndLectRegistDate(Date endLectRegistDate) {
+        this.endLectRegistDate = endLectRegistDate;
+    }
+
+    @Enumerated(EnumType.STRING)
+    private LectureRegisterStatus lectRegistStatus;
+
+    public LectureRegisterStatus getLectRegistStatus() {
+        return lectRegistStatus;
+    }
+
+    public void setLectRegistStatus(LectureRegisterStatus lectRegistStatus) {
+        this.lectRegistStatus = lectRegistStatus;
+    }
+
+    public String cancel() {
+        // answer must be obtained by UI
+
+        setLectRegistStatus(lectRegistStatus.CANCELED); // 취소
+        return "강의 신청이 취소되었습니다.";
+    }
+
+    public String startLectureRegister() {
+        // answer must be obtained by UI
+
+        setLectRegistStatus(lectRegistStatus.COMPLETED); // 취소
+        return "강의 신청이 완료 되었습니다.";
+    }
+
+    @Override
+    public String toString() {
+
+        return "<a href='./" + this.getClass().getSimpleName().toLowerCase() + "'" + ">"
+                + this.getClass().getSimpleName() + "</a>";
+    }
+
+    public static LectureRegisterRepository repository() {
+        LectureRegisterRepository lectRegistRepository = lectureRegisterApplication.applicationContext
+                .getBean(LectureRegisterRepository.class);
+        return lectRegistRepository;
     }
 
 }

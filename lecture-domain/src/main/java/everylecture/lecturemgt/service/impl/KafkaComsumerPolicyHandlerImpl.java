@@ -79,13 +79,9 @@ public class KafkaComsumerPolicyHandlerImpl implements KafkaComsumerPolicyHandle
 		category.setCategoryId(categoryChanged.getCategoryId());
 		category.setCategoryName(categoryChanged.getCategoryName());
 
-		if ("INSERT".equals(categoryChanged.getJobType())) {
+		if ("LectureCategoryRegistered".equals(categoryChanged.getEventType()   )) {
 			//JPA SAVE는 Select을 해보고 있으면 Update, 없으면 Insert하네요
 			categoryRepository.save(category);
-		} else if ("UPDATE".equals(categoryChanged.getJobType())) {
-			categoryRepository.save(category);
-		} else if ("DELETE".equals(categoryChanged.getJobType())) {
-			categoryRepository.delete(category);
 		} else {
 			log.error("데이터 변경 유형 오류, 관리자 확인 필요: {}", categoryChanged);
 			// TODO: 이 부분 처리 가이드 필요(2022-08-09)

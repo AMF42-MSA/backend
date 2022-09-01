@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.everyoneslecture.domain.lectureBid.service.LectureBidService;
+import com.everyoneslecture.domain.lectureBid.dto.LectureBidDetailDto;
 import com.everyoneslecture.domain.lectureBid.dto.LectureBidDto;
 import com.everyoneslecture.domain.lectureBid.dto.LectureBidPostInDto;
 import com.everyoneslecture.domain.lectureBid.entity.LectureBid;
@@ -64,18 +65,32 @@ public class LectureBidServiceImpl implements LectureBidService {
         LectureBid lectureBid = new LectureBid();
         lectureBid = LectureBid.repository().findById(lectureBidId).get();
         lectureBid.setStatus(BidStatus.CANCEL);//입찰취소
-        return lectureBid.repository().save(lectureBid);
+        return LectureBid.repository().save(lectureBid);
   }
 
   //낙찰요청
   @Override
-  public LectureBid successLectureBid(Long lectureBidId)
+  public LectureBid successLectureBid(LectureBid lectureBid)
       throws InterruptedException, ExecutionException, JsonProcessingException {
-        log.debug("registerLecture : {}", lectureBidId,  lectureBidId);
-        LectureBid lectureBid = new LectureBid();
-        lectureBid = LectureBid.repository().findById(lectureBidId).get();
+        log.debug("registerLecture : {}", lectureBid.getId(),  lectureBid.getAuctionId());
+        long lectureBidId = lectureBid.getId();
+        long auctionId = lectureBid.getAuctionId();
+        lectureBid = LectureBid.repository().findLectureBidByIdAndAuctionId(lectureBidId, auctionId);
         lectureBid.setStatus(BidStatus.SUCCESS);
-        return lectureBid.repository().save(lectureBid);
+        return LectureBid.repository().save(lectureBid);
+  }
+
+  //유찰요청
+  @Override
+  public void failLectureBid(LectureBid lectureBid)
+      throws InterruptedException, ExecutionException, JsonProcessingException {
+        long lectureBidId = lectureBid.getId();
+        long auctionId = lectureBid.getAuctionId();
+
+        log.debug("registerLecture : {}", lectureBidId,  auctionId);
+
+
+        LectureBid.repository().updateLectureBidWithoutId(lectureBidId, auctionId);
   }
 
   /**
@@ -98,9 +113,25 @@ public class LectureBidServiceImpl implements LectureBidService {
   public LectureBid searchLectureBid(LectureBidPostInDto lectureBidPostInDto)
       throws InterruptedException, ExecutionException, JsonProcessingException {
 
-        LectureBid lectureBid = LectureBid.repository().findLectureBidByAuctionIdAndMemberId(lectureBidPostInDto.getAuctionId(), lectureBidPostInDto.getMemnberId());
+        LectureBid lectureBid = LectureBid.repository().findLectureBidByAuctionIdAndMemberIdAndStatus(lectureBidPostInDto.getAuctionId(), lectureBidPostInDto.getMemberId(), BidStatus.BID); 
         return lectureBid;
   }
+
+
+
+  /**
+   * Business Logic
+   * 입찰리스트 조회(선택 경매건 기준)
+   **/
+  @Override
+  public List<LectureBidDetailDto> searchLectureBidList(LectureBid lectureBid)
+      throws InterruptedException, ExecutionException, JsonProcessingException {
+
+        List<LectureBidDetailDto> lectureBidList = LectureBid.repository().findLectureBidList(lectureBid);
+        return lectureBidList;
+  }
+
+
 
 }
 
