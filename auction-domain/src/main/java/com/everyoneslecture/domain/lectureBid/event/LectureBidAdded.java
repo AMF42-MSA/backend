@@ -5,10 +5,13 @@ import javax.persistence.*;
 import com.everyoneslecture.domain.lectureBid.enums.BidStatus;
 
 
-public class LectureBidSuccessed extends AbstractEvent {
+public class LectureBidAdded extends AbstractEvent {
     Long id;
         public Long getId() {
             return id;
+        }
+        public void setId(Long id) {
+            this.id = id;
         }
 
 

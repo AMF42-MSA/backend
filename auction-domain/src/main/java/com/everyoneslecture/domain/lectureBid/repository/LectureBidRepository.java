@@ -18,11 +18,13 @@ public interface LectureBidRepository extends CrudRepository<LectureBid, Long>{ 
   @Query(
     "select									\n" +
     "      lectureVo.lectId  as  lectId             \n" +
-    "    , lectureVo.cntStudent   as cntStudent        \n" +
+    "    , lectureVo.categoryName  as  categoryName             \n" +
+    "    , lectureVo.maxEnrollment   as maxEnrollment        \n" +
+    "    , lectureVo.minEnrollment   as minEnrollment        \n" +
     "    , lectureVo.lectCost      as lectCost       \n" +
-    "    , lectureVo.lectName      as lectName       \n" +
-    "    , lectureVo.lectStatus    as lectStatus       \n" +
-    "    , lectureVo.startLecture   as startLecture      \n" +
+    "    , trim(lectureVo.title)      as title       \n" +
+    "    , lectureVo.lectureStatus    as lectureStatus       \n" +
+    "    , lectureVo.startLectureDt   as startLectureDt      \n" +
 
     ", CASE                                  \n" +
     "   WHEN                                \n" +
