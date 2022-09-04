@@ -22,6 +22,7 @@ import everyoneslecture.lectureRegister.domain.LectureRegister.repository.Lectur
 import everyoneslecture.lectureRegister.domain.LectureRegister.vo.LectureRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import everyoneslecture.lectureRegister.domain.LectureRegister.service.LectureRegisterService;
+import everyoneslecture.lectureRegister.domain.LectureRegister.dto.LectureRegisterPostInDto;
 
 @RestController
 public class LectureRegisterController {
@@ -37,6 +38,7 @@ public class LectureRegisterController {
   LectureRegister lectureRegister;
   LectureRepository lectureRepository;
 
+  // 강의등록(API TEST용)
   @RequestMapping(method = RequestMethod.PUT, path = "lectureRegisters/RegistLect")
   public String registerLecture(@RequestBody LectureRegister lectureRegister)
       throws JsonProcessingException, InterruptedException, ExecutionException {
@@ -44,16 +46,12 @@ public class LectureRegisterController {
     return "강의 등록";
   }
 
-  // @RequestMapping(method = RequestMethod.GET, path =
-  // "lectureRegisters/searchLectureList")
-  // public List<LectureRegister> searchLectList()
-  // throws JsonProcessingException, InterruptedException, ExecutionException {
-  // return lectureRegisterRepository.findLectureAll();
-  // }
-
-  @RequestMapping(method = RequestMethod.GET, path = "lectureRegisters/searchLectureList")
-  public List<LectureRegister> getAllEmployees() {
-    return lectureRegisterRepository.findAll();
+  // member regist for lecture
+  @RequestMapping(method = RequestMethod.PUT, path = "lectureRegisters/MemberRegistLect")
+  public String memberRegistLect(@RequestBody LectureRegister lectureRegister)
+      throws JsonProcessingException, InterruptedException, ExecutionException {
+    lectureRegisterService.memberRegistLect(lectureRegister);
+    return "수강신청";
   }
 
 }

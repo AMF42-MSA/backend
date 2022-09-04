@@ -39,4 +39,7 @@ public interface LectureRegisterService {
         Iterable<LectureRegister> searchLectureRegistList(LectureRegister lectureRegister)
                         throws InterruptedException, ExecutionException, JsonProcessingException;
 
+        LectureRegister memberRegistLect(LectureRegister lectureRegister)
+                        throws InterruptedException, ExecutionException, JsonProcessingException;
+
 }
