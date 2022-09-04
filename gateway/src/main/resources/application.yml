@@ -58,7 +58,25 @@ spring:
           predicates:
             - Path=/lecture/**
         - id: category
+          uri: http://localhost:8082
+          predicates:
+            - Path=/category/**
+        - id: auctions
           uri: http://localhost:8084
+          predicates:
+            - Path=/auctions/**
+            - Method=POST,GET,PUT,OPTIONS,DELETE
+          filters:
+            - AuthorizationHeaderFilter
+        - id: lectureBids
+          uri: http://localhost:8084
+          predicates:
+            - Path=/lectureBids/**
+            - Method=POST,GET,PUT,OPTIONS,DELETE
+          filters:
+            - AuthorizationHeaderFilter
+        - id: default
+          uri: http://localhost:8080
           predicates:
             - Path=/**
 
