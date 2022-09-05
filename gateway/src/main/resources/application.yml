@@ -1,8 +1,6 @@
 server:
   port: 8088
-
 ---
-
 spring:
   profiles: default
   cloud:
@@ -10,7 +8,7 @@ spring:
     gateway:
       globalcors:
         corsConfigurations:
-          '[/**]':
+          "[/**]":
             allowedOrigins: "http://localhost:3000"
             allowedHeaders:
               - x-requested-with
@@ -84,6 +82,13 @@ spring:
             - Method=POST,GET,PUT,OPTIONS,DELETE
           filters:
             - AuthorizationHeaderFilter
+        - id: lecture-register
+          uri: http://localhost:8083
+          predicates:
+            - Path=/lectureRegisters/**
+            - Method=POST,GET,PUT,OPTIONS,DELETE
+          filters:
+            - AuthorizationHeaderFilter
         - id: default
           uri: http://localhost:8080
           predicates:
@@ -92,7 +97,6 @@ spring:
 token:
   secret: amf42_token
 ---
-
 spring:
   profiles: docker
   cloud:
@@ -103,18 +107,18 @@ spring:
           enabled: false
 
 spring.cloud.gateway.routes:
-- id: category
-  uri: http://category:8080
-  predicates:
-  - Path=/category/**
-- id: member
-  uri: http://member:8080
-  predicates:
-  - Path=/member/**
-- id: lecture
-  uri: http://lecture:8080
-  predicates:
-  - Path=/lecture/**
+  - id: category
+    uri: http://category:8080
+    predicates:
+      - Path=/category/**
+  - id: member
+    uri: http://member:8080
+    predicates:
+      - Path=/member/**
+  - id: lecture
+    uri: http://lecture:8080
+    predicates:
+      - Path=/lecture/**
 
 server.port: 8080
 
