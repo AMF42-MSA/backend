@@ -9,6 +9,9 @@ import everyoneslecture.lectureRegister.domain.LectureRegister.entity.LectureReg
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LectureRegisterRepository extends JpaRepository<LectureRegister, Long> {
+        // Optional<LectureCategory> findByCategoryName(String categoryName);
+        // LectureCategory findByCategoryId(Long categoryId);
+
 
         // @Query("select \n" +
         // " lectRegist.lectId as lectId \n" +
