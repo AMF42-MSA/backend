@@ -4,11 +4,13 @@ import java.util.Date;
 
 public interface AuctionTempDto {
   String getLectId();
-  String getLectName();
+  String getCategoryName();
+  String getTitle();
   String getLectureStatus();
-  int getCntStudent();
+  int getMaxEnrollment();
+  int getMinEnrollment();
   Long getLectCost();
-  Date getStartLecture();
+  Date getStartLectureDt();
   String getAuctionStatus();
   Long getAuctionId();
   Date getEndAuctionDate();

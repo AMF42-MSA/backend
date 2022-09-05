@@ -8,22 +8,80 @@ spring:
   cloud:
     config.import-check.enabled: false
     gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000"
+            allowedHeaders:
+              - x-requested-with
+              - authorization
+              - content-type
+              - credential
+              - X-AUTH-TOKEN
+              - X-CSRF-TOKEN
+            allowedMethods:
+              - POST
+              - GET
+              - PUT
+              - OPTIONS
+              - DELETE
       discovery:
         locator:
           enabled: true
       routes:
-        - id: member
-          uri: http://localhost:8082
+        - id: signup
+          uri: http://localhost:8080
           predicates:
-            - Path=/member/**
+            - Path=/signup
+            - Method=POST
+        - id: login
+          uri: http://localhost:8080
+          predicates:
+            - Path=/login
+            - Method=POST
+        - id: member
+          uri: http://localhost:8080
+          predicates:
+            - Path=/members**
+            - Method=POST,GET,PUT,OPTIONS,DELETE
+          filters:
+            - AuthorizationHeaderFilter
+        - id: member-admin
+          uri: http://localhost:8080
+          predicates:
+            - Path=/admin/members**
+            - Method=POST,GET,PUT,OPTIONS,DELETE
+          filters:
+            - AuthorizationHeaderFilter
         - id: lecture
           uri: http://localhost:8081
           predicates:
             - Path=/lecture/**
         - id: category
+          uri: http://localhost:8082
+          predicates:
+            - Path=/category/**
+        - id: auctions
           uri: http://localhost:8084
           predicates:
+            - Path=/auctions/**
+            - Method=POST,GET,PUT,OPTIONS,DELETE
+          filters:
+            - AuthorizationHeaderFilter
+        - id: lectureBids
+          uri: http://localhost:8084
+          predicates:
+            - Path=/lectureBids/**
+            - Method=POST,GET,PUT,OPTIONS,DELETE
+          filters:
+            - AuthorizationHeaderFilter
+        - id: default
+          uri: http://localhost:8080
+          predicates:
             - Path=/**
+
+token:
+  secret: amf42_token
 ---
 
 spring:
@@ -50,3 +108,6 @@ spring.cloud.gateway.routes:
   - Path=/lecture/**
 
 server.port: 8080
+
+token:
+  secret: amf42_token

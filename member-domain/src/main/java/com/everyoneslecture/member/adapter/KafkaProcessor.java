@@ -1,4 +1,4 @@
-package com.everylecture.kafka;
+package com.everyoneslecture.member.adapter;
 
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;

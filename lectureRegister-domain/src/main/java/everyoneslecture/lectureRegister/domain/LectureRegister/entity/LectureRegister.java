@@ -11,9 +11,9 @@ import everyoneslecture.lectureRegister.domain.LectureRegister.repository.Lectur
 @Entity()
 @Table(name = "LECTURE_REGISTER")
 public class LectureRegister {
- 
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     Long lectId;
 
     public Long getLectId() {
@@ -79,26 +79,48 @@ public class LectureRegister {
         this.lectFee = lectFee;
     }
 
-    // 강의신청시작일
-    Date startLectRegistDate;
+    // 강의시작일
+    Date startLectureDt;
 
-    public Date getStartLectRegistDate() {
-        return startLectRegistDate;
+    public Date getStartLectureDt() {
+        return startLectureDt;
     }
 
-    public void setStartLectRegistDate(Date startLectRegistDate) {
-        this.startLectRegistDate = startLectRegistDate;
+    public void setStartLectureDt(Date startLectureDt) {
+        this.startLectureDt = startLectureDt;
     }
 
     // 강의신청마감일
-    Date endLectRegistDate;
+    Date registerEndDt;
 
-    public Date getEndLectRegistDate() {
-        return endLectRegistDate;
+    public Date getRegisterEndDt() {
+        return registerEndDt;
     }
 
-    public void setEndLectRegistDate(Date endLectRegistDate) {
-        this.endLectRegistDate = endLectRegistDate;
+    public void setRegisterEndDt(Date registerEndDt) {
+        this.registerEndDt = registerEndDt;
+    }
+
+    // 강의신청자
+    String memberId;
+
+    public String getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(String memberId) {
+        this.memberId = memberId;
+    }
+
+    // 강의신청인원
+    int regitMemberCnt;
+
+    public int getRegitMemberCnt() {
+        return regitMemberCnt;
+    }
+
+    public void setRegitMemberCnt(int regitMemberCnt) {
+        this.regitMemberCnt = regitMemberCnt;
     }
 
     @Enumerated(EnumType.STRING)

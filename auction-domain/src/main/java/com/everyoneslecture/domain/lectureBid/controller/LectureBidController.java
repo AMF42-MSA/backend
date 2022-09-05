@@ -74,7 +74,7 @@ public class LectureBidController {
 			if(!AuctionStatus.AUCTION.toString().equals(auctionInfoResultDto.getAuctionStatus().toString())){
 				return auctionInfoResultDto.getAuctionStatus();
 			}
-			
+
 			//AuctionStatus auctionStatus = auction.getAuctionStatus();
 			//System.out.println(auction.getAuctionStatus());
 			//System.out.println("endend");
@@ -91,10 +91,10 @@ public class LectureBidController {
 			lectureBid.setAuctionId(auctionId);
 			lectureBid.setPrice(lectureBidPostInDto.getPrice());
 			lectureBid.setMemberId(lectureBidPostInDto.getMemberId());
-			
+
 			lectureBid = lectureBidService.registerLectureBid(lectureBid);
 		}
-		
+
 		return "입찰이 완료 되었습니다.";
 	}
 
@@ -102,10 +102,10 @@ public class LectureBidController {
 	//입찰취소
   @RequestMapping(method = RequestMethod.PUT, path="lectureBids/cancelBid")
 	public String cancelBid(@RequestBody LectureBidPostInDto lectureBidPostInDto) throws JsonProcessingException, InterruptedException, ExecutionException{
-		
+
 		List auctionIds = lectureBidPostInDto.getAuctionIds();
 
-		
+
 		Long auctionId;
 		int bidNotCnt = 0;
 
@@ -118,7 +118,7 @@ public class LectureBidController {
 			if(AuctionStatus.BID_SUCCESS.toString().equals(auctionInfoResultDto.getAuctionStatus().toString())){
 				return auctionInfoResultDto.getAuctionStatus();
 			}
-			
+
 			//AuctionStatus auctionStatus = auction.getAuctionStatus();
 			//System.out.println(auction.getAuctionStatus());
 			//System.out.println("endend");
@@ -128,7 +128,7 @@ public class LectureBidController {
 
 		}
 
-		
+
 
 		for(int i = 0 ; i < auctionIds.size(); i++){
 			LectureBid lectureBid = new LectureBid();

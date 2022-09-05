@@ -79,11 +79,9 @@ public class LectureRegisterServiceImpl implements LectureRegisterService {
   public LectureRegister registerLecture(LectureRegister lectureRegister)
       throws InterruptedException, ExecutionException, JsonProcessingException {
     Long lectId = lectureRegister.getLectId();
-    Date startLectRegistDate = lectureRegister.getStartLectRegistDate();
-    Date endLectRegistDate = lectureRegister.getEndLectRegistDate();
+    Date startLectureDt = lectureRegister.getStartLectureDt();
+    Date registerEndDt = lectureRegister.getRegisterEndDt();
     lectureRegister.setLectRegistStatus(LectureRegisterStatus.COMPLETED);
-    System.out.println(startLectRegistDate);
-    System.out.println(endLectRegistDate);
     return LectureRegister.repository().save(lectureRegister);
   }
 

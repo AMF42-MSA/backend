@@ -25,11 +25,13 @@ public interface AuctionRepository extends CrudRepository<Auction, Long>{    // 
   @Query(
     "select									\n" +
     "      lectureVo.lectId  as  lectId             \n" +
-    "    , lectureVo.cntStudent   as cntStudent        \n" +
+    "    , lectureVo.categoryName  as  categoryName             \n" +
+    "    , lectureVo.maxEnrollment   as maxEnrollment        \n" +
+    "    , lectureVo.minEnrollment   as minEnrollment        \n" +
     "    , lectureVo.lectCost      as lectCost       \n" +
-    "    , trim(lectureVo.lectName)      as lectName       \n" +
-    "    , lectureVo.lectStatus    as lectStatus       \n" +
-    "    , lectureVo.startLecture   as startLecture      \n" +
+    "    , trim(lectureVo.title)      as title       \n" +
+    "    , lectureVo.lectureStatus    as lectureStatus       \n" +
+    "    , lectureVo.startLectureDt   as startLectureDt      \n" +
 
     ", CASE                                  \n" +
     "   WHEN                                \n" +
@@ -57,23 +59,23 @@ public interface AuctionRepository extends CrudRepository<Auction, Long>{    // 
   "and (auction.auctionStatus = null or auction.auctionStatus != 'CANCEL')"
 
   )
-  List<AuctionTempDto> findLectAuctionAll();  
+  List<AuctionTempDto> findLectAuctionAll();
   //Optional<LectureVo> findByLectId(Long lectId);
 
 
   @Query(
-    "select																		   \n" +      			
+    "select																		   \n" +
     "    auction.id as id,                                                         \n" +
     "    auction.lectId as lectId,                                               \n" +
     "    auction.startAuctionDate as startAuctionDate,                         \n" +
 	"	 auction.endAuctionDate as endAuctionDate,                             \n" +
 	"  CASE                                                                        \n" +
     "   WHEN                                                                       \n" +
-    " 	to_char(auction.startAuctionDate, 'YYYYMMDD') > to_char(now(), 'YYYYMMDD') \n" +    
+    " 	to_char(auction.startAuctionDate, 'YYYYMMDD') > to_char(now(), 'YYYYMMDD') \n" +
     "   THEN                                                                       \n" +
     " 	'BEFORE_AUCTION'                                                           \n" +
     "   WHEN                                                                       \n" +
-    " 	to_char(auction.endAuctionDate, 'YYYYMMDD') < to_char(now(), 'YYYYMMDD')   \n" +  
+    " 	to_char(auction.endAuctionDate, 'YYYYMMDD') < to_char(now(), 'YYYYMMDD')   \n" +
     "   THEN                                                                       \n" +
     " 	'AFTER_AUCTION'                                                            \n" +
     "   ELSE                                                                       \n" +

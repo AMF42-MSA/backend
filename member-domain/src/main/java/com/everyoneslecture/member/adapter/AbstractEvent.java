@@ -1,17 +1,15 @@
-package com.everylecture;
+package com.everyoneslecture.member.adapter;
 
-import com.everylecture.kafka.KafkaProcessor;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.support.MessageBuilder;
-import org.springframework.util.MimeTypeUtils;
 import org.springframework.transaction.support.TransactionSynchronizationAdapter;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
+import org.springframework.util.MimeTypeUtils;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.everyoneslecture.member.MemberApplication;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class AbstractEvent {
 
