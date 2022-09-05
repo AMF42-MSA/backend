@@ -25,6 +25,7 @@ spring:
               - PUT
               - OPTIONS
               - DELETE
+              - PATCH
       discovery:
         locator:
           enabled: true
@@ -57,10 +58,18 @@ spring:
           uri: http://localhost:8081
           predicates:
             - Path=/lecture/**
-        - id: category
+        - id: lecture-category
           uri: http://localhost:8082
           predicates:
-            - Path=/category/**
+            - Path=/lectureCategories/**
+          filters:
+            - AuthorizationHeaderFilter
+        - id: interest-category
+          uri: http://localhost:8082
+          predicates:
+            - Path=/interestCategories/**
+          filters:
+            - AuthorizationHeaderFilter
         - id: auctions
           uri: http://localhost:8084
           predicates:
