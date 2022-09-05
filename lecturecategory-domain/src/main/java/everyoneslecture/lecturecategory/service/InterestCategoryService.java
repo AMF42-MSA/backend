@@ -64,18 +64,18 @@ public class InterestCategoryService {
   /**
    * 알림센터에 관심분류 관련 알림을 전달한다.
    */
-  public void deliverNotification(String memberId, String memberName, String categoryName, String mobile, String lectureName, String lectureStatus) {
+  public void deliverNotification(String memberLoginId, String memberName, String categoryName, String mobile, String lectureName, String lectureStatus) {
 
     NotiDelivered notiDelivered = new NotiDelivered();
 
-    notiDelivered.setMemberId(memberId);
+    notiDelivered.setMemberLoginId(memberLoginId);
     notiDelivered.setMemberName(memberName);
     notiDelivered.setCategoryName(categoryName);
     notiDelivered.setMobile(mobile);
     notiDelivered.setLectureName(lectureName);
     notiDelivered.setLectureStatus(lectureStatus);
 
-    notiDelivered.publishAfterCommit();
+    notiDelivered.publish();
 
   }
 

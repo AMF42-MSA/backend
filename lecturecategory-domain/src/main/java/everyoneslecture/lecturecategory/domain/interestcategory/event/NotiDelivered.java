@@ -4,18 +4,18 @@ import everyoneslecture.lecturecategory.AbstractEvent;
 
 public class NotiDelivered extends AbstractEvent {
 
-  String memberId;
+  String memberLoginId;
   String memberName;
   String categoryName;
   String mobile;
   String lectureName;
   String lectureStatus;
 
-  public String getMemberId() {
-    return memberId;
+  public String getMemberLoginId() {
+    return memberLoginId;
   }
-  public void setMemberId(String memberId) {
-    this.memberId = memberId;
+  public void setMemberLoginId(String memberLoginId) {
+    this.memberLoginId = memberLoginId;
   }
 
   public String getMemberName() {
