@@ -9,10 +9,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import everyoneslecture.lectureRegister.domain.LectureRegister.entity.LectureRegister;
+import everyoneslecture.lectureRegister.domain.LectureRegister.repository.LectureRegisterRepository;
 import everyoneslecture.lectureRegister.domain.LectureRegister.dto.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
 public interface LectureRegisterService {
+
+        @Autowired
+        //LectureRegisterRepository lectRegistRepo;
 
         LectureRegister save(LectureRegister lectureRegister);
 
@@ -39,7 +44,20 @@ public interface LectureRegisterService {
         Iterable<LectureRegister> searchLectureRegistList(LectureRegister lectureRegister)
                         throws InterruptedException, ExecutionException, JsonProcessingException;
 
-        LectureRegister memberRegistLect(LectureRegister lectureRegister)
-                        throws InterruptedException, ExecutionException, JsonProcessingException;
+        // LectureRegister memberRegistLect(LectureRegister lectureRegister)
+        // throws InterruptedException, ExecutionException, JsonProcessingException;
 
+        // public Long memberRegistLect(Long lectId, String lectName, String memberId){
+
+        // Long result = Long.valueOf(-1);
+
+        // LectureRegister lectureRegister =
+        // lectureRegisterRepository.findByCategoryId(categoryId);
+
+        // lectureCategory.setCategoryName(categoryName);
+
+        // result = lectureCategoryRepository.save(lectureCategory).getCategoryId();
+
+        // return result;
+        // }
 }
