@@ -82,7 +82,7 @@ spring:
             - Method=POST,GET,PUT,OPTIONS,DELETE
           filters:
             - AuthorizationHeaderFilter
-        - id: lecture-register
+        - id: lectureRegisters
           uri: http://localhost:8083
           predicates:
             - Path=/lectureRegisters/**
