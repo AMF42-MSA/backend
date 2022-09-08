@@ -52,6 +52,9 @@ public interface AuctionRepository extends CrudRepository<Auction, Long>{    // 
 	"	, auction.startAuctionDate     as startAuctionDate   \n" +
   ", (select coalesce(min(lectureBid.price), 0) from LectureBid lectureBid where lectureBid.auctionId = auction.id and lectureBid.status != 'CANCEL')  as bidMinPrice  \n" +
   ", (select count(0) from LectureBid lectureBid where lectureBid.auctionId = auction.id and lectureBid.status != 'CANCEL')  as lectureBidCnt  \n" +
+  ", (select memberVo.name from MemberVo memberVo where auction.auctionRegUserId = memberVo.memberId)  as auctionRegUserName  \n" +
+  ", auction.auctionRegUserId   as auctionRegUserId \n" +
+
     "from                                   \n" +
     "    LectureVo lectureVo                        \n" +
 	"left join Auction auction                     \n" +
@@ -69,6 +72,7 @@ public interface AuctionRepository extends CrudRepository<Auction, Long>{    // 
     "    auction.lectId as lectId,                                               \n" +
     "    auction.startAuctionDate as startAuctionDate,                         \n" +
 	"	 auction.endAuctionDate as endAuctionDate,                             \n" +
+  "	 auction.auctionRegUserId as auctionRegUserId,                             \n" +
 	"  CASE                                                                        \n" +
     "   WHEN                                                                       \n" +
     " 	to_char(auction.startAuctionDate, 'YYYYMMDD') > to_char(now(), 'YYYYMMDD') \n" +

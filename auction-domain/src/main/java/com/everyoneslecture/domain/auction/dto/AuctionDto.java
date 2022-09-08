@@ -20,6 +20,7 @@ public class AuctionDto {
   private Date endAuctionDate;
   private Date startAuctionDate;
   private Long id;
+  private String auctionRegUserId;
 
 
 
@@ -47,6 +48,7 @@ public class AuctionDto {
   public String getLectureStatus() {
     return lectureStatus;
   }
+  
   public void setLectureStatus(String lectureStatus) {
     this.lectureStatus = lectureStatus;
   }
@@ -109,6 +111,12 @@ public class AuctionDto {
     this.lectIds = lectIds;
   }
 
+  public String getAuctionRegUserId(){
+    return auctionRegUserId;
+  }
 
-
+  public void setAuctionRegUserId(String auctionRegUserId){
+    this.auctionRegUserId = auctionRegUserId;
+  }
+  
 }

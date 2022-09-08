@@ -29,12 +29,12 @@ public class LectureBid {     // Entity. Domain Class.
             this.auctionId = auctionId;
         }
 
-    Long memberId;
-        public Long getMemberId() {
-            return memberId;
+        String bidRegUserId;
+        public String getBidRegUserId() {
+            return bidRegUserId;
         }
-        public void setMemberId(Long memberId) {
-            this.memberId = memberId;
+        public void setBidRegUserId(String bidRegUserId) {
+            this.bidRegUserId = bidRegUserId;
         }
 
     int price;
@@ -73,7 +73,7 @@ public class LectureBid {     // Entity. Domain Class.
     	LectureBidAdded lectureBidAdded = new LectureBidAdded();
         lectureBidAdded.setId(id);
     	lectureBidAdded.setAuctionId(auctionId);
-    	lectureBidAdded.setMemberId(memberId);
+    	lectureBidAdded.setBidRegUserId(bidRegUserId);
     	lectureBidAdded.setPrice(price);
     	lectureBidAdded.setStatus(status);
     	lectureBidAdded.publishAfterCommit();
@@ -87,7 +87,7 @@ public class LectureBid {     // Entity. Domain Class.
         LectureBidUpdated lectureBidUpdated = new LectureBidUpdated();
         lectureBidUpdated.setId(id);
     	lectureBidUpdated.setAuctionId(auctionId);
-    	lectureBidUpdated.setMemberId(memberId);
+    	lectureBidUpdated.setBidRegUserId(bidRegUserId);
     	lectureBidUpdated.setPrice(price);
     	lectureBidUpdated.setStatus(status);
     	lectureBidUpdated.publishAfterCommit();

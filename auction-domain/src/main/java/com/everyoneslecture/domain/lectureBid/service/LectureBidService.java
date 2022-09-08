@@ -67,13 +67,13 @@ public interface LectureBidService {
      * Business Logic
      * 낙찰요청
      **/
-    LectureBid successLectureBid(LectureBid lectureBid) throws InterruptedException, ExecutionException, JsonProcessingException;
+    LectureBid successLectureBid(LectureBidPostInDto lectureBidPostInDto) throws InterruptedException, ExecutionException, JsonProcessingException;
 
     /**
      * Business Logic
      * 유찰요청
      **/
-    void failLectureBid(LectureBid lectureBid) throws InterruptedException, ExecutionException, JsonProcessingException;
+    void failLectureBid(LectureBidPostInDto lectureBidPostInDto) throws InterruptedException, ExecutionException, JsonProcessingException;
 
     /**
      * Business Logic

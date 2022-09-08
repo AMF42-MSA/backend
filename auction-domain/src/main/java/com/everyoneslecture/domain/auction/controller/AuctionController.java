@@ -57,6 +57,7 @@ public class AuctionController {
 	@RequestMapping(method = RequestMethod.PUT, path="auctions/auctionCancel")
 	public String cancelAuction(@RequestBody AuctionDto auctionDto) throws JsonProcessingException, InterruptedException, ExecutionException{
 		List lectIds = auctionDto.getLectIds();
+		String auctionRegUserId = auctionDto.getAuctionRegUserId();
 		Long lectId;
 
 		//경매 유효성 체크 시작
@@ -71,7 +72,10 @@ public class AuctionController {
 				auctionCnt = 0;
 				System.out.println(j);
 				System.out.println(auctionResultDtoList.get(j).getAuctionStatus().toString());
-				System.out.println(73);
+
+				if(!auctionRegUserId.equals(auctionResultDtoList.get(j).getAuctionRegUserId().toString())){
+					return "등록자가 아니면 취소 권한이 없습니다.";
+				}   
 				if(AuctionStatus.BID_SUCCESS.toString().equals(auctionResultDtoList.get(j).getAuctionStatus().toString()) ){
 					//경매완료인 건이 있으면 막는다.
 					return auctionResultDtoList.get(j).getAuctionStatus();
@@ -103,10 +107,12 @@ public class AuctionController {
 	public String registerAuction(@RequestBody AuctionDto auctionDto) throws JsonProcessingException, InterruptedException, ExecutionException{
 		System.out.println("###########################");
 		System.out.println(auctionDto.getLectIds());
+		System.out.println(auctionDto.getAuctionRegUserId());
 
 
 
 		List lectIds = auctionDto.getLectIds();
+		String auctionRegUserId = auctionDto.getAuctionRegUserId();
 
 
 
@@ -138,6 +144,7 @@ public class AuctionController {
 			System.out.println(lectIds.get(i));
 			lectId = Long.parseLong((String) lectIds.get(i));
 			auction.setLectId(lectId);	
+			auction.setAuctionRegUserId(auctionRegUserId);
 			auctionService.registerAuction(auction);
 		}
 		return "경매가 시작 되었습니다.";

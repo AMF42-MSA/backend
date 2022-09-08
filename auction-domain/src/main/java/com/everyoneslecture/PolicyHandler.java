@@ -40,8 +40,8 @@ public class PolicyHandler {
 
         MemberVo memberVo = new MemberVo();
         memberVo.setMemberId(memberJoined.getMemberId());
-        memberVo.setLoginId(memberJoined.getLoginId());
         memberVo.setMemberType(memberJoined.getMemberType());
+        memberVo.setEmail(memberJoined.getEmail());
         memberVo.setName(memberJoined.getName());
         memberVo.setMobile(memberJoined.getMobile());
         memberVo.setBirth(memberJoined.getBirth());
@@ -56,8 +56,8 @@ public class PolicyHandler {
             return;
 
         memberRepository.findByMemberId(memberUpdated.getMemberId()).ifPresent(memberVo->{
-            memberVo.setLoginId(memberUpdated.getLoginId());
             memberVo.setMemberType(memberUpdated.getMemberType());
+            memberVo.setEmail(memberUpdated.getEmail());
             memberVo.setName(memberUpdated.getName());
             memberVo.setMobile(memberUpdated.getMobile());
             memberVo.setBirth(memberUpdated.getBirth());

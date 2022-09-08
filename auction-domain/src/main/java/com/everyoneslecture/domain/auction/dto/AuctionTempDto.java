@@ -17,4 +17,6 @@ public interface AuctionTempDto {
   Date getStartAuctionDate();
   int getLectureBidCnt();
   int getBidMinPrice();
+  String getAuctionRegUserName();
+  String getAuctionRegUserId();
 }

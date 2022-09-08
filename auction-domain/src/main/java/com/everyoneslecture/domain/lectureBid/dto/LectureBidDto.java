@@ -18,5 +18,7 @@ public interface LectureBidDto {
   int getLectureBidCnt();
   int getBidMinPrice();
   String getMemberName();
+  String getBidRegUserId();
+  String getBidRegUserName();
 
 }
