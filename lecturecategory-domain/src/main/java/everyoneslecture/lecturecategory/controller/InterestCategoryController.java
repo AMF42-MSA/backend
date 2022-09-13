@@ -34,10 +34,9 @@ public class InterestCategoryController {
   public Long registerInterestCategory(@RequestBody Map<String, String> paramMap) {
     Long result = Long.valueOf(-1);
 
-    Long memberId = Long.valueOf(paramMap.get("memberId"));
-    String loginId = paramMap.get("loginId");
+    String memberId = paramMap.get("memberId");
     String memberName = paramMap.get("memberName");
-    String mobile = paramMap.get("mobile");
+    String email = paramMap.get("email");
     Long categoryId = Long.valueOf(paramMap.get("categoryId"));
     String categoryName = paramMap.get("categoryName");
 
@@ -46,7 +45,7 @@ public class InterestCategoryController {
       return result;
     }
 
-    result = interestCategoryService.registerInterestCategory(memberId, loginId, memberName, mobile, categoryId, categoryName);
+    result = interestCategoryService.registerInterestCategory(memberId, memberName, email, categoryId, categoryName);
 
     return result;
   }
@@ -66,7 +65,7 @@ public class InterestCategoryController {
    */
   @RequestMapping(value="interestCategories/searchByUser")
   public List<InterestCategory> searchInterestCategoryByUser(@RequestBody Map<String, String> paramMap) {
-    return interestCategoryRepository.findByMemberId(Long.valueOf(paramMap.get("memberId")));
+    return interestCategoryRepository.findByMemberEmail(paramMap.get("email"));
   }
 
   /**
@@ -79,10 +78,10 @@ public class InterestCategoryController {
     Long result = Long.valueOf(-1);
 
     Long Id = Long.valueOf(paramMap.get("Id"));
-    Long memberId = Long.valueOf(paramMap.get("memberId"));
+    String email = paramMap.get("email");
     Long categoryId = Long.valueOf(paramMap.get("categoryId"));
 
-    if(!interestCategoryService.existsInterestCategory(memberId, categoryId)) {
+    if(!interestCategoryService.existsInterestCategory(email, categoryId)) {
       // 해당 관심분류 존재하지 않을 경우, return -1
       return result;
     }

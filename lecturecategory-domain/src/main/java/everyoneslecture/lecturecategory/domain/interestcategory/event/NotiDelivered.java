@@ -4,18 +4,19 @@ import everyoneslecture.lecturecategory.AbstractEvent;
 
 public class NotiDelivered extends AbstractEvent {
 
-  String memberLoginId;
+  String memberId;
   String memberName;
   String categoryName;
-  String mobile;
+  String email;
   String lectureName;
   String lectureStatus;
 
-  public String getMemberLoginId() {
-    return memberLoginId;
+
+  public String getMemberId() {
+    return memberId;
   }
-  public void setMemberLoginId(String memberLoginId) {
-    this.memberLoginId = memberLoginId;
+  public void setMemberId(String memberId) {
+    this.memberId = memberId;
   }
 
   public String getMemberName() {
@@ -32,11 +33,11 @@ public class NotiDelivered extends AbstractEvent {
     this.categoryName = categoryName;
   }
 
-  public String getMobile() {
-    return mobile;
+  public String getEmail() {
+    return email;
   }
-  public void setMobile(String mobile) {
-    this.mobile = mobile;
+  public void setEmail(String email) {
+    this.email = email;
   }
 
   public String getLectureName() {
@@ -52,5 +53,6 @@ public class NotiDelivered extends AbstractEvent {
   public void setLectureStatus(String lectureStatus) {
     this.lectureStatus = lectureStatus;
   }
+
 
 }
