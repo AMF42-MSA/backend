@@ -2,7 +2,7 @@
 
 
 
-## 1.mysql 연동
+## 1.mysql 연동(DOcker 기반)
 2022-07-24일
 
 ### 1.1 MYSQL을 Docker로 기동하기
@@ -205,4 +205,27 @@
           interval: 10s
           timeout: 5s
           retries: 10
+    ```
+## 5. Azure Mysql 생성
+1. Azure Portal에서 MySQL 생성
+2. 네트워크 규칙에서 접속 Cclient IP 대역 입력(콘솔에서 해당 클라이언트만 등록 기능 있음)
+    시작: 0.0.0.0
+    종료: 255.255.255.255
+3. SSL 사용 DISABLE
+   - require_secure_transport=off
+   ![](images/mysql-03.png)
+4. 클라이언트 도구를 통하여 접속(DBever)
+   - DB 및 user 생성
+
+## A. Multi 생성을 Mysql 이미지에 포함하기
+1. Dockerfile
+    ```yaml
+    FROM mysql:5.7
+    COPY initialize_mysql_multiple_databases.sh /docker-entrypoint-initdb.d/initialize_mysql_multiple_databases.sh
+    ENV TZ=Asia/Seoul
+    ```
+
+2. 이미지 생성
+    ```bash
+    docker build -f Dockerfile --tag myinno-mysql:5.7 .
     ```

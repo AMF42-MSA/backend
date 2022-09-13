@@ -4,7 +4,7 @@
 
 ---
 
-## 1.Spring Boot 마이크로서비스 생성
+## 1.Spring Boot 마이크로서비스 생성(Local)
 Spring Initializer [https://start.spring.io/](https://start.spring.io/)를 이용하여 생성.
 
 ```bash
@@ -14,7 +14,7 @@ curl https://start.spring.io/starter.tgz -d dependencies=web -d baseDir=simple-m
 cd ..
 ```
 
-## 2.Spring MVC Controller추가
+## 2.Spring MVC Controller추가(Local)
 
 `HelloController.java` 생성:
 
@@ -56,7 +56,7 @@ kill %1
 ```
 
 ## 4.애플리케이션 생성 및 배포
-
+- 로컬에서 생성한 jar파일을 azure로 로드
 portal에서 생성 [the Azure portal](https://portal.azure.com/?WT.mc_id=azurespringcloud-github-judubois):
 
 - resource group에서 Azure Spring Apps 인스턴스를 찾습니다.(azure-spring-apps-lab-user09)
@@ -127,9 +127,3 @@ az spring app deploy -n simple-microservice --artifact-path target/demo-0.0.1-SN
 cd ..
 ```
 
----
-
-⬅️ Previous guide: [01-Create an Azure Spring Apps instance](./01-create-an-azure-spring-cloud-instance.md)
-
-➡️ Next guide: [03-Configure monitoring](./03-configure-monitoring.md)
-                                

@@ -5,7 +5,7 @@ root: intro
 parts:
 
 # PetStore
-  - caption: Level3교육-Backend
+  - caption: AMF3-Backend
     numbered: False
     chapters:
     - file: 01-간단jupyterbook사용법
@@ -25,6 +25,8 @@ parts:
     - file: 개발표준/00_개발표준
       sections:
       - file: 개발표준/01-backend-Package구조
+      - file: 개발표준/02-기타명명규칙.md
+      - file: 개발표준/81-유용한도구-termial.md
       - file: 개발표준/99-잡동사니.md
     - file: pipeline/00_pipeline.md
       sections:
@@ -34,13 +36,37 @@ parts:
 #      - file: pipeline/04-MYINNO-Building-Basic-CI-Pipeline-with-Jenkins.md
 #       - file: pipeline/05-MYINNO-Building-Advanced-CI-Pipeline.md
       - file: pipeline/99-LectureBuild.md
+      - file: pipeline/41-AKS애플리케이션배포.md
+      - file: pipeline/42-EveryLecture-AKS배포.md
+      - file: pipeline/42-A-EveryLecture-AKS배포.md
+      - file: pipeline/43-AzureKafka설치.md
+      - file: pipeline/44-AzureMysql설치.md
+
       - file: pipeline/A01-jenkins-docker.md
       - file: pipeline/A02-jenkins-Pipeline.md
       - file: pipeline/A03-BuildJavaAppWithMaven.md
       - file: pipeline/A04-BuildNode.jsReactAppWithNpm.md
-      - file: pipeline/A05-JenkinsGoogleCloud.md      
+      - file: pipeline/A05-JenkinsGoogleCloud.md
+      - file: pipeline/C01-Kubernetes-용어정리.md
       
+      - file: pipeline/21-A-JPA활용1편.md
+      - file: pipeline/21-B-JPA활용2편.md
+      - file: pipeline/21-JPA-기본정리.md
       
+    - file: Spring정리/00_spring정리.md
+      sections:
+      - file: Spring정리/SpringDataExample/00_SpringDataExample.md
+        sections:
+        - file: Spring정리/SpringDataExample/01-spring-data-jpa-eclipselink.md
+      - file: Spring정리/SpringGuides/00_SpringGuides.md
+        sections:
+        - file: Spring정리/SpringGuides/01-입력자료Validation.md
+        - file: Spring정리/SpringGuides/02-handingFormSubmission.md
+      - file: Spring정리/SpringEtc/00_SpringEtc.md
+        sections:
+        - file: Spring정리/SpringEtc/01-Controller와RestController의차이점.md
+        - file: Spring정리/SpringEtc/02-ResponseEntitymd
+
 
     - file: 00_PetStore.md
       sections:

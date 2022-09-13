@@ -55,7 +55,7 @@ AZ_RESOURCE_GROUP=msa-rg-01
 AZ_SPRING_APPS_NAME=msa-01
 ```
 
-인스턴스 생성.
+인스턴스 생성(20분 정도소요)
 
 ```bash
 az spring create \
