@@ -36,13 +36,13 @@ public class PolicyHandler{
         if(!memberUpdated.validate())
             return;
 
-        List<InterestCategory> interestCategories = interestCategoryRepository.findByMemberId(memberUpdated.getMemberId());
+        List<InterestCategory> interestCategories = interestCategoryRepository.findByMemberEmail(memberUpdated.getEmail());
 
         for(InterestCategory interestCategory : interestCategories) {
             MemberVO memberVO = interestCategory.getMemberVO();
-            memberVO.setLoginId(memberUpdated.getLoginId());
+            memberVO.setMemberId(memberUpdated.getEmail());
             memberVO.setMemberName(memberUpdated.getName());
-            memberVO.setMobile(memberUpdated.getMobile());
+            memberVO.setEmail(memberUpdated.getEmail());
             interestCategoryRepository.save(interestCategory);
         }
     }
@@ -66,14 +66,14 @@ public class PolicyHandler{
             for(InterestCategory interestCategory : interestCategories) {
                 MemberVO memberVO = interestCategory.getMemberVO();
 
-                String memberLoginId = memberVO.getLoginId();
+                String memberId = memberVO.getMemberId();
                 String memberName = memberVO.getMemberName();
                 String categoryName = lectureAdded.getCategoryName();
-                String mobile = memberVO.getMobile();
+                String email = memberVO.getEmail();
                 String lectureName = lectureAdded.getLectName();
                 String lectureStatus = lectureAdded.getLectStatus(); // 수정 필요할 것으로 예상 - 원래 enum타입이라..
 
-                interestCategoryService.deliverNotification(memberLoginId, memberName, categoryName, mobile, lectureName, lectureStatus);
+                interestCategoryService.deliverNotification(memberId, memberName, categoryName, email, lectureName, lectureStatus);
             }
         }
     }

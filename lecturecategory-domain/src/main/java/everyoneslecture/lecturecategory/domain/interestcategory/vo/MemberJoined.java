@@ -4,23 +4,15 @@ import everyoneslecture.lecturecategory.AbstractEvent;
 
 public class MemberJoined extends AbstractEvent {
 
-    Long memberId;
-    String loginId;
+    String memberId;
     String name;
-    String mobile;
+    String email;
 
-    public Long getMemberId() {
+    public String getMemberId() {
         return memberId;
     }
-    public void setMemberId(Long memberId) {
+    public void setMemberId(String memberId) {
         this.memberId = memberId;
-    }
-
-    public String getLoginId() {
-        return loginId;
-    }
-    public void setLoginId(String loginId) {
-        this.loginId = loginId;
     }
 
     public String getName() {
@@ -30,11 +22,11 @@ public class MemberJoined extends AbstractEvent {
         this.name = name;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getEmail() {
+        return email;
     }
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 }
