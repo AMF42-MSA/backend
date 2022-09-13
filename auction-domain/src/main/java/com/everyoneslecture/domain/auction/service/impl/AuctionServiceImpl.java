@@ -109,6 +109,8 @@ public class AuctionServiceImpl implements AuctionService {
   public List<AuctionTempDto> searchLectAuctionList()
       throws InterruptedException, ExecutionException, JsonProcessingException {
         List<AuctionTempDto> auctionDtoList = Auction.repository().findLectAuctionAll();
+
+        
         return auctionDtoList;
   }
 

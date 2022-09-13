@@ -36,12 +36,12 @@ public class LectureBidPostInDto implements Serializable {
       this.auctionIds = auctionIds;
   }
 
-  Long memberId;
-  public Long getMemberId() { 
-      return memberId;
+  String bidRegUserId;
+  public String getBidRegUserId() { 
+      return bidRegUserId;
   }
-  public void setMemberId(Long memberId) {
-      this.memberId = memberId;
+  public void setBidRegUserId(String bidRegUserId) {
+      this.bidRegUserId = bidRegUserId;
   }
 
   int price;
@@ -50,6 +50,14 @@ public class LectureBidPostInDto implements Serializable {
   }
   public void setPrice(int price) {
       this.price = price;
+  }
+
+  String bidSuccessReqUserId;
+  public String getBidSuccessReqUserId() { 
+    return bidSuccessReqUserId;
+  }
+  public void setBidSuccessReqUserId(String bidSuccessReqUserId) {
+      this.bidSuccessReqUserId = bidSuccessReqUserId;
   }
 
   @Enumerated(EnumType.STRING)

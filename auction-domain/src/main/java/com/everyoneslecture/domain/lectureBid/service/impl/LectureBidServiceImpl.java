@@ -70,22 +70,22 @@ public class LectureBidServiceImpl implements LectureBidService {
 
   //낙찰요청
   @Override
-  public LectureBid successLectureBid(LectureBid lectureBid)
+  public LectureBid successLectureBid(LectureBidPostInDto lectureBidPostInDto)
       throws InterruptedException, ExecutionException, JsonProcessingException {
-        log.debug("registerLecture : {}", lectureBid.getId(),  lectureBid.getAuctionId());
-        long lectureBidId = lectureBid.getId();
-        long auctionId = lectureBid.getAuctionId();
-        lectureBid = LectureBid.repository().findLectureBidByIdAndAuctionId(lectureBidId, auctionId);
+        log.debug("registerLecture : {}", lectureBidPostInDto.getId(),  lectureBidPostInDto.getAuctionId());
+        long lectureBidId = lectureBidPostInDto.getId();
+        long auctionId = lectureBidPostInDto.getAuctionId();
+        LectureBid lectureBid = LectureBid.repository().findLectureBidByIdAndAuctionId(lectureBidId, auctionId);
         lectureBid.setStatus(BidStatus.SUCCESS);
         return LectureBid.repository().save(lectureBid);
   }
 
   //유찰요청
   @Override
-  public void failLectureBid(LectureBid lectureBid)
+  public void failLectureBid(LectureBidPostInDto lectureBidPostInDto)
       throws InterruptedException, ExecutionException, JsonProcessingException {
-        long lectureBidId = lectureBid.getId();
-        long auctionId = lectureBid.getAuctionId();
+        long lectureBidId = lectureBidPostInDto.getId();
+        long auctionId = lectureBidPostInDto.getAuctionId();
 
         log.debug("registerLecture : {}", lectureBidId,  auctionId);
 
@@ -113,10 +113,10 @@ public class LectureBidServiceImpl implements LectureBidService {
   public LectureBid searchLectureBid(LectureBidPostInDto lectureBidPostInDto)
       throws InterruptedException, ExecutionException, JsonProcessingException {
 
-        LectureBid lectureBid = LectureBid.repository().findLectureBidByAuctionIdAndMemberIdAndStatus(lectureBidPostInDto.getAuctionId(), lectureBidPostInDto.getMemberId(), BidStatus.BID); 
+        LectureBid lectureBid = LectureBid.repository().findLectureBidByAuctionIdAndBidRegUserIdAndStatus(lectureBidPostInDto.getAuctionId(), lectureBidPostInDto.getBidRegUserId(), BidStatus.BID); 
         return lectureBid;
   }
-
+ 
 
 
   /**

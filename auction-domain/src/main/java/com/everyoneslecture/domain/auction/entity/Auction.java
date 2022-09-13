@@ -53,6 +53,16 @@ public class Auction {     // Entity. Domain Class.
         this.lectId = lectId;
     }
 
+    String auctionRegUserId;
+
+    public String getAuctionRegUserId() {
+        return auctionRegUserId;
+    }
+    public void setAuctionRegUserId(String auctionRegUserId) {
+        this.auctionRegUserId = auctionRegUserId;
+    }
+
+
 
 
 
@@ -126,6 +136,7 @@ public class Auction {     // Entity. Domain Class.
     	auctionAdded.setAuctionStatus(auctionStatus);
     	auctionAdded.setStartAuctionDate(startAuctionDate);
     	auctionAdded.setEndAuctionDate(endAuctionDate);
+        auctionAdded.setAuctionRegUserId(auctionRegUserId);
     	auctionAdded.publishAfterCommit();
     }
 
@@ -140,6 +151,7 @@ public class Auction {     // Entity. Domain Class.
     	auctionUpdated.setAuctionStatus(auctionStatus);
     	auctionUpdated.setStartAuctionDate(startAuctionDate);
     	auctionUpdated.setEndAuctionDate(endAuctionDate);
+        auctionUpdated.setAuctionRegUserId(auctionRegUserId);
     	auctionUpdated.publishAfterCommit();
     }
 

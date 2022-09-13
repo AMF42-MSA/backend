@@ -51,6 +51,15 @@ public class AuctionUpdated extends AbstractEvent {
             this.endAuctionDate = endAuctionDate;
         }
 
+    String auctionRegUserId;
+
+        public String getAuctionRegUserId() {
+            return auctionRegUserId;
+        }
+        public void setAuctionRegUserId(String auctionRegUserId) {
+            this.auctionRegUserId = auctionRegUserId;
+        }
+
     @Enumerated(EnumType.STRING)
     AuctionStatus auctionStatus;
     public AuctionStatus getAuctionStatus() {

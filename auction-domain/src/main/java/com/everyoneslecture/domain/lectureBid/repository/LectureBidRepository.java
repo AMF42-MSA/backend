@@ -53,14 +53,16 @@ public interface LectureBidRepository extends CrudRepository<LectureBid, Long>{ 
   )
   List<LectureBidDto> findAuctionLectureBidList();
 
-
-  public LectureBid findLectureBidByAuctionIdAndMemberIdAndStatus(Long auctionId, Long memberId, BidStatus status);
+  
+  public LectureBid findLectureBidByAuctionIdAndBidRegUserIdAndStatus(Long auctionId, String bidRegUserId, BidStatus status);
 
   @Query(
     " select 																									\n" +
     "   id as lectureBidId 																									\n" +
-    "   , memberId as memberId 																									\n" +
-    "		, (select memberVo.name from MemberVo memberVo where memberVo.memberId = lectureBid.memberId) as memberName    \n" +
+    "   , bidRegUserId as bidRegUserId 																									\n" +
+    "		, (select memberVo.name from MemberVo memberVo where memberVo.memberId = lectureBid.bidRegUserId) as bidRegUserName    \n" +
+    "		, (select memberVo.email from MemberVo memberVo where memberVo.memberId = lectureBid.bidRegUserId) as bidRegUserEmail    \n" +
+
     "		, lectureBid.price as price                                                                         \n" +
     "		, lectureBid.status as status                                                                       \n" +
     "  from                                                                                                     \n" +

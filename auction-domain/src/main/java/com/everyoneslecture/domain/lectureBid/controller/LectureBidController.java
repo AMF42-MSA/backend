@@ -63,6 +63,7 @@ public class LectureBidController {
 	@RequestMapping(method = RequestMethod.PUT, path="lectureBids/registerBid")
 	public String registerBid(@RequestBody LectureBidPostInDto lectureBidPostInDto) throws JsonProcessingException, InterruptedException, ExecutionException{
 		List auctionIds = lectureBidPostInDto.getAuctionIds();
+		String bidRegUserId = lectureBidPostInDto.getBidRegUserId();
 		Long auctionId;
 
 		//경매 유효성 체크 시작
@@ -74,6 +75,14 @@ public class LectureBidController {
 			if(!AuctionStatus.AUCTION.toString().equals(auctionInfoResultDto.getAuctionStatus().toString())){
 				return auctionInfoResultDto.getAuctionStatus();
 			}
+
+			lectureBidPostInDto.setAuctionId(auctionId);
+			if(lectureBidService.searchLectureBid(lectureBidPostInDto) != null){
+				return "이미 입찰한 내역이 있습니다.\n 취소하고 다시 입찰 바랍니다.";
+			}
+
+	
+
 
 			//AuctionStatus auctionStatus = auction.getAuctionStatus();
 			//System.out.println(auction.getAuctionStatus());
@@ -90,7 +99,7 @@ public class LectureBidController {
 			auctionId = ((Number)auctionIds.get(i)).longValue();
 			lectureBid.setAuctionId(auctionId);
 			lectureBid.setPrice(lectureBidPostInDto.getPrice());
-			lectureBid.setMemberId(lectureBidPostInDto.getMemberId());
+			lectureBid.setBidRegUserId(lectureBidPostInDto.getBidRegUserId());
 
 			lectureBid = lectureBidService.registerLectureBid(lectureBid);
 		}
@@ -104,6 +113,9 @@ public class LectureBidController {
 	public String cancelBid(@RequestBody LectureBidPostInDto lectureBidPostInDto) throws JsonProcessingException, InterruptedException, ExecutionException{
 
 		List auctionIds = lectureBidPostInDto.getAuctionIds();
+
+		String bidRegUserId = lectureBidPostInDto.getBidRegUserId();
+		System.out.println("####################################"+ bidRegUserId);
 
 
 		Long auctionId;
@@ -133,7 +145,7 @@ public class LectureBidController {
 		for(int i = 0 ; i < auctionIds.size(); i++){
 			LectureBid lectureBid = new LectureBid();
 			System.out.println("###########################"+ lectureBid);
-			Long memberId = lectureBidPostInDto.getMemberId();
+			String memberId = lectureBidPostInDto.getBidRegUserId();
 			auctionId = ((Number)auctionIds.get(i)).longValue();
 
 			lectureBidPostInDto.setAuctionId(auctionId);
@@ -162,7 +174,7 @@ public class LectureBidController {
 			}
 			return "입찰취소가 완료되었습니다.";
 		}else{
-			return "입찰이 아닌 건은 취소할 수가 없습니다.";
+			return "입찰내역이 존재하지 않는 건이 있습니다.";
 		}
 	}
 
@@ -175,23 +187,31 @@ public class LectureBidController {
 	//낙찰요청
 
 	@RequestMapping(method = RequestMethod.PUT, path="lectureBids/successLectureBid")
-	public String bidSuccessRegister(@RequestBody LectureBid lectureBid) throws JsonProcessingException, InterruptedException, ExecutionException{
+	public String bidSuccessRegister(@RequestBody LectureBidPostInDto lectureBidPostInDto) throws JsonProcessingException, InterruptedException, ExecutionException{
 
 
 		//입찰취소 유효성 체크 시작 ==> 낙찰된 경매는 낙찰진행을 막아야 한다.
-		Long auctionId = lectureBid.getAuctionId();
+		Long auctionId = lectureBidPostInDto.getAuctionId();
 		AuctionInfoResultDto auctionInfoResultDto = auctionService.searchAuction(auctionId);
+
+
+		String bidSuccessReqUserId = lectureBidPostInDto.getBidSuccessReqUserId();
+
 		System.out.println("auctionInfoResultDto.getAuctionStatus() : " + auctionInfoResultDto.getAuctionStatus());
 		System.out.println("AuctionStatus.BID_SUCCESS: " + AuctionStatus.BID_SUCCESS);
 		if(AuctionStatus.BID_SUCCESS.toString().equals(auctionInfoResultDto.getAuctionStatus().toString())){
 			return auctionInfoResultDto.getAuctionStatus();
 		}
 
-		System.out.println("###########################"+ lectureBid);
+		if(!bidSuccessReqUserId.equals(auctionInfoResultDto.getAuctionRegUserId())){
+			return "경매 등록자만 낙찰요청 할 수 있습니다.";
+		}
+
+		System.out.println("###########################"+ lectureBidPostInDto);
 		//유찰
-		lectureBidService.failLectureBid(lectureBid);
+		lectureBidService.failLectureBid(lectureBidPostInDto);
 		//낙찰
-		lectureBid = lectureBidService.successLectureBid(lectureBid);
+		lectureBidService.successLectureBid(lectureBidPostInDto);
 
 		//경매상태 변경 (AUCTION -> BID_SUCCESS (낙찰완료))
 		auctionService.updateAuctionStatusById(auctionId, AuctionStatus.BID_SUCCESS);

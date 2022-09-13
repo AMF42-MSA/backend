@@ -23,12 +23,12 @@ public class LectureBidUpdated extends AbstractEvent {
             this.auctionId = auctionId;
         }
 
-    Long memberId;
-        public Long getMemberId() {
-            return memberId;
+    String bidRegUserId;
+        public String getBidRegUserId() {
+            return bidRegUserId;
         }
-        public void setMemberId(Long memberId) {
-            this.memberId = memberId;
+        public void setBidRegUserId(String bidRegUserId) {
+            this.bidRegUserId = bidRegUserId;
         }
 
     int price;
