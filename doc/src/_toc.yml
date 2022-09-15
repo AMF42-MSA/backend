@@ -27,6 +27,7 @@ parts:
       - file: 개발표준/01-backend-Package구조
       - file: 개발표준/02-기타명명규칙.md
       - file: 개발표준/81-유용한도구-termial.md
+      - file: 개발표준/98-추가확인이필요한내용.md
       - file: 개발표준/99-잡동사니.md
     - file: pipeline/00_pipeline.md
       sections:
