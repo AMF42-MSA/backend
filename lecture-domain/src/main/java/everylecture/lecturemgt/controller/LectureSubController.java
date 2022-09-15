@@ -3,14 +3,15 @@ package everylecture.lecturemgt.controller;
 import java.util.concurrent.ExecutionException;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import everylecture.lecturemgt.config.interceptor.OnlineContext;
 import everylecture.lecturemgt.domain.Lecture;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,15 +24,17 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/lecturesubs")
 public class LectureSubController {
 
-    private final Logger log = LoggerFactory.getLogger(LectureSubController.class);
-
+    private Logger log;
+	private	final OnlineContext ctx;
  
+	
     /**
      * 생성자를 통한  객체주입
      * @param lectureService
      */
-    public LectureSubController() {
-
+    public LectureSubController(OnlineContext ctx) {
+    	this.ctx	=	ctx;
+//    	this.log	= ctx.getLog();
     }
 
 
@@ -49,7 +52,15 @@ public class LectureSubController {
     @Operation(summary = "특정강의분류ID 사용여부", description = "특정강의분류ID 사용여부(삭제 가능여부")
     public long getUseCategoryCnt(@PathVariable long categoryId) 
         throws InterruptedException, ExecutionException, JsonProcessingException {
-
+    	log = ctx.getLog();
+    	//URL을 어떻게 설정할까?
+    
+    	log.debug(ServletUriComponentsBuilder.fromCurrentRequest(). toUriString());
+    	log.debug(ServletUriComponentsBuilder.fromCurrentRequestUri().toUriString());
+//    	log.debug(ServletUriComponentsBuilder.fromCurrentRequestUri().);
+    	
+    	Thread.sleep(5000);  //임시 테스트용
+    	
     	long useCategoryCnt = Lecture.repository().getCountOfCategoryId(categoryId);
     	log.debug("useCategoryCnt: {}", useCategoryCnt);
         return useCategoryCnt;

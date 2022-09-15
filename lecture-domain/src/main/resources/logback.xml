@@ -6,8 +6,13 @@
 
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
-			<pattern>%d{MM-dd HH:mm:ss.SSS}, %-5level, %-8.15t, %c{5}.%M,%-4L , %m%n</pattern>
+			<!-- GUID: OnlineContext에서 설정  -->
+			<!-- URL: AOPContext에서 설정  -->
+			<pattern>%d{MM-dd HH:mm:ss.SSS},%-36X{GUID},%-36X{URL}, %-5level, %15t, %30class{5}.%-20M,%4L, %m%n</pattern>
 <!--  
+			<pattern>%d{MM-dd HH:mm:ss.SSS}, %-5level, %-8.15t, %c{5}.%M,%-4L , %m%n</pattern>
+
+
 			<pattern>%d %5p %40.40c:%4L - %m%n</pattern>
   pattern.console: "%clr(%d{MM-dd HH:mm:ss.SSS}){blue}, %-5level, %clr(%-8.15t){cyan}, %clr(%c{5}. %M){blue}%clr(,%-4L){blue} %clr(,){red} %clr(%m){faint}%n"
 -->
