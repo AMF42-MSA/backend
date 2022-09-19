@@ -1,6 +1,8 @@
 package com.everyoneslecture.domain.lectureBid.entity;
 
 
+import java.time.LocalDateTime;
+
 import javax.persistence.*;
 
 import com.everyoneslecture.AuctionApplication;
@@ -52,6 +54,20 @@ public class LectureBid {     // Entity. Domain Class.
     }
     public void setStatus(BidStatus status) {
         this.status = status;
+    }
+
+    LocalDateTime frstRegDate;
+    LocalDateTime lastChgDate;
+
+    @PrePersist
+    public void PrePersist(){
+        this.frstRegDate = LocalDateTime.now();
+        this.lastChgDate = this.frstRegDate;
+    }
+
+    @PreUpdate
+    public void PreUpdate(){
+        this.lastChgDate = LocalDateTime.now();
     }
 
     @Override

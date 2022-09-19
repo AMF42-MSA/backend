@@ -1,5 +1,6 @@
 package com.everyoneslecture.domain.auction.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,7 @@ import com.everyoneslecture.domain.auction.service.AuctionService;
 import com.everyoneslecture.domain.auction.dto.AuctionDto;
 import com.everyoneslecture.domain.auction.dto.AuctionInfoResultDto;
 import com.everyoneslecture.domain.auction.dto.AuctionResultDto;
+import com.everyoneslecture.domain.auction.dto.AuctionStaticsInfoResultDto;
 import com.everyoneslecture.domain.auction.dto.AuctionTempDto;
 import com.everyoneslecture.domain.auction.entity.Auction;
 import com.everyoneslecture.domain.auction.enums.AuctionStatus;
@@ -100,7 +102,7 @@ public class AuctionServiceImpl implements AuctionService {
         log.debug("registerLecture : {}", auctionId,  auctionStaus);
         Auction.repository().updateAuctionStatusById(auctionStaus, auctionId);
 	}
-  
+
   /**
    * Business Logic
    * 강좌별 경매정보 조회
@@ -110,7 +112,7 @@ public class AuctionServiceImpl implements AuctionService {
       throws InterruptedException, ExecutionException, JsonProcessingException {
         List<AuctionTempDto> auctionDtoList = Auction.repository().findLectAuctionAll();
 
-        
+
         return auctionDtoList;
   }
 
@@ -142,7 +144,20 @@ public class AuctionServiceImpl implements AuctionService {
       List<AuctionResultDto> auction = Auction.repository().findAuctionByLectId(lectId);
       return auction;
   }
-  
+
+
+      /**
+   * Business Logic
+   * 경매 통계 조회
+   **/
+  @Override
+  public List<AuctionStaticsInfoResultDto> searchAuctionStatics()
+      throws InterruptedException, ExecutionException, JsonProcessingException {
+      List<AuctionStaticsInfoResultDto> auctionStaticsInfoResultDtoList = Auction.repository().findAuctionStatics();
+      return auctionStaticsInfoResultDtoList;
+  }
+
+
 
   // /**
   //  * Business Logic

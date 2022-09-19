@@ -1,5 +1,7 @@
 package com.everyoneslecture.domain.auction.entity;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -86,6 +88,22 @@ public class Auction {     // Entity. Domain Class.
         public void setEndAuctionDate(Date endAuctionDate) {
             this.endAuctionDate = endAuctionDate;
         }
+
+
+    LocalDateTime frstRegDate;
+    LocalDateTime lastChgDate;
+
+    @PrePersist
+    public void PrePersist(){
+        this.frstRegDate = LocalDateTime.now();
+        this.lastChgDate = this.frstRegDate;
+    }
+
+    @PreUpdate
+    public void PreUpdate(){
+        this.lastChgDate = LocalDateTime.now();
+    }
+
     //처음은 무조건 등록
     //AuctionStatus auctionStatus = AuctionStatus.REGIST;
 

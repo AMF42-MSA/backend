@@ -23,6 +23,7 @@ import com.everyoneslecture.domain.lectureBid.entity.LectureBid;
 import com.everyoneslecture.domain.auction.dto.AuctionDto;
 import com.everyoneslecture.domain.auction.dto.AuctionInfoResultDto;
 import com.everyoneslecture.domain.auction.dto.AuctionResultDto;
+import com.everyoneslecture.domain.auction.dto.AuctionStaticsInfoResultDto;
 import com.everyoneslecture.domain.auction.dto.AuctionTempDto;
 import com.everyoneslecture.domain.auction.entity.Auction;
 import com.everyoneslecture.domain.auction.repository.AuctionRepository;
@@ -75,7 +76,7 @@ public class AuctionController {
 
 				if(!auctionRegUserId.equals(auctionResultDtoList.get(j).getAuctionRegUserId().toString())){
 					return "등록자가 아니면 취소 권한이 없습니다.";
-				}   
+				}
 				if(AuctionStatus.BID_SUCCESS.toString().equals(auctionResultDtoList.get(j).getAuctionStatus().toString()) ){
 					//경매완료인 건이 있으면 막는다.
 					return auctionResultDtoList.get(j).getAuctionStatus();
@@ -95,7 +96,7 @@ public class AuctionController {
 			Auction auction = new Auction();
 			System.out.println(lectIds.get(i));
 			lectId = Long.parseLong((String) lectIds.get(i));
-			auction.setLectId(lectId);	
+			auction.setLectId(lectId);
 			auctionService.cancelAuction(auction);
 		}
 		return "경매가 취소되었습니다.";
@@ -140,10 +141,10 @@ public class AuctionController {
 			Auction auction = new Auction();
 			auction.setEndAuctionDate(auctionDto.getEndAuctionDate());
 			auction.setStartAuctionDate(auctionDto.getStartAuctionDate());
-			
+
 			System.out.println(lectIds.get(i));
 			lectId = Long.parseLong((String) lectIds.get(i));
-			auction.setLectId(lectId);	
+			auction.setLectId(lectId);
 			auction.setAuctionRegUserId(auctionRegUserId);
 			auctionService.registerAuction(auction);
 		}
@@ -157,6 +158,15 @@ public class AuctionController {
 		//List<AuctionTempDto> auctionDtoList = auctionRepository.findLectAuctionAll();
 		//System.out.println(auctionDtoList);
 		return auctionService.searchLectAuctionList();
+
+	}
+
+
+	@RequestMapping(method = RequestMethod.GET, path="auctions/searchAuctionStatics")
+	public List<AuctionStaticsInfoResultDto> searchAuctionStatics() throws JsonProcessingException, InterruptedException, ExecutionException{
+		//List<AuctionTempDto> auctionDtoList = auctionRepository.findLectAuctionAll();
+		//System.out.println(auctionDtoList);
+		return auctionService.searchAuctionStatics();
 
 	}
 
