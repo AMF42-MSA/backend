@@ -1,12 +1,15 @@
 package everylecture.lecturemgt.controller;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -173,15 +176,16 @@ public class LectureController {
             @ApiResponse(responseCode = "200", description = "신규 강의 신청(등록)", 
             		content = @Content(schema = @Schema(implementation = LecturesPostOutDTO.class) ) )})
 
-    public ResponseEntity<LecturesPostOutDTO> registerLecture(@RequestBody   LecturesPostInDTO lecturesPostInDTO)
+//    public ResponseEntity<LecturesPostOutDTO> registerLecture(@RequestBody   LecturesPostInDTO lecturesPostInDTO)
+    public ResponseEntity<LecturesPostOutDTO> registerLecture(@Valid @RequestBody  LecturesPostInDTO lecturesPostInDTO, BindingResult bindingResult)
         throws InterruptedException, ExecutionException, JsonProcessingException {
     	log = ctx.getLog();
-//    	//입력자료 기초 검증(Java Validation 결과 확인)
-//    	if (bindingResult.hasErrors()) {
-//    		log.error("오류건수: {}", bindingResult.getErrorCount());
-//        	log.error(Arrays.toString(bindingResult.getAllErrors().toArray()));
-//        	return ResponseEntity.unprocessableEntity().body(null);
-//         }
+    	//입력자료 기초 검증(Java Validation 결과 확인)
+    	if (bindingResult.hasErrors()) {
+    		log.error("오류건수: {}", bindingResult.getErrorCount());
+        	log.error(Arrays.toString(bindingResult.getAllErrors().toArray()));
+        	return ResponseEntity.unprocessableEntity().body(null);
+         }
         
     	//feign - 회원정보 동기호출
     	//임시로 형변환
