@@ -1,5 +1,7 @@
 package everylecture.lecturemgt.domain;
 
+import java.util.Date;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
@@ -34,4 +36,11 @@ public interface LectureRepository extends PagingAndSortingRepository<Lecture, L
 //	//특정 CategoryID 내역 조회
 //	List<Lecture> findByCategoryId();	 
 
+	/**
+	 * 특정 기간 강의 등록 건수 조회
+	 * @return
+	 */
+	@Query("SELECT COUNT(A) FROM Lecture A WHERE A.endterDt >= :fm_date and A.endterDt <= :to_date")
+    int getCountOfLecture(@Param("fm_date")Date fmEnterDate, @Param("to_date")Date toEnterDate);	
+	
 }

@@ -8,7 +8,7 @@
 		<encoder>
 			<!-- GUID: OnlineContext에서 설정  -->
 			<!-- URL: AOPContext에서 설정  -->
-			<pattern>%d{MM-dd HH:mm:ss.SSS},%-36X{GUID},%-36X{URL}, %-5level, %15t, %30class{5}.%-20M,%4L, %m%n</pattern>
+			<pattern>%d{MM-dd HH:mm:ss.SSS},%-36X{GUID},%-30X{URL}, %-5level, %15t, %30class{5}.%-20M,%4L, %m%n</pattern>
 <!--  
 			<pattern>%d{MM-dd HH:mm:ss.SSS}, %-5level, %-8.15t, %c{5}.%M,%-4L , %m%n</pattern>
 

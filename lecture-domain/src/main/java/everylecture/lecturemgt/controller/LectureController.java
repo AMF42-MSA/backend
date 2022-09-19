@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import everylecture.lecturemgt.adaptor.client.MemberFeignClient;
+import everylecture.lecturemgt.config.interceptor.OnlineContext;
 import everylecture.lecturemgt.controller.dto.LecturesGetDetailOutDTO;
 import everylecture.lecturemgt.controller.dto.LecturesGetOutDTO;
 import everylecture.lecturemgt.controller.dto.LecturesPostInDTO;
@@ -42,8 +43,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 //@RequestMapping("/lectures")
 public class LectureController {
 
-    private final Logger log = LoggerFactory.getLogger(LectureController.class);
-
+    private Logger log;
+	private	final OnlineContext ctx;
+	
 //    private static final String ENTITY_NAME = "lecture";
 
     private final MemberFeignClient memberClient;
@@ -63,12 +65,14 @@ public class LectureController {
      * @param lecturePOSTOutMapper
      * @param memberClient
      */
-    public LectureController(LectureService lectureService, 
+    public LectureController(OnlineContext ctx,
+    		LectureService lectureService, 
     		LecturePostInMapper lecturePOSTInMapper, 
     		LecturePostOutMapper lecturePOSTOutMapper,
     		LectureGetDetailOutMapper lectureGetDetailOutMapper,
     		LectureGetOutMapper lectureGetOutMapper,
     		MemberFeignClient memberClient) {
+    	this.ctx = ctx;
     	this.lectureService = lectureService;
         this.lecturePostInMapper = lecturePOSTInMapper;
         this.lecturesPostOutMapper = lecturePOSTOutMapper;
@@ -97,6 +101,7 @@ public class LectureController {
             @ApiResponse(responseCode = "200", description = "회원 조회 성공(Jenkins빌드 점검1)", 
             		content = @Content(schema = @Schema(implementation = LecturesGetDetailOutDTO.class))) })
     public ResponseEntity<LecturesGetDetailOutDTO> getLeature(@PathVariable Long id) {
+    	log = ctx.getLog();
     	Optional<Lecture> lecture = lectureService.findOne(id);
     	if (lecture.isEmpty()) {
     		log.debug("해당 자료없음 id: {}", id);
@@ -114,6 +119,7 @@ public class LectureController {
             @ApiResponse(responseCode = "200", description = "회원 삭제 성공") })
 
     public ResponseEntity<Void> deleteLeature(@PathVariable Long id) {
+    	log = ctx.getLog();
     	lectureService.delete(id);
     	return ResponseEntity.ok().body(null);
     }
@@ -126,6 +132,7 @@ public class LectureController {
             @ApiResponse(responseCode = "200", description = "회원 조회 성공", 
             		content = @Content(schema = @Schema(implementation = LecturesGetOutDTO.class) ) )})
     public ResponseEntity<List<LecturesGetOutDTO>> getLeaturesByCategoryId() {
+    	log = ctx.getLog();
     	List<Lecture> lectureList = lectureService.findByCategoryId();
     	if (lectureList.isEmpty()) {
     		log.debug("해당 자료없음 id: {}", "" );
@@ -168,7 +175,7 @@ public class LectureController {
 
     public ResponseEntity<LecturesPostOutDTO> registerLecture(@RequestBody   LecturesPostInDTO lecturesPostInDTO)
         throws InterruptedException, ExecutionException, JsonProcessingException {
-
+    	log = ctx.getLog();
 //    	//입력자료 기초 검증(Java Validation 결과 확인)
 //    	if (bindingResult.hasErrors()) {
 //    		log.error("오류건수: {}", bindingResult.getErrorCount());

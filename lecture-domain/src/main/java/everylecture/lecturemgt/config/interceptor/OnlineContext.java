@@ -1,6 +1,5 @@
 package everylecture.lecturemgt.config.interceptor;
 
-import java.util.Iterator;
 import java.util.UUID;
 
 import javax.annotation.PostConstruct;
@@ -35,9 +34,9 @@ public class OnlineContext {
 //        this.URL = requestURL;
 //    }
     
-    public Logger getLog() {
-    	return log;
-    }
+//    public Logger getLog() {
+//    	return log;
+//    }
     
 //    public void debug(String message) {
 //        log.debug("[" + uuid + "]" + "[" + requestURL + "] " +  message);
@@ -58,15 +57,13 @@ public class OnlineContext {
     			urlPath = urlPath + "/" + urlWords[i]; 
 			}
 	    	MDC.put("URL",urlPath);
-    		
     	}
-    	
 
     	//    	출처: https://prohannah.tistory.com/182 [Hello, Hannah!:티스토리]
-        log.debug("[" + GUID + ", " + URL + "] request scope bean create:" + this);
+        log.debug("[ {} , {}] request scope bean create: {}", GUID, URL, this);
     }
     @PreDestroy
     public void close() {
-        log.debug("[" + GUID + ", " + URL + "] request scope bean close:" + this);
+        log.debug("[ {} , {}] request scope bean close: {}", GUID, URL, this);
     }
 }
