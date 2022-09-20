@@ -1,7 +1,7 @@
-package com.everyoneslecture.member.domain;
+package com.everyoneslecture.member.domain.member;
 
 import com.everyoneslecture.member.adapter.AbstractEvent;
-import com.everyoneslecture.member.domain.enumeration.MemberType;
+import com.everyoneslecture.member.domain.member.enumeration.MemberType;
 
 public class MemberJoined extends AbstractEvent {
 
