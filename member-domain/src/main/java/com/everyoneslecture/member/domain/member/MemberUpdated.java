@@ -1,4 +1,4 @@
-package com.everyoneslecture.member.domain;
+package com.everyoneslecture.member.domain.member;
 
 public class MemberUpdated extends MemberJoined{
 

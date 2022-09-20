@@ -18,8 +18,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.everyoneslecture.member.domain.dto.MemberDto;
-import com.everyoneslecture.member.domain.dto.RequestLogin;
+import com.everyoneslecture.member.domain.member.dto.MemberDto;
+import com.everyoneslecture.member.domain.member.dto.RequestLogin;
 import com.everyoneslecture.member.service.MemberService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
