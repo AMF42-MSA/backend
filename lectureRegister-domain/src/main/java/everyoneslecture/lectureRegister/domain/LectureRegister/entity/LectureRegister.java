@@ -24,8 +24,19 @@ public class LectureRegister {
         this.lectId = lectId;
     }
 
-    // 강의명
-    String lectName;
+    String lectName; // 강의명
+    String lectContent; // 강의내용
+    int lectMINUser; // 강의최소인원
+    int lectMAXUser; // 강의최대인원
+    int lectFee; // 강의료
+    Date startLectureDt; // 강의시작일
+    Date registerEndDt; // 수강신청마감일
+
+    @Enumerated(EnumType.STRING)
+    private LectureRegisterStatus lectureStatus; // 강의상태
+
+    String memberId; // 수강신청자 ID
+    int regitMemberCnt; // 수강신청자수
 
     public String getLectName() {
         return lectName;
@@ -35,9 +46,6 @@ public class LectureRegister {
         this.lectName = lectName;
     }
 
-    // 강의내용
-    String lectContent;
-
     public String getLectContent() {
         return lectContent;
     }
@@ -45,9 +53,6 @@ public class LectureRegister {
     public void setLectContent(String lectContent) {
         this.lectContent = lectContent;
     }
-
-    // 강의최소인원
-    int lectMINUser;
 
     public int getLectMINUser() {
         return lectMINUser;
@@ -57,9 +62,6 @@ public class LectureRegister {
         this.lectMINUser = lectMinUser;
     }
 
-    // 강의최대인원
-    int lectMAXUser;
-
     public int getLectMAXUser() {
         return lectMAXUser;
     }
@@ -67,9 +69,6 @@ public class LectureRegister {
     public void setLectMAXUser(int lectMAXUser) {
         this.lectMAXUser = lectMAXUser;
     }
-
-    // 강의료
-    int lectFee;
 
     public int getLectFee() {
         return lectFee;
@@ -79,9 +78,6 @@ public class LectureRegister {
         this.lectFee = lectFee;
     }
 
-    // 강의시작일
-    Date startLectureDt;
-
     public Date getStartLectureDt() {
         return startLectureDt;
     }
@@ -89,9 +85,6 @@ public class LectureRegister {
     public void setStartLectureDt(Date startLectureDt) {
         this.startLectureDt = startLectureDt;
     }
-
-    // 강의신청마감일
-    Date registerEndDt;
 
     public Date getRegisterEndDt() {
         return registerEndDt;
@@ -101,8 +94,13 @@ public class LectureRegister {
         this.registerEndDt = registerEndDt;
     }
 
-    // 강의신청자
-    String memberId;
+    public LectureRegisterStatus getLectureStatus() {
+        return lectureStatus;
+    }
+
+    public void setLectureStatus(String string) {
+        this.lectureStatus = lectureStatus;
+    }
 
     public String getMemberId() {
         return memberId;
@@ -112,9 +110,6 @@ public class LectureRegister {
         this.memberId = memberId;
     }
 
-    // 강의신청인원
-    int regitMemberCnt;
-
     public int getRegitMemberCnt() {
         return regitMemberCnt;
     }
@@ -123,28 +118,17 @@ public class LectureRegister {
         this.regitMemberCnt = regitMemberCnt;
     }
 
-    @Enumerated(EnumType.STRING)
-    private LectureRegisterStatus lectRegistStatus;
-
-    public LectureRegisterStatus getLectRegistStatus() {
-        return lectRegistStatus;
-    }
-
-    public void setLectRegistStatus(LectureRegisterStatus lectRegistStatus) {
-        this.lectRegistStatus = lectRegistStatus;
-    }
-
     public String cancel() {
         // answer must be obtained by UI
 
-        setLectRegistStatus(lectRegistStatus.CANCELED); // 취소
+       // setLectureStatus(lectureStatus.CANCELED); // 취소
         return "강의 신청이 취소되었습니다.";
     }
 
     public String startLectureRegister() {
         // answer must be obtained by UI
 
-        setLectRegistStatus(lectRegistStatus.COMPLETED); // 취소
+        //setLectureStatus(lectureStatus.COMPLETED); // 취소
         return "강의 신청이 완료 되었습니다.";
     }
 
