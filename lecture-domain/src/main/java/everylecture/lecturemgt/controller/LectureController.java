@@ -1,11 +1,15 @@
 package everylecture.lecturemgt.controller;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,12 +20,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import everylecture.lecturemgt.adaptor.client.MemberFeignClient;
+import everylecture.lecturemgt.config.interceptor.OnlineContext;
 import everylecture.lecturemgt.controller.dto.LecturesGetDetailOutDTO;
+import everylecture.lecturemgt.controller.dto.LecturesGetOutDTO;
 import everylecture.lecturemgt.controller.dto.LecturesPostInDTO;
 import everylecture.lecturemgt.controller.dto.LecturesPostOutDTO;
 import everylecture.lecturemgt.controller.dto.MemberInfoDTO;
-import everylecture.lecturemgt.controller.errors.BadRequestAlertException;
 import everylecture.lecturemgt.controller.mapper.LectureGetDetailOutMapper;
+import everylecture.lecturemgt.controller.mapper.LectureGetOutMapper;
 import everylecture.lecturemgt.controller.mapper.LecturePostInMapper;
 import everylecture.lecturemgt.controller.mapper.LecturePostOutMapper;
 import everylecture.lecturemgt.domain.Lecture;
@@ -40,8 +46,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 //@RequestMapping("/lectures")
 public class LectureController {
 
-    private final Logger log = LoggerFactory.getLogger(LectureController.class);
-
+    private Logger log;
+	private	final OnlineContext ctx;
+	
 //    private static final String ENTITY_NAME = "lecture";
 
     private final MemberFeignClient memberClient;
@@ -50,6 +57,7 @@ public class LectureController {
     private final LecturePostInMapper lecturePostInMapper;
     private final LecturePostOutMapper lecturesPostOutMapper;
     private final LectureGetDetailOutMapper lectureGetDetailOutMapper;
+    private final LectureGetOutMapper lectureGetOutMapper;
 
     
     
@@ -60,18 +68,20 @@ public class LectureController {
      * @param lecturePOSTOutMapper
      * @param memberClient
      */
-    public LectureController(LectureService lectureService, 
+    public LectureController(OnlineContext ctx,
+    		LectureService lectureService, 
     		LecturePostInMapper lecturePOSTInMapper, 
     		LecturePostOutMapper lecturePOSTOutMapper,
     		LectureGetDetailOutMapper lectureGetDetailOutMapper,
+    		LectureGetOutMapper lectureGetOutMapper,
     		MemberFeignClient memberClient) {
-    	log.debug("_START: {}", lectureService);
+    	this.ctx = ctx;
     	this.lectureService = lectureService;
         this.lecturePostInMapper = lecturePOSTInMapper;
         this.lecturesPostOutMapper = lecturePOSTOutMapper;
         this.lectureGetDetailOutMapper = lectureGetDetailOutMapper;
+        this.lectureGetOutMapper = lectureGetOutMapper;
         this.memberClient = memberClient;
-    	log.debug("_END: {}");
     }
 
 
@@ -87,24 +97,20 @@ public class LectureController {
 //    }
 
     @Tag(name = "leatures")    //swagger용
-    @GetMapping("/Leatures/{id}")
+    @GetMapping(value="/Leatures/{id}")
 
     @Operation(summary = "신규 강의 세부내역 조회", description = "\"강의 내역1건에 대하여 전체 내역을 조회한다\"",
     responses = {
             @ApiResponse(responseCode = "200", description = "회원 조회 성공(Jenkins빌드 점검1)", 
-            		content = @Content(schema = @Schema(implementation = LecturesGetDetailOutDTO.class))),
-            @ApiResponse(responseCode = "404", description = "존재하지 않는 리소스 접근", 
-            		content = @Content(schema = @Schema(implementation = BadRequestAlertException.class))) })
+            		content = @Content(schema = @Schema(implementation = LecturesGetDetailOutDTO.class))) })
     public ResponseEntity<LecturesGetDetailOutDTO> getLeature(@PathVariable Long id) {
-    	log.debug("_START: {}", id);
-
+    	log = ctx.getLog();
     	Optional<Lecture> lecture = lectureService.findOne(id);
     	if (lecture.isEmpty()) {
     		log.debug("해당 자료없음 id: {}", id);
             return ResponseEntity.ok().body(null);
     	}
     	LecturesGetDetailOutDTO lectureGetDetailDTO = lectureGetDetailOutMapper.toDto(lecture.get());
-    	log.debug("_END: {}", lectureGetDetailDTO);
         return ResponseEntity.ok().body(lectureGetDetailDTO);
     }
 
@@ -116,13 +122,43 @@ public class LectureController {
             @ApiResponse(responseCode = "200", description = "회원 삭제 성공") })
 
     public ResponseEntity<Void> deleteLeature(@PathVariable Long id) {
-    	log.debug("_START: {}", id);
+    	log = ctx.getLog();
     	lectureService.delete(id);
-    	log.debug("_END: {}", id);
     	return ResponseEntity.ok().body(null);
     }
 
 
+    @Tag(name = "leatures")
+    @GetMapping(value="/Leatures/category")
+    @Operation(summary = "강의분류 별 조회", description = "강의 분류 별 내역 조회",
+    responses = {
+            @ApiResponse(responseCode = "200", description = "회원 조회 성공", 
+            		content = @Content(schema = @Schema(implementation = LecturesGetOutDTO.class) ) )})
+    public ResponseEntity<List<LecturesGetOutDTO>> getLeaturesByCategoryId() {
+    	log = ctx.getLog();
+    	List<Lecture> lectureList = lectureService.findByCategoryId();
+    	if (lectureList.isEmpty()) {
+    		log.debug("해당 자료없음 id: {}", "" );
+            return ResponseEntity.ok().body(null);
+    	}
+
+    	
+    	List <LecturesGetOutDTO> lectureGetDTOList = lectureGetOutMapper.toDto(lectureList);
+        
+//		//ID값 포함여부 확인용
+//		for(Lecture lecture: lectureList){
+//			log.debug("lecture : {}", lecture);			
+//		}
+//		
+//		//ID값 포함여부 확인용
+//		for(LecturesGetOutDTO lectureGetDTO: lectureGetDTOList){
+//			log.debug("lectureGetDTO : {}", lectureGetDTO);			
+//		}
+    	
+    	return ResponseEntity.ok().body(lectureGetDTOList);
+    }
+
+    
     /**
      * 강의등록하기
      * @param userid
@@ -133,14 +169,28 @@ public class LectureController {
      * @throws JsonProcessingException
      */
     @Tag(name = "leatures")
-    @PostMapping("/leatures")
+    @PostMapping(value="/leatures")
     @Operation(summary = "신규 강의 신청(등록)", 
-    			description = "강의 분류, 강의명, 최소 필요 수강인원등을 등록한다")
-    public ResponseEntity<LecturesPostOutDTO> registerLecture(@RequestBody LecturesPostInDTO lecturesPostInDTO)
-        throws InterruptedException, ExecutionException, JsonProcessingException {
-    	log.debug("_START: {}", lecturesPostInDTO);
+    			description = "강의 분류, 강의명, 최소 필요 수강인원등을 등록한다",
+    responses = {
+            @ApiResponse(responseCode = "200", description = "신규 강의 신청(등록)", 
+            		content = @Content(schema = @Schema(implementation = LecturesPostOutDTO.class) ) )})
 
-        ResponseEntity<MemberInfoDTO> memberInfoResult = memberClient.findById(lecturesPostInDTO.getMemberId()); //feign - 책 정보 가져오기
+//    public ResponseEntity<LecturesPostOutDTO> registerLecture(@RequestBody   LecturesPostInDTO lecturesPostInDTO)
+    public ResponseEntity<LecturesPostOutDTO> registerLecture(@Valid @RequestBody  LecturesPostInDTO lecturesPostInDTO, BindingResult bindingResult)
+        throws InterruptedException, ExecutionException, JsonProcessingException {
+    	log = ctx.getLog();
+    	//입력자료 기초 검증(Java Validation 결과 확인)
+    	if (bindingResult.hasErrors()) {
+    		log.error("오류건수: {}", bindingResult.getErrorCount());
+        	log.error(Arrays.toString(bindingResult.getAllErrors().toArray()));
+        	return ResponseEntity.unprocessableEntity().body(null);
+         }
+        
+    	//feign - 회원정보 동기호출
+    	//임시로 형변환
+    	long memberid = Long.parseLong(lecturesPostInDTO.getMemberId());
+    	ResponseEntity<MemberInfoDTO> memberInfoResult = memberClient.findById(memberid); 
         MemberInfoDTO memberInfoDTO = memberInfoResult.getBody();
         log.debug("member info: {}", memberInfoDTO);
         
@@ -149,9 +199,7 @@ public class LectureController {
         
         Lecture returnLecture= lectureService.registerLecture(lecture);
         LecturesPostOutDTO returnDto = lecturesPostOutMapper.toDto(returnLecture);
-        
-        
-    	log.debug("_END: {}" , returnDto);
+
         return ResponseEntity.ok().body(returnDto);
     }
 

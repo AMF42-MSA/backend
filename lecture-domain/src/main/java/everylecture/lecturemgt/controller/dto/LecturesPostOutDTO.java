@@ -36,7 +36,7 @@ public class LecturesPostOutDTO implements Serializable {
 	@Schema(description = "수강마감일")
     private Date 	registerEndDt;  
 	@Schema(description = "강의상태")
-    private long 	lectureStatus;  
+    private String 	lectureStatus;  
 
 	@Schema(description = "강의등록자ID")
     private	long	memberId;		

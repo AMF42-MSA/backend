@@ -96,6 +96,11 @@ Docker기반으로 Jenkins 설정
     - 도커의 환경설정 정보 확인
     - ![](images/jenkins-99-02.png)
 
+6. jenkinss 처음 실행시점
+   - 초기 비밀번호 입력: docker 로그에 해당 비밀번호 있음(매번 다름)
+     도커로그 또는 화면에 표시된 위치에서 해당 파일 Open 하여 확인
+   - 초기 관리자 계정 등록
+
 ## (추가). 1번 과정을 docker-compose 설정으로 변경
 - dDockerfile 생성은 동일
     ```yaml

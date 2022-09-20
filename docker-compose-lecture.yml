@@ -3,14 +3,14 @@ version: '2'
 services:
 
   lecture:
-#    build: lecture
-    image: jcscom13/lecture-domain-docker:latest
+    build: lecture-domain
+#    image: jcscom13/lecture-domain-docker:latest
 
     mem_limit: 490m
     mem_reservation: 400m    
 # --scale lecture=2를 수행하면 오류 발생
-#    ports:
-#      - 8000:8000
+    ports:
+      - 8000:8000
 #      - 8081:8080
     environment:
 

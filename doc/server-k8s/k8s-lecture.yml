@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lecture
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lecture
+  template:
+    metadata:
+      labels:
+        app: lecture
+    spec:
+#      nodeSelector:
+#        "beta.kubernetes.io/os": linux      
+      containers:
+      - name: lecture
+        image: acr13myinno.azurecr.io/lecture
+        ports:
+          - containerPort: 8080
+        resources:
+          requests:
+            memory: "400Mi"
+            cpu: "250m"
+          limits:
+            memory: "550Mi"
+            cpu: "500m"
+        env:
+        - name: JVM_OPTS
+          value: -Xmx512m -Xms400m -XX:MaxPermSize=128m
+        - name: SPRING_PROFILES_ACTIVE
+          value: docker
+      restartPolicy: Always          
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: lecture
+
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+  selector:
+    app: lecture

@@ -5,10 +5,13 @@ import javax.persistence.*;
 import com.everyoneslecture.domain.lectureBid.enums.BidStatus;
 
 
-public class LectureBidSuccessed extends AbstractEvent {
+public class LectureBidUpdated extends AbstractEvent {
     Long id;
         public Long getId() {
             return id;
+        }
+        public void setId(Long id) {
+            this.id = id;
         }
 
 
@@ -20,12 +23,12 @@ public class LectureBidSuccessed extends AbstractEvent {
             this.auctionId = auctionId;
         }
 
-    Long memberId;
-        public Long getMemberId() {
-            return memberId;
+    String bidRegUserId;
+        public String getBidRegUserId() {
+            return bidRegUserId;
         }
-        public void setMemberId(Long memberId) {
-            this.memberId = memberId;
+        public void setBidRegUserId(String bidRegUserId) {
+            this.bidRegUserId = bidRegUserId;
         }
 
     int price;

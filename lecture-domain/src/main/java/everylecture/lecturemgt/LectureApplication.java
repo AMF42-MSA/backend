@@ -22,5 +22,5 @@ public class LectureApplication {
             SpringApplication.run(LectureApplication.class, args);
     }
     
-    
+
 }

@@ -8,20 +8,12 @@ import javax.persistence.*;
 @Embeddable
 public class MemberVO {
 
-    Long memberId;
-        public Long getMemberId() {
+    String memberId;
+        public String getMemberId() {
             return memberId;
         }
-        public void setMemberId(Long memberId) {
+        public void setMemberId(String memberId) {
             this.memberId = memberId;
-        }
-
-    String loginId;
-        public String getLoginId() {
-            return loginId;
-        }
-        public void setLoginId(String loginId) {
-            this.loginId = loginId;
         }
 
     String memberName;  //등록자명
@@ -32,12 +24,12 @@ public class MemberVO {
             this.memberName = memberName;
         }
 
-    String mobile;
-        public String getMobile() {
-            return mobile;
+    String email;
+        public String getEmail() {
+            return email;
         }
-        public void setMobile(String mobile) {
-            this.mobile = mobile;
+        public void setEmail(String email) {
+            this.email = email;
         }
 
 }

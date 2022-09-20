@@ -1,10 +1,14 @@
 package com.everyoneslecture.domain.lectureBid.entity;
 
 
+import java.time.LocalDateTime;
+
 import javax.persistence.*;
 
 import com.everyoneslecture.AuctionApplication;
 import com.everyoneslecture.domain.lectureBid.enums.BidStatus;
+import com.everyoneslecture.domain.lectureBid.event.LectureBidAdded;
+import com.everyoneslecture.domain.lectureBid.event.LectureBidUpdated;
 import com.everyoneslecture.domain.lectureBid.repository.LectureBidRepository;
 
 @Entity
@@ -27,12 +31,12 @@ public class LectureBid {     // Entity. Domain Class.
             this.auctionId = auctionId;
         }
 
-    Long memberId;
-        public Long getMemberId() {
-            return memberId;
+        String bidRegUserId;
+        public String getBidRegUserId() {
+            return bidRegUserId;
         }
-        public void setMemberId(Long memberId) {
-            this.memberId = memberId;
+        public void setBidRegUserId(String bidRegUserId) {
+            this.bidRegUserId = bidRegUserId;
         }
 
     int price;
@@ -52,6 +56,20 @@ public class LectureBid {     // Entity. Domain Class.
         this.status = status;
     }
 
+    LocalDateTime frstRegDate;
+    LocalDateTime lastChgDate;
+
+    @PrePersist
+    public void PrePersist(){
+        this.frstRegDate = LocalDateTime.now();
+        this.lastChgDate = this.frstRegDate;
+    }
+
+    @PreUpdate
+    public void PreUpdate(){
+        this.lastChgDate = LocalDateTime.now();
+    }
+
     @Override
     public String toString() {
 
@@ -61,5 +79,36 @@ public class LectureBid {     // Entity. Domain Class.
         LectureBidRepository lectureBidRepository = AuctionApplication.applicationContext.getBean(LectureBidRepository.class);
         return lectureBidRepository;
     }
+
+
+    /**
+     * 입찰정보이력 Kafka 등록 (입찰시)
+     */
+    @PostPersist
+    public void onPostPersist(){
+    	LectureBidAdded lectureBidAdded = new LectureBidAdded();
+        lectureBidAdded.setId(id);
+    	lectureBidAdded.setAuctionId(auctionId);
+    	lectureBidAdded.setBidRegUserId(bidRegUserId);
+    	lectureBidAdded.setPrice(price);
+    	lectureBidAdded.setStatus(status);
+    	lectureBidAdded.publishAfterCommit();
+    }
+
+    /**
+     * 입찰정보이력 Kafka (수정시)
+     */
+    @PostUpdate
+    public void onPostUpdate(){
+        LectureBidUpdated lectureBidUpdated = new LectureBidUpdated();
+        lectureBidUpdated.setId(id);
+    	lectureBidUpdated.setAuctionId(auctionId);
+    	lectureBidUpdated.setBidRegUserId(bidRegUserId);
+    	lectureBidUpdated.setPrice(price);
+    	lectureBidUpdated.setStatus(status);
+    	lectureBidUpdated.publishAfterCommit();
+    }
+
+
 
 }

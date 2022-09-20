@@ -10,16 +10,18 @@ import lombok.Data;
 public class AuctionDto {
   private Long lectId;
   private List lectIds;
-  private String lectName;
+  private String title;
   private String lectureStatus;
-  private int cntStudent;
+  private int maxEnrollment;
   private Long lectureCost;
-  private Date startLecture;
+  private Date startLectureDt;
   private String auctionStatus;
   private Long auctionId;
   private Date endAuctionDate;
   private Date startAuctionDate;
   private Long id;
+  private String auctionRegUserId;
+
 
 
 
@@ -37,23 +39,24 @@ public class AuctionDto {
   public void setLectId(Long lectId) {
     this.lectId = lectId;
   }
-  public String getLectName() {
-    return lectName;
+  public String getTitle() {
+    return title;
   }
-  public void setLectName(String lectName) {
-    this.lectName = lectName;
+  public void setTitle(String title) {
+    this.title = title;
   }
   public String getLectureStatus() {
     return lectureStatus;
   }
+  
   public void setLectureStatus(String lectureStatus) {
     this.lectureStatus = lectureStatus;
   }
-  public int getCntStudent() {
-    return cntStudent;
+  public int getMaxEnrollment() {
+    return maxEnrollment;
   }
-  public void setCntStudent(int cntStudent) {
-    this.cntStudent = cntStudent;
+  public void setMaxEnrollment(int maxEnrollment) {
+    this.maxEnrollment = maxEnrollment;
   }
   public Long getLectureCost() {
     return lectureCost;
@@ -61,11 +64,11 @@ public class AuctionDto {
   public void setLectureCost(Long lectureCost) {
     this.lectureCost = lectureCost;
   }
-  public Date getStartLecture() {
-    return startLecture;
+  public Date getStartLectureDt() {
+    return startLectureDt;
   }
-  public void setStartLecture(Date startLecture) {
-    this.startLecture = startLecture;
+  public void setStartLectureDt(Date startLectureDt) {
+    this.startLectureDt = startLectureDt;
   }
   public String getAuctionStatus() {
     return auctionStatus;
@@ -108,6 +111,12 @@ public class AuctionDto {
     this.lectIds = lectIds;
   }
 
+  public String getAuctionRegUserId(){
+    return auctionRegUserId;
+  }
 
-
+  public void setAuctionRegUserId(String auctionRegUserId){
+    this.auctionRegUserId = auctionRegUserId;
+  }
+  
 }

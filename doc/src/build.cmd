@@ -5,10 +5,10 @@ title "jupyter book 만들기"
 
 rem 생성위치는 각자 수정(d:\APP\GIT-AMF3\backend\doc\htm)
 rem 해당 shell 수행위치는 build.msa가 있는 위치에서 수행
-jb build  --path-output "d:\APP\GIT-AMF3\backend\doc\html"  --all .\
+jb build  --path-output "d:\APP\GIT-AMF3\backend\doc\html"  .\
 
-#REM 기존 문서와 동일위치에 생성하기 위하여 추가 빌드
-jb build  --path-output "c:\APP\jb_html\MSA-EDU-LV3"  --all .\
+REM 기존 문서와 동일위치에 생성하기 위하여 추가 빌드
+#jb build  --path-output "c:\APP\jb_html\MSA-EDU-LV3"  --all .\
 
 
 

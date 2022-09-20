@@ -7,9 +7,10 @@ public class NotiDelivered extends AbstractEvent {
   String memberId;
   String memberName;
   String categoryName;
-  String mobile;
+  String email;
   String lectureName;
   String lectureStatus;
+
 
   public String getMemberId() {
     return memberId;
@@ -32,11 +33,11 @@ public class NotiDelivered extends AbstractEvent {
     this.categoryName = categoryName;
   }
 
-  public String getMobile() {
-    return mobile;
+  public String getEmail() {
+    return email;
   }
-  public void setMobile(String mobile) {
-    this.mobile = mobile;
+  public void setEmail(String email) {
+    this.email = email;
   }
 
   public String getLectureName() {
@@ -52,5 +53,6 @@ public class NotiDelivered extends AbstractEvent {
   public void setLectureStatus(String lectureStatus) {
     this.lectureStatus = lectureStatus;
   }
+
 
 }

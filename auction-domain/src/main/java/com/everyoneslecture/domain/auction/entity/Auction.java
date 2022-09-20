@@ -1,5 +1,7 @@
 package com.everyoneslecture.domain.auction.entity;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -10,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.everyoneslecture.domain.auction.enums.AuctionStatus;
+import com.everyoneslecture.domain.auction.event.AuctionAdded;
+import com.everyoneslecture.domain.auction.event.AuctionUpdated;
 import com.everyoneslecture.domain.auction.entity.Auction;
 import com.everyoneslecture.domain.auction.repository.AuctionRepository;
 import com.everyoneslecture.AuctionApplication;
@@ -51,6 +55,16 @@ public class Auction {     // Entity. Domain Class.
         this.lectId = lectId;
     }
 
+    String auctionRegUserId;
+
+    public String getAuctionRegUserId() {
+        return auctionRegUserId;
+    }
+    public void setAuctionRegUserId(String auctionRegUserId) {
+        this.auctionRegUserId = auctionRegUserId;
+    }
+
+
 
 
 
@@ -74,6 +88,22 @@ public class Auction {     // Entity. Domain Class.
         public void setEndAuctionDate(Date endAuctionDate) {
             this.endAuctionDate = endAuctionDate;
         }
+
+
+    LocalDateTime frstRegDate;
+    LocalDateTime lastChgDate;
+
+    @PrePersist
+    public void PrePersist(){
+        this.frstRegDate = LocalDateTime.now();
+        this.lastChgDate = this.frstRegDate;
+    }
+
+    @PreUpdate
+    public void PreUpdate(){
+        this.lastChgDate = LocalDateTime.now();
+    }
+
     //처음은 무조건 등록
     //AuctionStatus auctionStatus = AuctionStatus.REGIST;
 
@@ -111,5 +141,37 @@ public class Auction {     // Entity. Domain Class.
         AuctionRepository auctionRepository = AuctionApplication.applicationContext.getBean(AuctionRepository.class);
         return auctionRepository;
     }
+
+
+    /**
+     * 경매정보이력 Kafka 등록 (경매등록)
+     */
+    @PostPersist
+    public void onPostPersist(){
+    	AuctionAdded auctionAdded = new AuctionAdded();
+        auctionAdded.setId(id);
+    	auctionAdded.setLectId(lectId);
+    	auctionAdded.setAuctionStatus(auctionStatus);
+    	auctionAdded.setStartAuctionDate(startAuctionDate);
+    	auctionAdded.setEndAuctionDate(endAuctionDate);
+        auctionAdded.setAuctionRegUserId(auctionRegUserId);
+    	auctionAdded.publishAfterCommit();
+    }
+
+    /**
+     * 입찰정보이력 Kafka (경매수정(취소))
+     */
+    @PostUpdate
+    public void onPostUpdate(){
+    	AuctionUpdated auctionUpdated = new AuctionUpdated();
+        auctionUpdated.setId(id);
+    	auctionUpdated.setLectId(lectId);
+    	auctionUpdated.setAuctionStatus(auctionStatus);
+    	auctionUpdated.setStartAuctionDate(startAuctionDate);
+    	auctionUpdated.setEndAuctionDate(endAuctionDate);
+        auctionUpdated.setAuctionRegUserId(auctionRegUserId);
+    	auctionUpdated.publishAfterCommit();
+    }
+
 
 }

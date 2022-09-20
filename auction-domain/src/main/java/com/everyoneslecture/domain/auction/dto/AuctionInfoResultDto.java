@@ -8,4 +8,5 @@ public interface AuctionInfoResultDto {
   Long getAuctionId();
   Date getEndAuctionDate();
   Date getStartAuctionDate();
+  String getAuctionRegUserId();
 }

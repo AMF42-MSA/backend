@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8083
 ---
 spring:
   profiles: default
@@ -15,7 +15,7 @@ spring:
     stream:
       kafka:
         binder:
-          brokers: localhost:9092
+          brokers: localhost:29092
         streams:
           binder:
             configuration:

@@ -1,5 +1,6 @@
 package everylecture.lecturemgt.service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
@@ -33,6 +34,16 @@ public interface LectureService {
      */
     Page<Lecture> findAll(Pageable pageable);
 
+
+    /**
+     * 특정 강의분류 전체 조회.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    List<Lecture> findByCategoryId();
+
+    
     /**
      * Get the "id" rental.
      *

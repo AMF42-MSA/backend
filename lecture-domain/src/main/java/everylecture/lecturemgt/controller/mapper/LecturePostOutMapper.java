@@ -12,7 +12,6 @@ import everylecture.lecturemgt.domain.Lecture;
 public interface LecturePostOutMapper extends EntityMapper<LecturesPostOutDTO, Lecture> {
 
 
-    @Mapping(target = "status", ignore = true)
     @Mapping(target = "version", ignore = true)
     Lecture toEntity(LecturesPostOutDTO lectureDTO);
 

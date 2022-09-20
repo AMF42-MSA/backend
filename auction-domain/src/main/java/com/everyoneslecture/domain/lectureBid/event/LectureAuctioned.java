@@ -18,12 +18,12 @@ public class LectureAuctioned extends AbstractEvent {
         this.lectId = lectId;
     }
 
-    String lectName;
-    public String getLectName() {
-        return lectName;
+    String title;
+    public String getTitle() {
+        return title;
     }
-    public void setLectName(String lectName) {
-        this.lectName = lectName;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     String lectStatus;

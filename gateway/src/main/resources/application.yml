@@ -1,8 +1,6 @@
 server:
   port: 8088
-
 ---
-
 spring:
   profiles: default
   cloud:
@@ -10,7 +8,7 @@ spring:
     gateway:
       globalcors:
         corsConfigurations:
-          '[/**]':
+          "[/**]":
             allowedOrigins: "http://localhost:3000"
             allowedHeaders:
               - x-requested-with
@@ -25,6 +23,7 @@ spring:
               - PUT
               - OPTIONS
               - DELETE
+              - PATCH
       discovery:
         locator:
           enabled: true
@@ -57,15 +56,47 @@ spring:
           uri: http://localhost:8081
           predicates:
             - Path=/lecture/**
-        - id: category
+        - id: lecture-category
+          uri: http://localhost:8082
+          predicates:
+            - Path=/lectureCategories/**
+          filters:
+            - AuthorizationHeaderFilter
+        - id: interest-category
+          uri: http://localhost:8082
+          predicates:
+            - Path=/interestCategories/**
+          filters:
+            - AuthorizationHeaderFilter
+        - id: auctions
           uri: http://localhost:8084
+          predicates:
+            - Path=/auctions/**
+            - Method=POST,GET,PUT,OPTIONS,DELETE
+          filters:
+            - AuthorizationHeaderFilter
+        - id: lectureBids
+          uri: http://localhost:8084
+          predicates:
+            - Path=/lectureBids/**
+            - Method=POST,GET,PUT,OPTIONS,DELETE
+          filters:
+            - AuthorizationHeaderFilter
+        - id: lectureRegisters
+          uri: http://localhost:8083
+          predicates:
+            - Path=/lectureRegisters/**
+            - Method=POST,GET,PUT,OPTIONS,DELETE
+          filters:
+            - AuthorizationHeaderFilter
+        - id: default
+          uri: http://localhost:8080
           predicates:
             - Path=/**
 
 token:
   secret: amf42_token
 ---
-
 spring:
   profiles: docker
   cloud:
@@ -76,18 +107,18 @@ spring:
           enabled: false
 
 spring.cloud.gateway.routes:
-- id: category
-  uri: http://category:8080
-  predicates:
-  - Path=/category/**
-- id: member
-  uri: http://member:8080
-  predicates:
-  - Path=/member/**
-- id: lecture
-  uri: http://lecture:8080
-  predicates:
-  - Path=/lecture/**
+  - id: category
+    uri: http://category:8080
+    predicates:
+      - Path=/category/**
+  - id: member
+    uri: http://member:8080
+    predicates:
+      - Path=/member/**
+  - id: lecture
+    uri: http://lecture:8080
+    predicates:
+      - Path=/lecture/**
 
 server.port: 8080
 
