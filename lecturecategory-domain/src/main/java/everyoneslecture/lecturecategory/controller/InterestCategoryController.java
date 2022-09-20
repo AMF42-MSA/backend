@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import everyoneslecture.lecturecategory.domain.interestcategory.dto.TopInterestCategoryDTO;
 import everyoneslecture.lecturecategory.domain.interestcategory.entity.InterestCategory;
 import everyoneslecture.lecturecategory.domain.interestcategory.repository.InterestCategoryRepository;
 import everyoneslecture.lecturecategory.service.InterestCategoryService;
@@ -59,7 +60,7 @@ public class InterestCategoryController {
     return interestCategoryRepository.findAll();
   }
 
-    /**
+  /**
    * 유저 별 관심분류 조회
    * @return
    */
@@ -89,6 +90,21 @@ public class InterestCategoryController {
     result = interestCategoryService.deleteInterestCategory(Id);
 
     return result;
+  }
+
+
+  /**
+   * top 5 관심분류 리턴
+   * 최근 7일 내 top 5 리턴, 0개일 경우 전체에서 top 5 리턴
+   * @return
+   */
+  @RequestMapping(value="interestCategories/top5InterestCategories")
+  public List<TopInterestCategoryDTO> top5InterestCategories() {
+    List<TopInterestCategoryDTO> topInterestCategories = interestCategoryRepository.recentTop5InterestCategory();
+    if(topInterestCategories.size() == 0) {
+      topInterestCategories = interestCategoryRepository.top5InterestCategory();
+    }
+    return topInterestCategories;
   }
 
 }

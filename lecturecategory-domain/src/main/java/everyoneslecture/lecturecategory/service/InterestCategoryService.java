@@ -1,5 +1,6 @@
 package everyoneslecture.lecturecategory.service;
 
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ public class InterestCategoryService {
     newInterestCategory.getMemberVO().setMemberName(memberName);
     newInterestCategory.getCategoryVO().setCategoryId(categoryId);
     newInterestCategory.getCategoryVO().setCategoryName(categoryName);
+    newInterestCategory.setRegistrationDate(new Date());
     result = interestCategoryRepository.save(newInterestCategory).getId();
 
     return result;
