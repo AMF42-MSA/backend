@@ -32,7 +32,7 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception{
-        web.ignoring().antMatchers("/h2-console/*");
+        web.ignoring().antMatchers("/h2-console/*","/swagger-ui/*");
     }
 
 
@@ -40,8 +40,8 @@ public class SpringSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable();
-        http.authorizeRequests().antMatchers("/h2-console/*", "/signup", "/login").permitAll();
-        // http.authorizeRequests().antMatchers("**").denyAll();
+        http.authorizeRequests().antMatchers("/h2-console/*","/swagger-ui/*", "/signup", "/login").permitAll();
+        //http.authorizeRequests().antMatchers("**").permitAll();
         http.authorizeRequests()
                 .antMatchers("/admin/**").hasAnyRole("ADMIN")
                 .and()

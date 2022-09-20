@@ -1,8 +1,8 @@
-package com.everyoneslecture.member.domain.entity;
+package com.everyoneslecture.member.domain.member.entity;
 
 import javax.persistence.*;
 
-import com.everyoneslecture.member.domain.enumeration.MemberType;
+import com.everyoneslecture.member.domain.member.enumeration.MemberType;
 
 import lombok.Data;
 

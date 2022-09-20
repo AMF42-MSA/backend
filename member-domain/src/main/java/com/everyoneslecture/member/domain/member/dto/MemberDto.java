@@ -1,4 +1,4 @@
-package com.everyoneslecture.member.domain.dto;
+package com.everyoneslecture.member.domain.member.dto;
 
 import javax.annotation.processing.Generated;
 
