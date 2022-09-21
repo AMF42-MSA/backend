@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: category
+  labels:
+    app: category
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: category
+  template:
+    metadata:
+      labels:
+        app: category
+    spec:
+      containers:
+        - name: category
+          image: amf42acr.azurecr.io/category:$(Build.BuildId)
+          ports:
+            - containerPort: 80
