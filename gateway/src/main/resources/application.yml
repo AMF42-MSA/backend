@@ -102,23 +102,93 @@ spring:
   cloud:
     config.import-check.enabled: false
     gateway:
+      globalcors:
+        corsConfigurations:
+          "[/**]":
+            allowedOrigins: "https://everyoneslecture.azurewebsites.net/"
+            allowedHeaders:
+              - x-requested-with
+              - authorization
+              - content-type
+              - credential
+              - X-AUTH-TOKEN
+              - X-CSRF-TOKEN
+            allowedMethods:
+              - POST
+              - GET
+              - PUT
+              - OPTIONS
+              - DELETE
+              - PATCH
       discovery:
         locator:
-          enabled: false
-
-spring.cloud.gateway.routes:
-  - id: category
-    uri: http://category:8080
-    predicates:
-      - Path=/category/**
-  - id: member
-    uri: http://member:8080
-    predicates:
-      - Path=/member/**
-  - id: lecture
-    uri: http://lecture:8080
-    predicates:
-      - Path=/lecture/**
+          enabled: true
+      routes:
+        - id: signup
+          uri: http://member:8080
+          predicates:
+            - Path=/signup
+            - Method=POST
+        - id: login
+          uri: http://member:8080
+          predicates:
+            - Path=/login
+            - Method=POST
+        - id: member
+          uri: http://member:8080
+          predicates:
+            - Path=/members**
+            - Method=POST,GET,PUT,OPTIONS,DELETE
+          filters:
+            - AuthorizationHeaderFilter
+        - id: member-admin
+          uri: http://member:8080
+          predicates:
+            - Path=/admin/members**
+            - Method=POST,GET,PUT,OPTIONS,DELETE
+          filters:
+            - AuthorizationHeaderFilter
+        - id: lecture
+          uri: http://lecture:8081
+          predicates:
+            - Path=/lecture/**
+        - id: lecture-category
+          uri: http://localhost:8082
+          predicates:
+            - Path=/lectureCategories/**
+          filters:
+            - AuthorizationHeaderFilter
+        - id: interest-category
+          uri: http://localhost:8082
+          predicates:
+            - Path=/interestCategories/**
+          filters:
+            - AuthorizationHeaderFilter
+        - id: auctions
+          uri: http://localhost:8084
+          predicates:
+            - Path=/auctions/**
+            - Method=POST,GET,PUT,OPTIONS,DELETE
+          filters:
+            - AuthorizationHeaderFilter
+        - id: lectureBids
+          uri: http://localhost:8084
+          predicates:
+            - Path=/lectureBids/**
+            - Method=POST,GET,PUT,OPTIONS,DELETE
+          filters:
+            - AuthorizationHeaderFilter
+        - id: lectureRegisters
+          uri: http://localhost:8083
+          predicates:
+            - Path=/lectureRegisters/**
+            - Method=POST,GET,PUT,OPTIONS,DELETE
+          filters:
+            - AuthorizationHeaderFilter
+        - id: default
+          uri: http://member:8080
+          predicates:
+            - Path=/**
 
 server.port: 8080
 
