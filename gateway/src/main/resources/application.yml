@@ -149,7 +149,7 @@ spring:
           filters:
             - AuthorizationHeaderFilter
         - id: lecture
-          uri: http://lecture:8081
+          uri: http://lecture:8080
           predicates:
             - Path=/lecture/**
         - id: lecture-category
