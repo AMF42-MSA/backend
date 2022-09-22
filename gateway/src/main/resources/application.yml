@@ -153,13 +153,13 @@ spring:
           predicates:
             - Path=/lecture/**
         - id: lecture-category
-          uri: http://localhost:8082
+          uri: http://category:8080
           predicates:
             - Path=/lectureCategories/**
           filters:
             - AuthorizationHeaderFilter
         - id: interest-category
-          uri: http://localhost:8082
+          uri: http://category:8080
           predicates:
             - Path=/interestCategories/**
           filters:
