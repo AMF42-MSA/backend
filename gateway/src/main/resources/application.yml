@@ -152,6 +152,12 @@ spring:
           uri: http://lecture:8080
           predicates:
             - Path=/lecture/**
+        - id: category
+          uri: http://category:8080
+          predicates:
+            - Path=/category/**
+
+
         - id: lecture-category
           uri: http://category:8080
           predicates:
