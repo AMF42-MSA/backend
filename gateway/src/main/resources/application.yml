@@ -102,13 +102,10 @@ spring:
   cloud:
     config.import-check.enabled: false
     gateway:
-      httpclient:
-        ssl:
-          useInsecureTrustManager: true
       globalcors:
         corsConfigurations:
           "[/**]":
-            allowedOrigins: "http://everyoneslecture.azurewebsites.net"
+            allowedOrigins: "http://everyoneslecture.azurewebsites.net/"
             allowedHeaders:
               - x-requested-with
               - authorization
