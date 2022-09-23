@@ -72,21 +72,18 @@ spring:
           uri: http://localhost:8084
           predicates:
             - Path=/auctions/**
-            - Method=POST,GET,PUT,OPTIONS,DELETE
           filters:
             - AuthorizationHeaderFilter
         - id: lectureBids
           uri: http://localhost:8084
           predicates:
             - Path=/lectureBids/**
-            - Method=POST,GET,PUT,OPTIONS,DELETE
           filters:
             - AuthorizationHeaderFilter
         - id: lectureRegisters
           uri: http://localhost:8083
           predicates:
             - Path=/lectureRegisters/**
-            - Method=POST,GET,PUT,OPTIONS,DELETE
           filters:
             - AuthorizationHeaderFilter
         - id: default
@@ -156,8 +153,6 @@ spring:
           uri: http://category:8080
           predicates:
             - Path=/category/**
-
-
         - id: lecture-category
           uri: http://category:8080
           predicates:
@@ -174,29 +169,30 @@ spring:
           uri: http://localhost:8084
           predicates:
             - Path=/auctions/**
-            - Method=POST,GET,PUT,OPTIONS,DELETE
           filters:
             - AuthorizationHeaderFilter
         - id: lectureBids
           uri: http://localhost:8084
           predicates:
             - Path=/lectureBids/**
-            - Method=POST,GET,PUT,OPTIONS,DELETE
           filters:
             - AuthorizationHeaderFilter
         - id: lectureRegisters
           uri: http://localhost:8083
           predicates:
             - Path=/lectureRegisters/**
-            - Method=POST,GET,PUT,OPTIONS,DELETE
           filters:
             - AuthorizationHeaderFilter
         - id: default
           uri: http://member:8080
           predicates:
             - Path=/**
-
-server.port: 8080
-
+server:
+  port: 8080
+  ssl:
+    key-store-password: sksksksksk
+    key-store: classpath:everyone.p12
+    key-store-type: PKCS12
+    key-alias: everyone
 token:
   secret: amf42_token

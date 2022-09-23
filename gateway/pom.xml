@@ -53,6 +53,11 @@
 			<artifactId>jaxb-api</artifactId>
 				<version>2.1</version>
 		</dependency>
+		<dependency>
+				<groupId>de.dentrassi.crypto</groupId>
+				<artifactId>pem-keystore</artifactId>
+				<version>2.2.0</version> <!-- check for most recent version -->
+		</dependency>
 
 	</dependencies>
 	<dependencyManagement>
