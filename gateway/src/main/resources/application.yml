@@ -108,7 +108,7 @@ spring:
       globalcors:
         corsConfigurations:
           "[/**]":
-            allowedOrigins: "https://everyoneslecture.azurewebsites.net/"
+            allowedOrigins: "http://everyoneslecture.azurewebsites.net"
             allowedHeaders:
               - x-requested-with
               - authorization
