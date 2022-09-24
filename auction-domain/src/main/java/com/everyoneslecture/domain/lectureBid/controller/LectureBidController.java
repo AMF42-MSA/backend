@@ -17,12 +17,15 @@ import com.everyoneslecture.domain.lectureBid.entity.LectureBid;
 import com.everyoneslecture.domain.lectureBid.enums.BidStatus;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.everyoneslecture.domain.lectureBid.service.LectureBidService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 
 /**
  * REST controller for managing {@link lecturemgt.domain.Lecture}.
  */
 
+@Tag(name = "lectureBid", description = "입찰: 입찰 등록, 조회, 수정(낙찰/유찰)")
 @RestController
 public class LectureBidController {
 
@@ -46,6 +49,8 @@ public class LectureBidController {
 	 * @throws InterruptedException
 	 * @throws JsonProcessingException
    */
+	@Tag(name="lectureBid")
+  @Operation(summary = "입찰 등록", description = "입찰을 등록한다.")
 	@RequestMapping(method = RequestMethod.PUT, path="lectureBids/registerBid")
 	public String registerBid(@RequestBody LectureBidPostInDto lectureBidPostInDto) throws JsonProcessingException, InterruptedException, ExecutionException{
 		List auctionIds = lectureBidPostInDto.getAuctionIds();
@@ -83,6 +88,8 @@ public class LectureBidController {
 
 
 	//입찰취소
+	@Tag(name="lectureBid")
+  @Operation(summary = "입찰 취소", description = "입찰을 취소한다.(상태값:CANCEL)")
   @RequestMapping(method = RequestMethod.PUT, path="lectureBids/cancelBid")
 	public String cancelBid(@RequestBody LectureBidPostInDto lectureBidPostInDto) throws JsonProcessingException, InterruptedException, ExecutionException{
 
@@ -140,6 +147,8 @@ public class LectureBidController {
 
 
 	//낙찰요청
+	@Tag(name="lectureBid")
+  @Operation(summary = "낙찰요청", description = "낙찰을 요청한다.(상태값:SUCCESS)")
 	@RequestMapping(method = RequestMethod.PUT, path="lectureBids/successLectureBid")
 	public String bidSuccessRegister(@RequestBody LectureBidPostInDto lectureBidPostInDto) throws JsonProcessingException, InterruptedException, ExecutionException{
 
@@ -172,13 +181,17 @@ public class LectureBidController {
 		return "낙찰이 완료되었습니다.";
 	}
 
-	//경매조회(입찰자수)
+	//경매조회(입찰자 정보 JOIN)
+	@Tag(name="lectureBid")
+  @Operation(summary = "경매 리스트 조회(입찰정보포함)", description = "경매 리스트를 조회한다. (입찰정보포함)")
 	@RequestMapping(method = RequestMethod.GET, path="auctions/searchAuctionLectureBidList")
 	public List<LectureBidDto> searchLectAuctionList() throws JsonProcessingException, InterruptedException, ExecutionException{
 		return lectureBidService.searchAuctionLectureBidList();
 
 	}
 
+	@Tag(name="lectureBid")
+  @Operation(summary = "입찰 리스트 조회", description = "입찰 리스트를 조회한다.")
 	@RequestMapping(method = RequestMethod.GET, path="lectureBids/searchLectureBidList")
 	public List<LectureBidDetailDto> searchLectureBidList(@RequestParam Long auctionId) throws JsonProcessingException, InterruptedException, ExecutionException{
 		LectureBid lectureBid = new LectureBid();

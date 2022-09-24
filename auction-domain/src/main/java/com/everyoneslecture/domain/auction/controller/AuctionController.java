@@ -16,10 +16,14 @@ import com.everyoneslecture.domain.auction.repository.AuctionRepository;
 import com.everyoneslecture.domain.auction.vo.LectureRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.everyoneslecture.domain.auction.service.AuctionService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * REST controller for managing {@link lecturemgt.domain.Lecture}.
  */
+
+@Tag(name = "auction", description = "경매: 경매 등록, 조회, 수정(삭제)")
 @RestController
 public class AuctionController {
 	private final AuctionService auctionService;
@@ -34,6 +38,9 @@ public class AuctionController {
 	@Autowired
 	AuctionRepository auctionRepository;
 	LectureRepository lectureRepository;
+
+	@Tag(name="auction")
+  @Operation(summary = "경매 취소", description = "경매 상태값을 CANCEL로 수정")
 	@RequestMapping(method = RequestMethod.PUT, path="auctions/auctionCancel")
 	public String cancelAuction(@RequestBody AuctionPostInDto auctionPostInDto) throws JsonProcessingException, InterruptedException, ExecutionException{
 		List lectIds = auctionPostInDto.getLectIds();
@@ -78,7 +85,8 @@ public class AuctionController {
 
 	}
 
-  //@RequestMapping(method = RequestMethod.PUT, path="auctions/auctionRegister")
+	@Tag(name="auction")
+  @Operation(summary = "경매 등록", description = "경매 상태값을 AUCTION으로 신규등록")
 	@RequestMapping(method = RequestMethod.PUT, path="auctions/auctionRegister")
 	public String registerAuction(@RequestBody AuctionPostInDto auctionPostInDto) throws JsonProcessingException, InterruptedException, ExecutionException{
 
@@ -115,14 +123,16 @@ public class AuctionController {
 	}
 
 
-
+	@Tag(name="auction")
+  @Operation(summary = "경매 리스트 조회", description = "경매 리스트를 조회한다.")
 	@RequestMapping(method = RequestMethod.GET, path="auctions/searchAuctionList")
 	public List<AuctionDto> searchLectAuctionList() throws JsonProcessingException, InterruptedException, ExecutionException{
 		return auctionService.searchLectAuctionList();
 
 	}
 
-
+	@Tag(name="auction")
+  @Operation(summary = "경매 통계 조회", description = "경매 통계를 조회한다.")
 	@RequestMapping(method = RequestMethod.GET, path="auctions/searchAuctionStatics")
 	public List<AuctionStaticsInfoResultDto> searchAuctionStatics() throws JsonProcessingException, InterruptedException, ExecutionException{
 		return auctionService.searchAuctionStatics();
