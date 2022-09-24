@@ -1,6 +1,5 @@
 package com.everyoneslecture.domain.auction.service.impl;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -16,11 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.everyoneslecture.domain.auction.service.AuctionService;
-import com.everyoneslecture.domain.auction.dto.AuctionDto;
 import com.everyoneslecture.domain.auction.dto.AuctionInfoResultDto;
 import com.everyoneslecture.domain.auction.dto.AuctionResultDto;
 import com.everyoneslecture.domain.auction.dto.AuctionStaticsInfoResultDto;
-import com.everyoneslecture.domain.auction.dto.AuctionTempDto;
+import com.everyoneslecture.domain.auction.dto.AuctionDto;
 import com.everyoneslecture.domain.auction.entity.Auction;
 import com.everyoneslecture.domain.auction.enums.AuctionStatus;
 
@@ -81,13 +79,9 @@ public class AuctionServiceImpl implements AuctionService {
 	public Auction registerAuction(Auction auction)
 			throws InterruptedException, ExecutionException, JsonProcessingException {
         log.debug("registerLecture : {}", auction,  auction);
-        Long lectId = auction.getLectId();
         Date startAuctionDate = auction.getStartAuctionDate();
-        Date endAuctionDate = auction.getEndAuctionDate();
         auction.setAuctionStatus(AuctionStatus.AUCTION);
         System.out.println(startAuctionDate);
-
-
         return Auction.repository().save(auction);
 	}
 
@@ -108,19 +102,10 @@ public class AuctionServiceImpl implements AuctionService {
    * 강좌별 경매정보 조회
    **/
   @Override
-  public List<AuctionTempDto> searchLectAuctionList()
+  public List<AuctionDto> searchLectAuctionList()
       throws InterruptedException, ExecutionException, JsonProcessingException {
-        List<AuctionTempDto> auctionDtoList = Auction.repository().findLectAuctionAll();
-
-
+        List<AuctionDto> auctionDtoList = Auction.repository().findLectAuctionAll();
         return auctionDtoList;
-  }
-
-  @Override
-  public Iterable<Auction> searchAuctionList(Auction auction)
-      throws InterruptedException, ExecutionException, JsonProcessingException {
-    // TODO Auto-generated method stub
-    return null;
   }
 
   /**
@@ -156,20 +141,5 @@ public class AuctionServiceImpl implements AuctionService {
       List<AuctionStaticsInfoResultDto> auctionStaticsInfoResultDtoList = Auction.repository().findAuctionStatics();
       return auctionStaticsInfoResultDtoList;
   }
-
-
-
-  // /**
-  //  * Business Logic
-  //  * 경매정보리스트 조회
-  //  **/
-  // @Override
-  // public Iterable<Auction> searchAuctionList()
-  //     throws InterruptedException, ExecutionException, JsonProcessingException {
-
-  //       // return Iterable<Auction> auctionDtoList = Auction.repository().findAll();
-
-  // }
-
 }
 

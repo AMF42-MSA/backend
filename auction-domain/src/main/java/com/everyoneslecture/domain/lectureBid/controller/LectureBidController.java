@@ -1,34 +1,20 @@
 package com.everyoneslecture.domain.lectureBid.controller;
 
-
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.everyoneslecture.domain.auction.dto.AuctionInfoResultDto;
-import com.everyoneslecture.domain.auction.entity.Auction;
 import com.everyoneslecture.domain.auction.enums.AuctionStatus;
 import com.everyoneslecture.domain.auction.service.AuctionService;
 import com.everyoneslecture.domain.lectureBid.dto.LectureBidDetailDto;
 import com.everyoneslecture.domain.lectureBid.dto.LectureBidDto;
 import com.everyoneslecture.domain.lectureBid.dto.LectureBidPostInDto;
 import com.everyoneslecture.domain.lectureBid.entity.LectureBid;
-import com.everyoneslecture.domain.lectureBid.repository.LectureBidRepository;
 import com.everyoneslecture.domain.lectureBid.enums.BidStatus;
-import com.everyoneslecture.kafka.KafkaProcessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.everyoneslecture.domain.lectureBid.service.LectureBidService;
 
@@ -63,7 +49,6 @@ public class LectureBidController {
 	@RequestMapping(method = RequestMethod.PUT, path="lectureBids/registerBid")
 	public String registerBid(@RequestBody LectureBidPostInDto lectureBidPostInDto) throws JsonProcessingException, InterruptedException, ExecutionException{
 		List auctionIds = lectureBidPostInDto.getAuctionIds();
-		String bidRegUserId = lectureBidPostInDto.getBidRegUserId();
 		Long auctionId;
 
 		//경매 유효성 체크 시작
@@ -80,17 +65,6 @@ public class LectureBidController {
 			if(lectureBidService.searchLectureBid(lectureBidPostInDto) != null){
 				return "이미 입찰한 내역이 있습니다.\n 취소하고 다시 입찰 바랍니다.";
 			}
-
-	
-
-
-			//AuctionStatus auctionStatus = auction.getAuctionStatus();
-			//System.out.println(auction.getAuctionStatus());
-			//System.out.println("endend");
-			// if(AuctionStatus.CANCEL.equals(auctionStatus)){
-
-			// }
-
 		}
 
 		for(int i = 0 ; i < auctionIds.size(); i++){
@@ -115,9 +89,6 @@ public class LectureBidController {
 		List auctionIds = lectureBidPostInDto.getAuctionIds();
 
 		String bidRegUserId = lectureBidPostInDto.getBidRegUserId();
-		System.out.println("####################################"+ bidRegUserId);
-
-
 		Long auctionId;
 		int bidNotCnt = 0;
 
@@ -130,22 +101,12 @@ public class LectureBidController {
 			if(AuctionStatus.BID_SUCCESS.toString().equals(auctionInfoResultDto.getAuctionStatus().toString())){
 				return auctionInfoResultDto.getAuctionStatus();
 			}
-
-			//AuctionStatus auctionStatus = auction.getAuctionStatus();
-			//System.out.println(auction.getAuctionStatus());
-			//System.out.println("endend");
-			// if(AuctionStatus.CANCEL.equals(auctionStatus)){
-
-			// }
-
 		}
 
 
 
 		for(int i = 0 ; i < auctionIds.size(); i++){
 			LectureBid lectureBid = new LectureBid();
-			System.out.println("###########################"+ lectureBid);
-			String memberId = lectureBidPostInDto.getBidRegUserId();
 			auctionId = ((Number)auctionIds.get(i)).longValue();
 
 			lectureBidPostInDto.setAuctionId(auctionId);
@@ -153,7 +114,6 @@ public class LectureBidController {
 			lectureBid = lectureBidService.searchLectureBid(lectureBidPostInDto);
 			if(lectureBid==null){
 				bidNotCnt ++;
-				// return "입찰내역이 없습니다.";
 			}else{
 				if(!BidStatus.BID.equals(lectureBid.getStatus())){
 					bidNotCnt ++;
@@ -178,14 +138,8 @@ public class LectureBidController {
 		}
 	}
 
-	// @RequestMapping(method = RequestMethod.PUT, path="lectureBids/registerBid")
-	// public String registerBid(@RequestBody LectureBid lectureBid) throws JsonProcessingException, InterruptedException, ExecutionException{
-	// 	lectureBid = lectureBidService.registerLectureBid(lectureBid);
-	// 	return "경매가 입찰 되었습니다.";
-	// }
 
 	//낙찰요청
-
 	@RequestMapping(method = RequestMethod.PUT, path="lectureBids/successLectureBid")
 	public String bidSuccessRegister(@RequestBody LectureBidPostInDto lectureBidPostInDto) throws JsonProcessingException, InterruptedException, ExecutionException{
 
@@ -197,8 +151,6 @@ public class LectureBidController {
 
 		String bidSuccessReqUserId = lectureBidPostInDto.getBidSuccessReqUserId();
 
-		System.out.println("auctionInfoResultDto.getAuctionStatus() : " + auctionInfoResultDto.getAuctionStatus());
-		System.out.println("AuctionStatus.BID_SUCCESS: " + AuctionStatus.BID_SUCCESS);
 		if(AuctionStatus.BID_SUCCESS.toString().equals(auctionInfoResultDto.getAuctionStatus().toString())){
 			return auctionInfoResultDto.getAuctionStatus();
 		}
@@ -207,7 +159,6 @@ public class LectureBidController {
 			return "경매 등록자만 낙찰요청 할 수 있습니다.";
 		}
 
-		System.out.println("###########################"+ lectureBidPostInDto);
 		//유찰
 		lectureBidService.failLectureBid(lectureBidPostInDto);
 		//낙찰
@@ -228,40 +179,10 @@ public class LectureBidController {
 
 	}
 
-	//입찰조회(경매건 기준)
-	// @RequestMapping(method = RequestMethod.GET, path="lectureBids/searchLectureBidList/{auctionId}")
-	// public List<LectureBidDto> searchLectureBidList(@PathVariable(value = "auctionId") Long auctionId) throws JsonProcessingException, InterruptedException, ExecutionException{
-	// 	LectureBid lectureBid = new LectureBid();
-	// 	lectureBid.setAuctionId(auctionId);
-	// 	return lectureBidService.searchLectureBidList(lectureBid);
-	// }
-
-  // @RequestMapping(method = RequestMethod.GET, path="lectureBids/searchLectureBidList")
-	// public List<LectureBidDto> searchLectureBidList(@RequestBody LectureBid lectureBid) throws JsonProcessingException, InterruptedException, ExecutionException{
-
-	// 	return lectureBidService.searchLectureBidList(lectureBid);
-	// }
-	//입찰조회(경매건 기준)
-	// @RequestMapping(method = RequestMethod.GET, path="lectureBids/searchLectureBidList/{auctionId}")
-	// public List<LectureBidDto> searchLectureBidList(@PathVariable(value = "auctionId") Long auctionId) throws JsonProcessingException, InterruptedException, ExecutionException{
-	// 	LectureBid lectureBid = new LectureBid();
-	// 	lectureBid.setAuctionId(auctionId);
-	// 	return lectureBidService.searchLectureBidList(lectureBid);
-	// }
-
 	@RequestMapping(method = RequestMethod.GET, path="lectureBids/searchLectureBidList")
 	public List<LectureBidDetailDto> searchLectureBidList(@RequestParam Long auctionId) throws JsonProcessingException, InterruptedException, ExecutionException{
 		LectureBid lectureBid = new LectureBid();
 		lectureBid.setAuctionId(auctionId);
 		return lectureBidService.searchLectureBidList(lectureBid);
 	}
-
-
-  // @RequestMapping(method = RequestMethod.GET, path="auctions/{auctionId}/search")
-	// public Auction search(@PathVariable(value = "auctionId") Long auctionId){
-	// 	Auction auction = auctionRepository.findById(auctionId).get();
-	// 	return auction;
-	// }
-
-
 }

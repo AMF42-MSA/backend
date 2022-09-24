@@ -1,47 +1,28 @@
 package com.everyoneslecture.domain.auction.controller;
-
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.everyoneslecture.domain.auction.enums.AuctionStatus;
-import com.everyoneslecture.domain.lectureBid.entity.LectureBid;
-import com.everyoneslecture.domain.auction.dto.AuctionDto;
-import com.everyoneslecture.domain.auction.dto.AuctionInfoResultDto;
+import com.everyoneslecture.domain.auction.dto.AuctionPostInDto;
 import com.everyoneslecture.domain.auction.dto.AuctionResultDto;
 import com.everyoneslecture.domain.auction.dto.AuctionStaticsInfoResultDto;
-import com.everyoneslecture.domain.auction.dto.AuctionTempDto;
+import com.everyoneslecture.domain.auction.dto.AuctionDto;
 import com.everyoneslecture.domain.auction.entity.Auction;
 import com.everyoneslecture.domain.auction.repository.AuctionRepository;
 import com.everyoneslecture.domain.auction.vo.LectureRepository;
-import com.everyoneslecture.kafka.KafkaProcessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.everyoneslecture.domain.auction.service.AuctionService;
-
 
 /**
  * REST controller for managing {@link lecturemgt.domain.Lecture}.
  */
-
 @RestController
 public class AuctionController {
-
 	private final AuctionService auctionService;
-
 	/**
 	 * 생성자를 통한  객체주입
 	 * @param auctionService
@@ -50,25 +31,20 @@ public class AuctionController {
 			this.auctionService = auctionService;
 	}
 
-
 	@Autowired
 	AuctionRepository auctionRepository;
 	LectureRepository lectureRepository;
-
 	@RequestMapping(method = RequestMethod.PUT, path="auctions/auctionCancel")
-	public String cancelAuction(@RequestBody AuctionDto auctionDto) throws JsonProcessingException, InterruptedException, ExecutionException{
-		List lectIds = auctionDto.getLectIds();
-		String auctionRegUserId = auctionDto.getAuctionRegUserId();
+	public String cancelAuction(@RequestBody AuctionPostInDto auctionPostInDto) throws JsonProcessingException, InterruptedException, ExecutionException{
+		List lectIds = auctionPostInDto.getLectIds();
+		String auctionRegUserId = auctionPostInDto.getAuctionRegUserId();
 		Long lectId;
-
 		//경매 유효성 체크 시작
 		for(int i = 0; i<lectIds.size(); i++){
 			lectId = Long.parseLong((String) lectIds.get(i));
 			System.out.println("lectId : " + lectId);
 			List<AuctionResultDto> auctionResultDtoList = auctionService.searchAuctionByLectId(lectId);
 			int auctionCnt = 0;
-
-
 			for(int j = 0; j<auctionResultDtoList.size(); j++){
 				auctionCnt = 0;
 				System.out.println(j);
@@ -89,7 +65,6 @@ public class AuctionController {
 				//경매 미등록건도 취소할 수가 없어야 한다.
 				return "경매가 등록되어 있지 않습니다.";
 			}
-
 		}
 
 		for(int i = 0 ; i < lectIds.size(); i++){
@@ -105,21 +80,11 @@ public class AuctionController {
 
   //@RequestMapping(method = RequestMethod.PUT, path="auctions/auctionRegister")
 	@RequestMapping(method = RequestMethod.PUT, path="auctions/auctionRegister")
-	public String registerAuction(@RequestBody AuctionDto auctionDto) throws JsonProcessingException, InterruptedException, ExecutionException{
-		System.out.println("###########################");
-		System.out.println(auctionDto.getLectIds());
-		System.out.println(auctionDto.getAuctionRegUserId());
+	public String registerAuction(@RequestBody AuctionPostInDto auctionPostInDto) throws JsonProcessingException, InterruptedException, ExecutionException{
 
-
-
-		List lectIds = auctionDto.getLectIds();
-		String auctionRegUserId = auctionDto.getAuctionRegUserId();
-
-
-
+		List lectIds = auctionPostInDto.getLectIds();
+		String auctionRegUserId = auctionPostInDto.getAuctionRegUserId();
 		Long lectId;
-
-
 		//경매 유효성 체크 시작
 		for(int i = 0; i<lectIds.size(); i++){
 			lectId = Long.parseLong((String) lectIds.get(i));
@@ -135,12 +100,10 @@ public class AuctionController {
 			}
 
 		}
-
-
 		for(int i = 0 ; i < lectIds.size(); i++){
 			Auction auction = new Auction();
-			auction.setEndAuctionDate(auctionDto.getEndAuctionDate());
-			auction.setStartAuctionDate(auctionDto.getStartAuctionDate());
+			auction.setEndAuctionDate(auctionPostInDto.getEndAuctionDate());
+			auction.setStartAuctionDate(auctionPostInDto.getStartAuctionDate());
 
 			System.out.println(lectIds.get(i));
 			lectId = Long.parseLong((String) lectIds.get(i));
@@ -154,9 +117,7 @@ public class AuctionController {
 
 
 	@RequestMapping(method = RequestMethod.GET, path="auctions/searchAuctionList")
-	public List<AuctionTempDto> searchLectAuctionList() throws JsonProcessingException, InterruptedException, ExecutionException{
-		//List<AuctionTempDto> auctionDtoList = auctionRepository.findLectAuctionAll();
-		//System.out.println(auctionDtoList);
+	public List<AuctionDto> searchLectAuctionList() throws JsonProcessingException, InterruptedException, ExecutionException{
 		return auctionService.searchLectAuctionList();
 
 	}
@@ -164,41 +125,9 @@ public class AuctionController {
 
 	@RequestMapping(method = RequestMethod.GET, path="auctions/searchAuctionStatics")
 	public List<AuctionStaticsInfoResultDto> searchAuctionStatics() throws JsonProcessingException, InterruptedException, ExecutionException{
-		//List<AuctionTempDto> auctionDtoList = auctionRepository.findLectAuctionAll();
-		//System.out.println(auctionDtoList);
 		return auctionService.searchAuctionStatics();
 
 	}
-
-	// @RequestMapping(method = RequestMethod.GET, path="auctions/searchAuctionList")
-	// public Iterable<Auction> searchAuctionList(){
-	// 	return auctionService.searchAuctionList();
-	// }
-
-  // @RequestMapping(method = RequestMethod.PUT, path="auctions/{auctionId}/bidAuction")
-	// public String bidAuction(@PathVariable(value = "auctionId") Long auctionId){
-	// 	System.out.println("###########################"+ auctionId);
-  //       Auction auction = auctionRepository.findById(auctionId).get();
-	// 	auction.startAuction();
-	// 	auctionRepository.save(auction);
-	// 	return "경매가 시작 되었습니다.";
-	// }
-    //@PostMapping(path="auctions/bidAuction")
-    //public String bidAuction(@RequestBody )
-
-
-
-    ///입찰부분이에요.
-    //@RequestMapping(method = RequestMethod.PUT, path="auctions/{auctionId}/bidAuction")
-	//public String bidAuction(@PathVariable(value = "auctionId") Long auctionId){
-	//	System.out.println("###########################"+ auctionId);
-    //    Auction LectureBid = auctionRepository.findById(auctionId).get();
-    //    LectureBid.
-	//	auction.startAuction();
-	//	auctionRepository.save(auction);
-	//	return "경매가 시작 되었습니다.";
-	//}
-
 
 
 

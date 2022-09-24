@@ -1,4 +1,4 @@
-# ddd-petstore
+# ddd-petstore 자동실행 테스트2
 
 ## GitPod 접속
 https://gitpod.io/#https://github.com/msa-school/ddd-petstore-level9-bounded-multi-model

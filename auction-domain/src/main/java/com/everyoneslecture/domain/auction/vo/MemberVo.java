@@ -1,11 +1,5 @@
 package com.everyoneslecture.domain.auction.vo;
 
-import org.springframework.beans.BeanUtils;
-
-
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.*;
 
 @Entity
@@ -61,7 +55,7 @@ public class MemberVo {     // Entity. Domain Class.
         return email;
     }
 
-    
+
     public void setMobile(String mobile) {
         this.mobile = mobile;
     }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import com.everyoneslecture.domain.BidStatus;
+import com.everyoneslecture.domain.lectureBid.enums.BidStatus;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -37,7 +37,7 @@ public class LectureBidPostInDto implements Serializable {
   }
 
   String bidRegUserId;
-  public String getBidRegUserId() { 
+  public String getBidRegUserId() {
       return bidRegUserId;
   }
   public void setBidRegUserId(String bidRegUserId) {
@@ -53,7 +53,7 @@ public class LectureBidPostInDto implements Serializable {
   }
 
   String bidSuccessReqUserId;
-  public String getBidSuccessReqUserId() { 
+  public String getBidSuccessReqUserId() {
     return bidSuccessReqUserId;
   }
   public void setBidSuccessReqUserId(String bidSuccessReqUserId) {

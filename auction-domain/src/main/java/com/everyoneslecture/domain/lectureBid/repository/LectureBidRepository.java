@@ -16,73 +16,68 @@ import com.everyoneslecture.domain.lectureBid.entity.LectureBid;
 public interface LectureBidRepository extends CrudRepository<LectureBid, Long>{    // Repository Pattern Interface
 
   @Query(
-    "select									\n" +
-    "      lectureVo.lectId  as  lectId             \n" +
-    "    , lectureVo.categoryName  as  categoryName             \n" +
-    "    , lectureVo.maxEnrollment   as maxEnrollment        \n" +
-    "    , lectureVo.minEnrollment   as minEnrollment        \n" +
-    "    , lectureVo.lectCost      as lectCost       \n" +
-    "    , trim(lectureVo.title)      as title       \n" +
-    "    , lectureVo.lectureStatus    as lectureStatus       \n" +
-    "    , lectureVo.startLectureDt   as startLectureDt      \n" +
+    "select																																									\n" +
+    "      lectureVo.lectId  as  lectId                                                                                                                                     \n" +
+    "    , lectureVo.categoryName  as  categoryName                                                                                                                         \n" +
+    "    , lectureVo.maxEnrollment   as maxEnrollment                                                                                                                       \n" +
+    "    , lectureVo.minEnrollment   as minEnrollment                                                                                                                       \n" +
+    "    , lectureVo.lectCost      as lectCost                                                                                                                              \n" +
+    "    , trim(lectureVo.title)      as title                                                                                                                              \n" +
+    "    , lectureVo.lectureStatus    as lectureStatus                                                                                                                      \n" +
+    "    , lectureVo.startLectureDt   as startLectureDt                                                                                                                     \n" +
+    ", case                                                                                                                                                                 \n" +
+    "   when                                                                                                                                                                \n" +
+    " 		to_char(auction.startAuctionDate, 'YYYYMMDD') > to_char(now(), 'YYYYMMDD')                                                                                        \n" +
+    "   then                                                                                                                                                                \n" +
+    " 		'BEFORE_AUCTION'                                                                                                                                                  \n" +
+    "   when                                                                                                                                                                \n" +
+    " 		to_char(auction.endAuctionDate, 'YYYYMMDD') < to_char(now(), 'YYYYMMDD')                                                                                          \n" +
+    "   then                                                                                                                                                                \n" +
+    " 		'AFTER_AUCTION'                                                                                                                                                   \n" +
+    "   else                                                                                                                                                                \n" +
+    "     	auction.auctionStatus                                                                                                                                           \n" +
+    " end as auctionStatus                                                                                                                                                  \n" +
+	"	, auction.id as auctionId                                                                                                                                               \n" +
+	"	, auction.endAuctionDate      as endAuctionDate                                                                                                                         \n" +
+	"	, auction.startAuctionDate     as startAuctionDate                                                                                                                      \n" +
+    ", (select coalesce(min(lectureBid.price), 0) from LectureBid lectureBid where lectureBid.auctionId = auction.id and lectureBid.status != 'CANCEL')  as bidMinPrice     \n" +
+    ", (select count(0) from LectureBid lectureBid where lectureBid.auctionId = auction.id and lectureBid.status != 'CANCEL')  as lectureBidCnt                             \n" +
+    "from                                                                                                                                                                   \n" +
+    "     LectureVo lectureVo                                                                                                                                               \n" +
+	"     , Auction auction                                                                                                                                                   \n" +
+	"where auction.lectId = lectureVo.lectId                                                                                                                                  \n" +
+  "  and (auction.auctionStatus = 'AUCTION' OR auction.auctionStatus = 'BID_SUCCESS')																						                                              "
 
-    ", CASE                                  \n" +
-    "   WHEN                                \n" +
-    " 	to_char(auction.startAuctionDate, 'YYYYMMDD') > to_char(now(), 'YYYYMMDD')      \n" +
-    "   THEN                                \n" +
-    " 	'BEFORE_AUCTION'                     \n" +
-    "   WHEN                                \n" +
-    " 	to_char(auction.endAuctionDate, 'YYYYMMDD') < to_char(now(), 'YYYYMMDD')      \n" +
-    "   THEN                                \n" +
-    " 	'AFTER_AUCTION'                      \n" +
-    "   ELSE                                \n" +
-    "     auction.auctionStatus             \n" +
-    " END as auctionStatus                  \n" +
-
-	"	, auction.id as auctionId                        \n" +
-	"	, auction.endAuctionDate      as endAuctionDate    \n" +
-	"	, auction.startAuctionDate     as startAuctionDate   \n" +
-  ", (select coalesce(min(lectureBid.price), 0) from LectureBid lectureBid where lectureBid.auctionId = auction.id and lectureBid.status != 'CANCEL')  as bidMinPrice  \n" +
-  ", (select count(0) from LectureBid lectureBid where lectureBid.auctionId = auction.id and lectureBid.status != 'CANCEL')  as lectureBidCnt  \n" +
-    "from                                   \n" +
-    "     LectureVo lectureVo                        \n" +
-	"     , Auction auction                     \n" +
-	"where auction.lectId = lectureVo.lectId \n" +
-  "and (auction.auctionStatus = 'AUCTION' OR auction.auctionStatus = 'BID_SUCCESS')"
 
   )
   List<LectureBidDto> findAuctionLectureBidList();
 
-  
+
   public LectureBid findLectureBidByAuctionIdAndBidRegUserIdAndStatus(Long auctionId, String bidRegUserId, BidStatus status);
 
   @Query(
-    " select 																									\n" +
-    "   id as lectureBidId 																									\n" +
-    "   , bidRegUserId as bidRegUserId 																									\n" +
-    "		, (select memberVo.name from MemberVo memberVo where memberVo.memberId = lectureBid.bidRegUserId) as bidRegUserName    \n" +
-    "		, (select memberVo.email from MemberVo memberVo where memberVo.memberId = lectureBid.bidRegUserId) as bidRegUserEmail    \n" +
-
-    "		, lectureBid.price as price                                                                         \n" +
-    "		, lectureBid.status as status                                                                       \n" +
-    "  from                                                                                                     \n" +
-    "	 LectureBid lectureBid                                                                                  \n" +
-    "	where lectureBid.status != 'CANCEL'                                                                            \n" +
-    "	  and (:#{#lectureBid.auctionId} is null or lectureBid.auctionId = :#{#lectureBid.auctionId}   )            "
+    " select 																									                                                                  \n" +
+    "   id as lectureBidId 																									                                                    \n" +
+    "   , bidRegUserId as bidRegUserId 																									                                        \n" +
+    "		, (select memberVo.name from MemberVo memberVo where memberVo.memberId = lectureBid.bidRegUserId) as bidRegUserName     \n" +
+    "		, (select memberVo.email from MemberVo memberVo where memberVo.memberId = lectureBid.bidRegUserId) as bidRegUserEmail   \n" +
+    "		, lectureBid.price as price                                                                                             \n" +
+    "		, lectureBid.status as status                                                                                           \n" +
+    "  from                                                                                                                     \n" +
+    "	 LectureBid lectureBid                                                                                                    \n" +
+    "	where lectureBid.status != 'CANCEL'                                                                                       \n" +
+    "	  and (:#{#lectureBid.auctionId} is null or lectureBid.auctionId = :#{#lectureBid.auctionId}   )                           "
   )
   List<LectureBidDetailDto> findLectureBidList(@Param("lectureBid") LectureBid lectureBid);
 
   @Modifying
   @Query(
-    "  update LectureBid lectureBid					\n" +
-    "    set lectureBid.status = 'FAIL'             \n" +
+    "  update LectureBid lectureBid					      \n" +
+    "    set lectureBid.status = 'FAIL'           \n" +
     "   where lectureBid.id!=:id                  \n" +
     "     and lectureBid.auctionId=:auctionId       "
   )
   void updateLectureBidWithoutId(Long id, long auctionId);
-
-
-
 
   public LectureBid findLectureBidByIdAndAuctionId(Long id, Long auctionId);
 
