@@ -11,7 +11,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import everyoneslecture.lectureRegister.domain.LectureRegister.entity.LectureRegister;
 import everyoneslecture.lectureRegister.domain.LectureRegister.dto.*;
 
-@Service
+/**
+ * Service Interface for managing {@link lecturemgt.domain.Rental}.
+ */
+
 public interface LectureRegisterService {
 
         LectureRegister save(LectureRegister lectureRegister);
@@ -22,21 +25,13 @@ public interface LectureRegisterService {
 
         void delete(Long id);
 
-        /*
-         * String cancelLectRegister(LectureRegister lectureRegister)
-         * throws InterruptedException, ExecutionException, JsonProcessingException;
-         */
-        LectureRegister registerLecture(LectureRegister lectureRegister)
-                        throws InterruptedException, ExecutionException, JsonProcessingException;
-
         /**
          * Business Logic
-         * 강의 조회
+         * 등록강좌리스트 조회
          **/
-        List<LectureRegister> searchLectList()
-                        throws InterruptedException, ExecutionException, JsonProcessingException;
+        List<LectureRegisterTempDto>  searchLectureList() throws InterruptedException, ExecutionException, JsonProcessingException;
 
-        Iterable<LectureRegister> searchLectureRegistList(LectureRegister lectureRegister)
-                        throws InterruptedException, ExecutionException, JsonProcessingException;
+        // LectureRegister registerLecture(LectureRegister lectureRegister)
+        //                 throws InterruptedException, ExecutionException, JsonProcessingException;
 
 }

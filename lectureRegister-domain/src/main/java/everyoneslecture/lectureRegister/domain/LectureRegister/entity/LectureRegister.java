@@ -14,108 +14,97 @@ public class LectureRegister {
 
     @Id
     @GeneratedValue
-    Long lectId;
+    private Long lectId;
+    private Long version;
+    private String title;
+    private Integer minEnrollment;
+    private Integer maxEnrollment;
+    private String  categoryName;
+    private Date 	startLectureDt;  	//강의시작일
+    private Date 	registerEndDt;  //수강마감일
+    private long 	lectureStatus;  //강의상태
+    private	String	memberId;		//강의등록자ID
+    private	String	opName;			//강의등록자
+    private	Date	endterDt;     //강의등록일
+    private int lectCost;
 
     public Long getLectId() {
         return lectId;
     }
-
     public void setLectId(Long lectId) {
         this.lectId = lectId;
     }
-
-    String lectName; // 강의명
-    String lectContent; // 강의내용
-    int lectMINUser; // 강의최소인원
-    int lectMAXUser; // 강의최대인원
-    int lectFee; // 강의료
-    Date startLectureDt; // 강의시작일
-    Date registerEndDt; // 수강신청마감일
-
-    @Enumerated(EnumType.STRING)
-    private LectureRegisterStatus lectureStatus; // 강의상태
-
-    String memberId; // 수강신청자 ID
-    int regitMemberCnt; // 수강신청자수
-
-    public String getLectName() {
-        return lectName;
+    public Long getVersion() {
+        return version;
     }
-
-    public void setLectName(String lectName) {
-        this.lectName = lectName;
+    public void setVersion(Long version) {
+        this.version = version;
     }
-
-    public String getLectContent() {
-        return lectContent;
+    public String getTitle() {
+        return title;
     }
-
-    public void setLectContent(String lectContent) {
-        this.lectContent = lectContent;
+    public void setTitle(String title) {
+        this.title = title;
     }
-
-    public int getLectMINUser() {
-        return lectMINUser;
+    public Integer getMinEnrollment() {
+        return minEnrollment;
     }
-
-    public void setLectMINUser(int lectMinUser) {
-        this.lectMINUser = lectMinUser;
+    public void setMinEnrollment(Integer minEnrollment) {
+        this.minEnrollment = minEnrollment;
     }
-
-    public int getLectMAXUser() {
-        return lectMAXUser;
+    public Integer getMaxEnrollment() {
+        return maxEnrollment;
     }
-
-    public void setLectMAXUser(int lectMAXUser) {
-        this.lectMAXUser = lectMAXUser;
+    public void setMaxEnrollment(Integer maxEnrollment) {
+        this.maxEnrollment = maxEnrollment;
     }
-
-    public int getLectFee() {
-        return lectFee;
+    public String getCategoryName() {
+        return categoryName;
     }
-
-    public void setLectFee(int lectFee) {
-        this.lectFee = lectFee;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
-
     public Date getStartLectureDt() {
         return startLectureDt;
     }
-
     public void setStartLectureDt(Date startLectureDt) {
         this.startLectureDt = startLectureDt;
     }
-
     public Date getRegisterEndDt() {
         return registerEndDt;
     }
-
     public void setRegisterEndDt(Date registerEndDt) {
         this.registerEndDt = registerEndDt;
     }
-
-    public LectureRegisterStatus getLectureStatus() {
+    public long getLectureStatus() {
         return lectureStatus;
     }
-
-    public void setLectureStatus(String string) {
+    public void setLectureStatus(long lectureStatus) {
         this.lectureStatus = lectureStatus;
     }
-
     public String getMemberId() {
         return memberId;
     }
-
     public void setMemberId(String memberId) {
         this.memberId = memberId;
     }
-
-    public int getRegitMemberCnt() {
-        return regitMemberCnt;
+    public String getOpName() {
+        return opName;
     }
-
-    public void setRegitMemberCnt(int regitMemberCnt) {
-        this.regitMemberCnt = regitMemberCnt;
+    public void setOpName(String opName) {
+        this.opName = opName;
+    }
+    public Date getEndterDt() {
+        return endterDt;
+    }
+    public void setEndterDt(Date endterDt) {
+        this.endterDt = endterDt;
+    }
+    public int getLectCost() {
+        return lectCost;
+    }
+    public void setLectCost(int lectCost) {
+        this.lectCost = lectCost;
     }
 
     public String cancel() {

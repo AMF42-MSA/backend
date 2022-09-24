@@ -4,23 +4,12 @@ import java.util.Date;
 
 public interface LectureRegisterTempDto {
   String getLectId();
-
-  String getLectName();
-
-  String getLectureStatus();
-
-  int getCntStudent();
-
+  String getCategoryName();
+  int getMaxEnrollment();
+  int getMinEnrollment();
   Long getLectCost();
-
-  Date getStartLecture();
-
-  String getRegisterStatus();
-
-  Long getRegisterId();
-
-  Date getEndLecturDate();
-
-  Date getStartLecturDate();
+  String getTitle();
+  String getLectureStatus();
+  Date getStartLectureDt();
 
 }

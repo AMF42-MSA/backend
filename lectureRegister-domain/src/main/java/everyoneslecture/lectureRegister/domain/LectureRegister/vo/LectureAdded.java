@@ -2,64 +2,95 @@ package everyoneslecture.lectureRegister.domain.LectureRegister.vo;
 
 import java.util.Date;
 
-import everyoneslecture.lectureRegister.AbstractEvent;
+import everyoneslecture.lectureRegister.AbstractEvent;//com.everyoneslecture.AbstractEvent;
+
 
 public class LectureAdded extends AbstractEvent {
 
-    private Long lectId;
+    private Long id;
+    private Long version;
+    private String title;
+    private Integer minEnrollment;
+    private Integer maxEnrollment;
+    private String  categoryName;
+    private Date 	startLectureDt;  	//강의시작일
+    private Date 	registerEndDt;  //수강마감일
+    private long 	lectureStatus;  //강의상태
+    private	String	memberId;		//강의등록자ID
+    private	String	opName;			//강의등록자
+    private	Date	endterDt;     //강의등록일
 
-    private String lectName;
-    private String lectStatus;
-    private int lectCost;
-    private int cntStudent;
-    private Date startLecture;
-
-    public Long getLectId() {
-        return lectId;
+    public Long getId() {
+      return id;
     }
-
-    public void setLectId(Long lectId) {
-        this.lectId = lectId;
+    public void setId(Long id) {
+      this.id = id;
     }
-
-    public String getLectName() {
-        return lectName;
+    public Long getVersion() {
+      return version;
     }
-
-    public void setLectName(String lectName) {
-        this.lectName = lectName;
+    public void setVersion(Long version) {
+      this.version = version;
     }
-
-    public String getLectStatus() {
-        return lectStatus;
+    public String getTitle() {
+      return title;
     }
-
-    public void setLectStatus(String lectStatus) {
-        this.lectStatus = lectStatus;
+    public void setTitle(String title) {
+      this.title = title;
     }
-
-    public int getLectCost() {
-        return lectCost;
+    public Integer getMinEnrollment() {
+      return minEnrollment;
     }
-
-    public void setLectCost(int lectCost) {
-        this.lectCost = lectCost;
+    public void setMinEnrollment(Integer minEnrollment) {
+      this.minEnrollment = minEnrollment;
     }
-
-    public int getCntStudent() {
-        return cntStudent;
+    public Integer getMaxEnrollment() {
+      return maxEnrollment;
     }
-
-    public void setCntStudent(int cntStudent) {
-        this.cntStudent = cntStudent;
+    public void setMaxEnrollment(Integer maxEnrollment) {
+      this.maxEnrollment = maxEnrollment;
     }
-
-    public Date getStartLecture() {
-        return startLecture;
+    public String getCategoryName() {
+      return categoryName;
     }
-
-    public void setStartLecture(Date startLecture) {
-        this.startLecture = startLecture;
+    public void setCategoryName(String categoryName) {
+      this.categoryName = categoryName;
+    }
+    public Date getStartLectureDt() {
+      return startLectureDt;
+    }
+    public void setStartLectureDt(Date startLectureDt) {
+      this.startLectureDt = startLectureDt;
+    }
+    public Date getRegisterEndDt() {
+      return registerEndDt;
+    }
+    public void setRegisterEndDt(Date registerEndDt) {
+      this.registerEndDt = registerEndDt;
+    }
+    public long getLectureStatus() {
+      return lectureStatus;
+    }
+    public void setLectureStatus(long lectureStatus) {
+      this.lectureStatus = lectureStatus;
+    }
+    public String getMemberId() {
+      return memberId;
+    }
+    public void setMemberId(String memberId) {
+      this.memberId = memberId;
+    }
+    public String getOpName() {
+      return opName;
+    }
+    public void setOpName(String opName) {
+      this.opName = opName;
+    }
+    public Date getEndterDt() {
+      return endterDt;
+    }
+    public void setEndterDt(Date endterDt) {
+      this.endterDt = endterDt;
     }
 
 }
