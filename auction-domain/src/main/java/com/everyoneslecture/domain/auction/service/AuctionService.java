@@ -8,14 +8,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.everyoneslecture.domain.auction.dto.AuctionDto;
 import com.everyoneslecture.domain.auction.dto.AuctionInfoResultDto;
 import com.everyoneslecture.domain.auction.dto.AuctionResultDto;
 import com.everyoneslecture.domain.auction.dto.AuctionStaticsInfoResultDto;
-import com.everyoneslecture.domain.auction.dto.AuctionTempDto;
+import com.everyoneslecture.domain.auction.dto.AuctionDto;
 import com.everyoneslecture.domain.auction.entity.Auction;
 import com.everyoneslecture.domain.auction.enums.AuctionStatus;
-
 
 /**
  * Service Interface for managing {@link lecturemgt.domain.Rental}.
@@ -77,13 +75,7 @@ public interface AuctionService {
      * Business Logic
      * 강좌별 경매정보 조회
      **/
-    List<AuctionTempDto>  searchLectAuctionList() throws InterruptedException, ExecutionException, JsonProcessingException;
-
-    /**
-     * Business Logic
-     * 경매정보리스트 조회
-     **/
-    Iterable<Auction> searchAuctionList(Auction auction) throws InterruptedException, ExecutionException, JsonProcessingException;
+    List<AuctionDto>  searchLectAuctionList() throws InterruptedException, ExecutionException, JsonProcessingException;
 
     /**
      * Business Logic

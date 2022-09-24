@@ -2,9 +2,6 @@ package com.everyoneslecture.domain.auction.vo;
 
 import java.util.Date;
 
-import com.everyoneslecture.AbstractEvent;
-
-
 public class LectureUpdated extends LectureAdded{
   private Long id;
   private Long version;

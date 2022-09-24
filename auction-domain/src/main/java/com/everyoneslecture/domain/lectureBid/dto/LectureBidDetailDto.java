@@ -1,7 +1,5 @@
 package com.everyoneslecture.domain.lectureBid.dto;
 
-import java.util.Date;
-
 public interface LectureBidDetailDto {
   String getStatus();
   Long getAuctionId();

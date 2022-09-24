@@ -27,14 +27,6 @@ public class AuctionUpdated extends AbstractEvent {
             this.lectId = lectId;
         }
 
-    // Long memberId;
-    //     public Long getMemberId() {
-    //         return memberId;
-    //     }
-    //     public void setMemberId(Long memberId) {
-    //         this.memberId = memberId;
-    //     }
-
     Date startAuctionDate;
         public Date getStartAuctionDate() {
             return startAuctionDate;
