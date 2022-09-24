@@ -101,22 +101,14 @@ spring:
     gateway:
       globalcors:
         corsConfigurations:
-          "[/**]":
-            allowedOrigins: "https://everyoneslecture.azurewebsites.net/"
-            allowedHeaders:
-              - x-requested-with
-              - authorization
-              - content-type
-              - credential
-              - X-AUTH-TOKEN
-              - X-CSRF-TOKEN
+          '[/**]':
+            allowedOriginPatterns:
+              - "*"
             allowedMethods:
-              - POST
-              - GET
-              - PUT
-              - OPTIONS
-              - DELETE
-              - PATCH
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
       discovery:
         locator:
           enabled: true
@@ -171,12 +163,6 @@ spring:
             - Path=/auctions/**
           filters:
             - AuthorizationHeaderFilter
-        - id: lectureBids
-          uri: http://localhost:8084
-          predicates:
-            - Path=/lectureBids/**
-          filters:
-            - AuthorizationHeaderFilter
         - id: lectureRegisters
           uri: http://localhost:8083
           predicates:
@@ -189,10 +175,6 @@ spring:
             - Path=/**
 server:
   port: 8080
-  ssl:
-    key-store-password: sksksksksk
-    key-store: classpath:everyone.p12
-    key-store-type: PKCS12
-    key-alias: everyone
+
 token:
   secret: amf42_token
