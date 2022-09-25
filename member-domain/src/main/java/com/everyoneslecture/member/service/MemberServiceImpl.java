@@ -18,15 +18,20 @@ import com.everyoneslecture.member.domain.member.dto.MemberDto;
 import com.everyoneslecture.member.domain.member.entity.MemberEntity;
 import com.everyoneslecture.member.domain.member.enumeration.MemberType;
 import com.everyoneslecture.member.domain.member.repository.MemberRepository;
+import com.everyoneslecture.member.domain.paymentMethod.dto.RequestPaymentMethod;
+import com.everyoneslecture.member.domain.paymentMethod.entity.PaymentMethodEntity;
+import com.everyoneslecture.member.domain.paymentMethod.repository.PaymentMethodRepository;
 
 @Service
 public class MemberServiceImpl implements MemberService {
     MemberRepository memberRepository;
+    PaymentMethodRepository paymentMethodRepository;
     BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     public MemberServiceImpl(MemberRepository memberRepository, BCryptPasswordEncoder passwordEncoder) {
         this.memberRepository = memberRepository;
+        this.paymentMethodRepository = paymentMethodRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -44,8 +49,11 @@ public class MemberServiceImpl implements MemberService {
 
         MemberEntity memberEntity = mapper.map(memberDto, MemberEntity.class);
         memberEntity.setEncryptedPwd(passwordEncoder.encode(memberDto.getPwd()));
-        memberEntity.setMemberType(MemberType.valueOf(memberDto.getMemberType()==null?"ROLE_USER":memberDto.getMemberType()));
-
+        if ("ROLE_ADMIN".equals(memberDto.getMemberType())){
+            memberEntity.setMemberType(MemberType.valueOf("ROLE_ADMIN"));
+        } else {
+            memberEntity.setMemberType(MemberType.valueOf("ROLE_USER"));
+        }
         memberRepository.save(memberEntity);
 
         MemberDto ReturnMemberDto = mapper.map(memberEntity, MemberDto.class);
@@ -98,6 +106,25 @@ public class MemberServiceImpl implements MemberService {
     public Long getMemberCount() {
         return memberRepository.count();
     }
+
+    @Override
+    public void deleteMember(Long id) {
+        memberRepository.deleteById(id);
+    }
+
+    @Override
+    public void registerPaymenetMethod(RequestPaymentMethod requestPaymentMethod) {
+
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+
+        PaymentMethodEntity paymentMethodEntity = mapper.map(requestPaymentMethod, PaymentMethodEntity.class);
+
+        paymentMethodRepository.save(paymentMethodEntity);
+
+    }
+
+
 
 
 }
