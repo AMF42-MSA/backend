@@ -10,7 +10,7 @@ import everylecture.lecturemgt.controller.dto.MemberInfoDTO;
 
 @FeignClient(name= "member", url="http://member:8080", configuration = {FeignConfiguration.class})
 public interface MemberFeignClient {
-//    @GetMapping("/member/members/{memberId}")
-    @GetMapping("/member/memberEntities/{memberId}")
+    @GetMapping("/members/{memberId}")
+//    @GetMapping("/member/memberEntities/{memberId}")
     ResponseEntity<MemberInfoDTO> findById(@PathVariable("memberId") Long memberId);
 }
