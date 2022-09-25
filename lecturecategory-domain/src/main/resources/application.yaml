@@ -65,6 +65,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     properties:
       hibernate:
+        ddl-auto: create
         show_sql: true
         format_sql: true
   cloud:
