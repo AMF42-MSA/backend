@@ -95,12 +95,12 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>{    // R
 
   " select																																						\n" +
   " a.frst_reg_date as regDate,                                                                                                                                  \n" +
-  " (select count(0) from auction b where date_format(b.frst_reg_date, '%Y/%m/%d)  = a.frst_reg_date and auction_status != 'CANCEL' ) as auctionCount,              \n" +
-  " (select count(0) from lecture_bid b where date_format(b.frst_reg_date, '%Y/%m/%d)  = a.frst_reg_date and b.status != 'CANCEL') as bidCount,                     \n" +
-  " (select count(0) from auction  b where date_format(b.last_chg_date, '%Y/%m/%d)  = a.frst_reg_date and b.auction_status= 'BID_SUCCESS') as successCount          \n" +
+  " (select count(0) from auction b where date_format(b.frst_reg_date, '%Y/%m/%d')  = a.frst_reg_date and auction_status != 'CANCEL' ) as auctionCount,              \n" +
+  " (select count(0) from lecture_bid b where date_format(b.frst_reg_date, '%Y/%m/%d')  = a.frst_reg_date and b.status != 'CANCEL') as bidCount,                     \n" +
+  " (select count(0) from auction  b where date_format(b.last_chg_date, '%Y/%m/%d')  = a.frst_reg_date and b.auction_status= 'BID_SUCCESS') as successCount          \n" +
   " from                                                                                                                                                          \n" +
   " (                                                                                                                                                             \n" +
-  " select  distinct date_format(a.frst_reg_date, '%Y/%m/%d) as frst_reg_date                                                                                        \n" +
+  " select  distinct date_format(a.frst_reg_date, '%Y/%m/%d') as frst_reg_date                                                                                        \n" +
   " from Auction a                                                                                                                                                \n" +
   " where                                                                                                                                                         \n" +
   "    date_format(a.frst_reg_date, '%Y%m%d') >  date_format(timestampadd(DAY, -7, NOW()), '%Y%m%d')                                                                  \n" +
