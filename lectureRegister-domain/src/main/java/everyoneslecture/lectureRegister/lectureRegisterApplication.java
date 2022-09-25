@@ -13,11 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableAspectJAutoProxy
 @EnableBinding(KafkaProcessor.class)
 public class lectureRegisterApplication {
-
 	public static ApplicationContext applicationContext;
 
 	public static void main(String[] args) {
-
+		System.out.println("LectureRegister APPLICATION START");
 		applicationContext = SpringApplication.run(lectureRegisterApplication.class, args);
 
 	}

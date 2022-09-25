@@ -11,7 +11,6 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 import org.springframework.util.MimeTypeUtils;
 
 public class AbstractEvent {
-    // 이벤트 발행 로직을 담당하는 EventPublisher 클래스
 
     String eventType;
     Long timestamp;

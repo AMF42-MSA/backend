@@ -41,6 +41,13 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>
+		<!-- mySQL DB -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
 		<!-- Azure CosmosDB -->
 		<!-- <dependency>
 			<groupId>com.azure.spring</groupId>
