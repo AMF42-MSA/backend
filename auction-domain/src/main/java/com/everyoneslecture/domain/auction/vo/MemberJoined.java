@@ -4,7 +4,7 @@ import com.everyoneslecture.AbstractEvent;
 
 public class MemberJoined extends AbstractEvent {
 
-    String id;
+    Long id;
     String memberId;
     String encryptedPwd;
     String email;
@@ -12,7 +12,16 @@ public class MemberJoined extends AbstractEvent {
     String birth;
     String mobile;
     String memberType;
-    
+
+
+
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getMemberId() {
         return memberId;
     }

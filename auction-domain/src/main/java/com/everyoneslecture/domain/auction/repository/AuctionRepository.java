@@ -42,6 +42,9 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>{    // R
   ", (select coalesce(min(lectureBid.price), 0) from LectureBid lectureBid where lectureBid.auctionId = auction.id and lectureBid.status != 'CANCEL')  as bidMinPrice   \n" +
   ", (select count(0) from LectureBid lectureBid where lectureBid.auctionId = auction.id and lectureBid.status != 'CANCEL')  as lectureBidCnt                           \n" +
   ", (select memberVo.name from MemberVo memberVo where auction.auctionRegUserId = memberVo.memberId)  as auctionRegUserName                                            \n" +
+  ", (select memberVo.email from MemberVo memberVo where auction.auctionRegUserId = memberVo.memberId)  as auctionRegUserEmail                                             \n" +
+
+
   ", auction.auctionRegUserId   as auctionRegUserId                                     \n" +
     "from                                                                               \n" +
     "    LectureVo lectureVo                                                            \n" +

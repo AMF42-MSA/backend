@@ -19,4 +19,7 @@ public interface AuctionDto {
   int getBidMinPrice();
   String getAuctionRegUserName();
   String getAuctionRegUserId();
+  String getAuctionRegUserEmail();
+
+
 }
