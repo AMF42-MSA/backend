@@ -40,7 +40,7 @@ public class AuctionController {
 	LectureRepository lectureRepository;
 
 	@Tag(name="auction")
-  @Operation(summary = "경매 취소", description = "경매 상태값을 CANCEL로 수정")
+  @Operation(summary = "경매 취소", description = "경매 상태값을 CANCEL로 수정 ")
 	@RequestMapping(method = RequestMethod.PUT, path="auctions/auctionCancel")
 	public String cancelAuction(@RequestBody AuctionPostInDto auctionPostInDto) throws JsonProcessingException, InterruptedException, ExecutionException{
 		List lectIds = auctionPostInDto.getLectIds();
