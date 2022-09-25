@@ -1,10 +1,5 @@
 package everyoneslecture.lectureRegister.domain.LectureRegister.vo;
 
-import org.springframework.beans.BeanUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.*;
 
 @Entity
@@ -13,39 +8,29 @@ import javax.persistence.*;
 public class MemberVo { // Entity. Domain Class.
 
     @Id
-    private Long memberId;
-
-    private String loginId;
-    private String password;
+    private Long id;
+    private String memberId;
+    private String encryptedPwd;
+    private String email;
     private String name;
     private String birth;
     private String mobile;
     private String memberType;
 
-    public Long getMemberId() {
+    public String getMemberId() {
         return memberId;
     }
 
-    public void setMemberId(Long memberId) {
+    public void setMemberId(String memberId) {
         this.memberId = memberId;
     }
 
-    public String getLoginId() {
-        return loginId;
+    public String getEncryptedPwd() {
+        return encryptedPwd;
     }
 
-    public void setLoginId(String loginId) {
-        if (loginId == null)
-            throw new IllegalArgumentException("Login ID는 필수값입니다.");
-        this.loginId = loginId;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setEncryptedPwd(String encryptedPwd) {
+        this.encryptedPwd = encryptedPwd;
     }
 
     public String getName() {
@@ -66,6 +51,14 @@ public class MemberVo { // Entity. Domain Class.
 
     public String getMobile() {
         return mobile;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public void setMobile(String mobile) {

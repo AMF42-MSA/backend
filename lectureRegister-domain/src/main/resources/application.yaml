@@ -3,14 +3,22 @@ server:
 ---
 spring:
   profiles: default
+
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+      path: /h2-console
+  datasource:
+    generate-unique-name: false
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
   jpa:
     properties:
       hibernate:
         show_sql: true
         format_sql: true
-  h2:
-    console:
-      enabled: true
   cloud:
     stream:
       kafka:
@@ -39,13 +47,15 @@ logging:
     org.springframework.cloud: debug
 
 ---
+server:
+  port: 8080
 spring:
   profiles: docker
   cloud:
     stream:
       kafka:
         binder:
-          brokers: my-kafka:9092
+          brokers: kafka:9092
         streams:
           binder:
             configuration:
@@ -56,9 +66,12 @@ spring:
                   serde: org.apache.kafka.common.serialization.Serdes$StringSerde
       bindings:
         event-in:
-          group: everylecture
+          group: amf42
           destination: lecture
           contentType: application/json
         event-out:
           destination: lecture
           contentType: application/json
+token:
+  expiration_time: 86400000
+  secret: amf42_token
