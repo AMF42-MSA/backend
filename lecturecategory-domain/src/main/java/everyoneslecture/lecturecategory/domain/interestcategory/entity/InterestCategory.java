@@ -10,7 +10,7 @@ import everyoneslecture.lecturecategory.domain.interestcategory.vo.MemberVO;
 @Entity
 public class InterestCategory {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
         public Long getId() {
             return Id;
@@ -41,7 +41,7 @@ public class InterestCategory {
         public void setRegistrationDate(Date registrationDate) {
             this.registrationDate = registrationDate;
         }
-    
+
     public InterestCategory() {
         this.categoryVO = new LectureCategoryVO();
         this.memberVO = new MemberVO();

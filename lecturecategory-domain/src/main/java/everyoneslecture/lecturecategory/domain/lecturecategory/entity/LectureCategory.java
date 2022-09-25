@@ -9,7 +9,7 @@ import everyoneslecture.lecturecategory.domain.lecturecategory.event.LectureCate
 @Entity
 public class LectureCategory {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long categoryId;
         public Long getCategoryId() {
             return categoryId;
