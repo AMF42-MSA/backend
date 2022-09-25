@@ -19,14 +19,14 @@ import everylecture.lecturemgt.LectureApplication;
 public class AbstractEvent {
 
     String eventType;
-    Long timestamp;
+    String timestamp;
 
     public AbstractEvent() {
         this.setEventType(this.getClass().getSimpleName());
         //Event에 String 형식으로 시간 저장
-        // SimpleDateFormat defaultSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        // this.timestamp = defaultSimpleDateFormat.format(new Date());
-        this.timestamp = System.currentTimeMillis();
+        SimpleDateFormat defaultSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        this.timestamp = defaultSimpleDateFormat.format(new Date());
+//        this.timestamp = System.currentTimeMillis();
     }
 
     public String toJson() {
@@ -86,11 +86,11 @@ public class AbstractEvent {
         this.eventType = eventType;
     }
 
-    public Long getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Long timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 
