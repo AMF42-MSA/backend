@@ -39,12 +39,12 @@ public class MemberController {
         this.paymentMethodService = paymentMethodService;
         this.memberService = memberService;
 
-        MemberDto memberDto = new MemberDto();
-        memberDto.setEmail("admin@sk.com");
-        memberDto.setPwd("1111");
-        memberDto.setMemberType("ROLE_ADMIN");
-        memberDto.setName("테스트관리자");
-        memberService.createMember(memberDto);
+        // MemberDto memberDto = new MemberDto();
+        // memberDto.setEmail("admin@sk.com");
+        // memberDto.setPwd("1111");
+        // memberDto.setMemberType("ROLE_ADMIN");
+        // memberDto.setName("테스트관리자");
+        // memberService.createMember(memberDto);
 
     }
 
