@@ -46,10 +46,6 @@ public class LectureRegisterServiceImpl implements LectureRegisterService {
   public void delete(Long id) {
   }
 
-  /**
-   * Business Logic
-   * 경매 취소 요청
-   **/
   /*
    * @Override
    * public String cancelLectRegister(@RequestBody LectureRegister
@@ -70,36 +66,34 @@ public class LectureRegisterServiceImpl implements LectureRegisterService {
    * }
    * }
    */
-  /**
-   * Business Logic
-   * 경매정보 등록
-   **/
   @Override
   @Transactional
   public LectureRegister registerLecture(LectureRegister lectureRegister)
       throws InterruptedException, ExecutionException, JsonProcessingException {
     Long lectId = lectureRegister.getLectId();
-    Date startLectRegistDate = lectureRegister.getStartLectRegistDate();
-    Date endLectRegistDate = lectureRegister.getEndLectRegistDate();
+    Date startLectureDt = lectureRegister.getStartLectureDt();
+    Date registerEndDt = lectureRegister.getRegisterEndDt();
     lectureRegister.setLectRegistStatus(LectureRegisterStatus.COMPLETED);
-    System.out.println(startLectRegistDate);
-    System.out.println(endLectRegistDate);
     return LectureRegister.repository().save(lectureRegister);
   }
 
-  /**
-   * Business Logic
-   * 강좌별 경매정보 조회
-   **/
-  @Override
-  public List<LectureRegisterTempDto> searchLectList()
-      throws InterruptedException, ExecutionException, JsonProcessingException {
-    List<LectureRegisterTempDto> LectureRegisterDtoList = LectureRegister.repository().findLectLectureAll();
-    return LectureRegisterDtoList;
-  }
+  // @Override
+  // public List<LectureRegisterTempDto> searchLectList()
+  // throws InterruptedException, ExecutionException, JsonProcessingException {
+  // List<LectureRegisterTempDto> LectureRegisterDtoList =
+  // LectureRegister.repository().findLectLectureAll();
+  // return LectureRegisterDtoList;
+  // }
 
   @Override
   public Iterable<LectureRegister> searchLectureRegistList(LectureRegister lectureRegister)
+      throws InterruptedException, ExecutionException, JsonProcessingException {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public List<LectureRegister> searchLectList()
       throws InterruptedException, ExecutionException, JsonProcessingException {
     // TODO Auto-generated method stub
     return null;

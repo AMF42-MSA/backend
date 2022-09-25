@@ -4,31 +4,32 @@ import com.everyoneslecture.AbstractEvent;
 
 public class MemberJoined extends AbstractEvent {
 
-    Long memberId;
-    String loginId;
-    String password;
+    String id;
+    String memberId;
+    String encryptedPwd;
+    String email;
     String name;
     String birth;
     String mobile;
     String memberType;
-
-    public Long getMemberId() {
+    
+    public String getMemberId() {
         return memberId;
     }
-    public void setMemberId(Long memberId) {
+    public void setMemberId(String memberId) {
         this.memberId = memberId;
     }
-    public String getLoginId() {
-        return loginId;
+    public String getEncryptedPwd() {
+        return encryptedPwd;
     }
-    public void setLoginId(String loginId) {
-        this.loginId = loginId;
+    public void setEncryptedPwd(String encryptedPwd) {
+        this.encryptedPwd = encryptedPwd;
     }
-    public String getPassword() {
-        return password;
+    public String getEmail() {
+        return email;
     }
-    public void setPassword(String password) {
-        this.password = password;
+    public void setEmail(String email) {
+        this.email = email;
     }
     public String getName() {
         return name;

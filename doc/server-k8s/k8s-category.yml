@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: category
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: category
+  template:
+    metadata:
+      labels:
+        app: category
+    spec:
+#      nodeSelector:
+#        "beta.kubernetes.io/os": linux      
+      containers:
+      - name: category
+        image: acr13myinno.azurecr.io/category
+        ports:
+          - containerPort: 8080
+        resources:
+          limits:
+            memory: "576716800"
+        env:
+        - name: JVM_OPTS
+          value: -Xmx400m -Xms400m -XX:MaxPermSize=128m
+        - name: SPRING_PROFILES_ACTIVE
+          value: docker
+      restartPolicy: Always          
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: category
+
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+  selector:
+    app: category

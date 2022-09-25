@@ -1,5 +1,7 @@
 package everyoneslecture.lecturecategory.domain.interestcategory.entity;
 
+import java.util.Date;
+
 import javax.persistence.*;
 
 import everyoneslecture.lecturecategory.domain.interestcategory.vo.LectureCategoryVO;
@@ -32,7 +34,14 @@ public class InterestCategory {
             this.memberVO = memberVO;
         }
 
-
+    private Date registrationDate;
+        public Date getRegistrationDate() {
+            return registrationDate;
+        }
+        public void setRegistrationDate(Date registrationDate) {
+            this.registrationDate = registrationDate;
+        }
+    
     public InterestCategory() {
         this.categoryVO = new LectureCategoryVO();
         this.memberVO = new MemberVO();

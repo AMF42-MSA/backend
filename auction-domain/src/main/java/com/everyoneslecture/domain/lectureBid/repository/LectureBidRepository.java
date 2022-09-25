@@ -18,11 +18,13 @@ public interface LectureBidRepository extends CrudRepository<LectureBid, Long>{ 
   @Query(
     "select									\n" +
     "      lectureVo.lectId  as  lectId             \n" +
-    "    , lectureVo.cntStudent   as cntStudent        \n" +
+    "    , lectureVo.categoryName  as  categoryName             \n" +
+    "    , lectureVo.maxEnrollment   as maxEnrollment        \n" +
+    "    , lectureVo.minEnrollment   as minEnrollment        \n" +
     "    , lectureVo.lectCost      as lectCost       \n" +
-    "    , lectureVo.lectName      as lectName       \n" +
-    "    , lectureVo.lectStatus    as lectStatus       \n" +
-    "    , lectureVo.startLecture   as startLecture      \n" +
+    "    , trim(lectureVo.title)      as title       \n" +
+    "    , lectureVo.lectureStatus    as lectureStatus       \n" +
+    "    , lectureVo.startLectureDt   as startLectureDt      \n" +
 
     ", CASE                                  \n" +
     "   WHEN                                \n" +
@@ -51,14 +53,16 @@ public interface LectureBidRepository extends CrudRepository<LectureBid, Long>{ 
   )
   List<LectureBidDto> findAuctionLectureBidList();
 
-
-  public LectureBid findLectureBidByAuctionIdAndMemberIdAndStatus(Long auctionId, Long memberId, BidStatus status);
+  
+  public LectureBid findLectureBidByAuctionIdAndBidRegUserIdAndStatus(Long auctionId, String bidRegUserId, BidStatus status);
 
   @Query(
     " select 																									\n" +
     "   id as lectureBidId 																									\n" +
-    "   , memberId as memberId 																									\n" +
-    "		, (select memberVo.name from MemberVo memberVo where memberVo.memberId = lectureBid.memberId) as memberName    \n" +
+    "   , bidRegUserId as bidRegUserId 																									\n" +
+    "		, (select memberVo.name from MemberVo memberVo where memberVo.memberId = lectureBid.bidRegUserId) as bidRegUserName    \n" +
+    "		, (select memberVo.email from MemberVo memberVo where memberVo.memberId = lectureBid.bidRegUserId) as bidRegUserEmail    \n" +
+
     "		, lectureBid.price as price                                                                         \n" +
     "		, lectureBid.status as status                                                                       \n" +
     "  from                                                                                                     \n" +

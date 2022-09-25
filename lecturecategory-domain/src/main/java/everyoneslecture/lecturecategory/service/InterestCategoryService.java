@@ -1,5 +1,6 @@
 package everyoneslecture.lecturecategory.service;
 
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,23 +22,23 @@ public class InterestCategoryService {
    * @param categoryId
    * @return
    */
-  public boolean existsInterestCategory(Long memberId, Long categoryId) {
-    return interestCategoryRepository.findByMemberIdAndCategoryId(memberId, categoryId).isPresent();
+  public boolean existsInterestCategory(String email, Long categoryId) {
+    return interestCategoryRepository.findByMemberEmailAndCategoryId(email, categoryId).isPresent();
   }
 
   /**
    * 관심분류 등록
    */
-  public Long registerInterestCategory(Long memberId, String loginId, String memberName, String mobile, Long categoryId, String categoryName) {
+  public Long registerInterestCategory(String memberId, String memberName, String email, Long categoryId, String categoryName) {
     Long result = Long.valueOf(-1);
 
     InterestCategory newInterestCategory = new InterestCategory();
-    newInterestCategory.getMemberVO().setLoginId(loginId);
     newInterestCategory.getMemberVO().setMemberId(memberId);
-    newInterestCategory.getMemberVO().setMobile(mobile);
+    newInterestCategory.getMemberVO().setEmail(email);
     newInterestCategory.getMemberVO().setMemberName(memberName);
     newInterestCategory.getCategoryVO().setCategoryId(categoryId);
     newInterestCategory.getCategoryVO().setCategoryName(categoryName);
+    newInterestCategory.setRegistrationDate(new Date());
     result = interestCategoryRepository.save(newInterestCategory).getId();
 
     return result;
@@ -64,18 +65,18 @@ public class InterestCategoryService {
   /**
    * 알림센터에 관심분류 관련 알림을 전달한다.
    */
-  public void deliverNotification(String memberId, String memberName, String categoryName, String mobile, String lectureName, String lectureStatus) {
+  public void deliverNotification(String memberId, String memberName, String categoryName, String email, String lectureName, String lectureStatus) {
 
     NotiDelivered notiDelivered = new NotiDelivered();
 
     notiDelivered.setMemberId(memberId);
     notiDelivered.setMemberName(memberName);
     notiDelivered.setCategoryName(categoryName);
-    notiDelivered.setMobile(mobile);
+    notiDelivered.setEmail(email);
     notiDelivered.setLectureName(lectureName);
     notiDelivered.setLectureStatus(lectureStatus);
 
-    notiDelivered.publishAfterCommit();
+    notiDelivered.publish();
 
   }
 

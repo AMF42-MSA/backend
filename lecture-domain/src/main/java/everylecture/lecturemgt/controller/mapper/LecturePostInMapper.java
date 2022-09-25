@@ -13,7 +13,6 @@ public interface LecturePostInMapper extends EntityMapper<LecturesPostInDTO, Lec
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "categoryName", ignore = true)
-    @Mapping(target = "status", ignore = true)
     @Mapping(target = "version", ignore = true)
     Lecture toEntity(LecturesPostInDTO lectureDTO);
 

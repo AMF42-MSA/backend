@@ -40,8 +40,8 @@ public class PolicyHandler {
 
         MemberVo memberVo = new MemberVo();
         memberVo.setMemberId(memberJoined.getMemberId());
-        memberVo.setLoginId(memberJoined.getLoginId());
         memberVo.setMemberType(memberJoined.getMemberType());
+        memberVo.setEmail(memberJoined.getEmail());
         memberVo.setName(memberJoined.getName());
         memberVo.setMobile(memberJoined.getMobile());
         memberVo.setBirth(memberJoined.getBirth());
@@ -56,8 +56,8 @@ public class PolicyHandler {
             return;
 
         memberRepository.findByMemberId(memberUpdated.getMemberId()).ifPresent(memberVo->{
-            memberVo.setLoginId(memberUpdated.getLoginId());
             memberVo.setMemberType(memberUpdated.getMemberType());
+            memberVo.setEmail(memberUpdated.getEmail());
             memberVo.setName(memberUpdated.getName());
             memberVo.setMobile(memberUpdated.getMobile());
             memberVo.setBirth(memberUpdated.getBirth());
@@ -74,14 +74,19 @@ public class PolicyHandler {
     public void wheneverLectureAdded(@Payload LectureAdded lectureAdded){
         if(!lectureAdded.validate())
             return;
-
+        //최소강의비가 없음
         LectureVo lectureVo = new LectureVo();
-        lectureVo.setLectId(lectureAdded.getLectId());
-        lectureVo.setLectName(lectureAdded.getLectName());
-        lectureVo.setLectStatus(lectureAdded.getLectStatus());
-        lectureVo.setLectCost(lectureAdded.getLectCost());
-        lectureVo.setCntStudent(lectureAdded.getCntStudent());
-        lectureVo.setStartLecture(lectureAdded.getStartLecture());
+        lectureVo.setLectId(lectureAdded.getId());
+        lectureVo.setTitle(lectureAdded.getTitle());
+        lectureVo.setMinEnrollment(lectureAdded.getMinEnrollment());
+        lectureVo.setMaxEnrollment(lectureAdded.getMaxEnrollment());
+        lectureVo.setCategoryName(lectureAdded.getCategoryName());
+        lectureVo.setStartLectureDt(lectureAdded.getStartLectureDt());
+        lectureVo.setRegisterEndDt(lectureAdded.getRegisterEndDt());
+        lectureVo.setLectureStatus(lectureAdded.getLectureStatus());
+        lectureVo.setMemberId(lectureAdded.getMemberId());
+        lectureVo.setOpName(lectureAdded.getOpName());
+        lectureVo.setEndterDt(lectureAdded.getEndterDt());
         lectureRepository.save(lectureVo);
 
     }
@@ -92,13 +97,19 @@ public class PolicyHandler {
             return;
 
         LectureVo lectureVo = new LectureVo();
-        lectureVo.setLectId(lectureUpdated.getLectId());
-        lectureVo.setLectName(lectureUpdated.getLectName());
-        lectureVo.setLectStatus(lectureUpdated.getLectStatus());
-        lectureVo.setLectCost(lectureUpdated.getLectCost());
-        lectureVo.setCntStudent(lectureUpdated.getCntStudent());
-        lectureVo.setStartLecture(lectureUpdated.getStartLecture());
+        lectureVo.setLectId(lectureUpdated.getId());
+        lectureVo.setTitle(lectureUpdated.getTitle());
+        lectureVo.setMinEnrollment(lectureUpdated.getMinEnrollment());
+        lectureVo.setMaxEnrollment(lectureUpdated.getMaxEnrollment());
+        lectureVo.setCategoryName(lectureUpdated.getCategoryName());
+        lectureVo.setStartLectureDt(lectureUpdated.getStartLectureDt());
+        lectureVo.setRegisterEndDt(lectureUpdated.getRegisterEndDt());
+        lectureVo.setLectureStatus(lectureUpdated.getLectureStatus());
+        lectureVo.setMemberId(lectureUpdated.getMemberId());
+        lectureVo.setOpName(lectureUpdated.getOpName());
+        lectureVo.setEndterDt(lectureUpdated.getEndterDt());
         lectureRepository.save(lectureVo);
+
 
     }
 

@@ -6,8 +6,9 @@ public interface LectureBidDetailDto {
   String getStatus();
   Long getAuctionId();
   Long getLectureBidId();
-  Long getMemberId();
-  String getMemberName();
+  String getBidRegUserId();
+  String getBidRegUserName();
+  String getBidRegUserEmail();
   int getPrice();
 
 }

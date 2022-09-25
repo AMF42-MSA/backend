@@ -12,7 +12,6 @@ import everylecture.lecturemgt.domain.Lecture;
 public interface LectureGetDetailOutMapper extends EntityMapper<LecturesGetDetailOutDTO, Lecture> {
 
 
-    @Mapping(target = "status", ignore = true)
     @Mapping(target = "version", ignore = true)
     Lecture toEntity(LecturesGetDetailOutDTO lectureDTO);
 

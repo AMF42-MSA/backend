@@ -11,6 +11,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.everyoneslecture.domain.auction.dto.AuctionDto;
 import com.everyoneslecture.domain.auction.dto.AuctionInfoResultDto;
 import com.everyoneslecture.domain.auction.dto.AuctionResultDto;
+import com.everyoneslecture.domain.auction.dto.AuctionStaticsInfoResultDto;
 import com.everyoneslecture.domain.auction.dto.AuctionTempDto;
 import com.everyoneslecture.domain.auction.entity.Auction;
 import com.everyoneslecture.domain.auction.enums.AuctionStatus;
@@ -71,7 +72,7 @@ public interface AuctionService {
      **/
     void updateAuctionStatusById(Long auctionId, AuctionStatus auctionStatus) throws InterruptedException, ExecutionException, JsonProcessingException;
 
-    
+
      /**
      * Business Logic
      * 강좌별 경매정보 조회
@@ -96,5 +97,10 @@ public interface AuctionService {
      **/
     List<AuctionResultDto>  searchAuctionByLectId(Long lectId) throws InterruptedException, ExecutionException, JsonProcessingException;
 
+        /**
+     * Business Logic
+     * 경매 통계 조회
+     **/
+    List<AuctionStaticsInfoResultDto>  searchAuctionStatics() throws InterruptedException, ExecutionException, JsonProcessingException;
 
 }

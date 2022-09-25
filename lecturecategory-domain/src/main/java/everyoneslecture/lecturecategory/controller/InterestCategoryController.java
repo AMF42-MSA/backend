@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import everyoneslecture.lecturecategory.domain.interestcategory.dto.TopInterestCategoryDTO;
 import everyoneslecture.lecturecategory.domain.interestcategory.entity.InterestCategory;
 import everyoneslecture.lecturecategory.domain.interestcategory.repository.InterestCategoryRepository;
 import everyoneslecture.lecturecategory.service.InterestCategoryService;
@@ -34,10 +35,9 @@ public class InterestCategoryController {
   public Long registerInterestCategory(@RequestBody Map<String, String> paramMap) {
     Long result = Long.valueOf(-1);
 
-    Long memberId = Long.valueOf(paramMap.get("memberId"));
-    String loginId = paramMap.get("loginId");
+    String memberId = paramMap.get("memberId");
     String memberName = paramMap.get("memberName");
-    String mobile = paramMap.get("mobile");
+    String email = paramMap.get("email");
     Long categoryId = Long.valueOf(paramMap.get("categoryId"));
     String categoryName = paramMap.get("categoryName");
 
@@ -46,7 +46,7 @@ public class InterestCategoryController {
       return result;
     }
 
-    result = interestCategoryService.registerInterestCategory(memberId, loginId, memberName, mobile, categoryId, categoryName);
+    result = interestCategoryService.registerInterestCategory(memberId, memberName, email, categoryId, categoryName);
 
     return result;
   }
@@ -60,13 +60,13 @@ public class InterestCategoryController {
     return interestCategoryRepository.findAll();
   }
 
-    /**
+  /**
    * 유저 별 관심분류 조회
    * @return
    */
   @RequestMapping(value="interestCategories/searchByUser")
   public List<InterestCategory> searchInterestCategoryByUser(@RequestBody Map<String, String> paramMap) {
-    return interestCategoryRepository.findByMemberId(Long.valueOf(paramMap.get("memberId")));
+    return interestCategoryRepository.findByMemberEmail(paramMap.get("email"));
   }
 
   /**
@@ -79,10 +79,10 @@ public class InterestCategoryController {
     Long result = Long.valueOf(-1);
 
     Long Id = Long.valueOf(paramMap.get("Id"));
-    Long memberId = Long.valueOf(paramMap.get("memberId"));
+    String email = paramMap.get("email");
     Long categoryId = Long.valueOf(paramMap.get("categoryId"));
 
-    if(!interestCategoryService.existsInterestCategory(memberId, categoryId)) {
+    if(!interestCategoryService.existsInterestCategory(email, categoryId)) {
       // 해당 관심분류 존재하지 않을 경우, return -1
       return result;
     }
@@ -90,6 +90,21 @@ public class InterestCategoryController {
     result = interestCategoryService.deleteInterestCategory(Id);
 
     return result;
+  }
+
+
+  /**
+   * top 5 관심분류 리턴
+   * 최근 7일 내 top 5 리턴, 0개일 경우 전체에서 top 5 리턴
+   * @return
+   */
+  @RequestMapping(value="interestCategories/top5InterestCategories")
+  public List<TopInterestCategoryDTO> top5InterestCategories() {
+    List<TopInterestCategoryDTO> topInterestCategories = interestCategoryRepository.recentTop5InterestCategory();
+    if(topInterestCategories.size() == 0) {
+      topInterestCategories = interestCategoryRepository.top5InterestCategory();
+    }
+    return topInterestCategories;
   }
 
 }

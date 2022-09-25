@@ -4,11 +4,13 @@ import java.util.Date;
 
 public interface LectureBidDto {
   String getLectId();
-  String getLectName();
+  String getCategoryName();
+  String getTitle();
   String getLectureStatus();
-  int getCntStudent();
+  int getMaxEnrollment();
+  int getMinEnrollment();
   Long getLectCost();
-  Date getStartLecture();
+  Date getStartLectureDt();
   String getAuctionStatus();
   Long getAuctionId();
   Date getEndAuctionDate();
@@ -16,5 +18,7 @@ public interface LectureBidDto {
   int getLectureBidCnt();
   int getBidMinPrice();
   String getMemberName();
+  String getBidRegUserId();
+  String getBidRegUserName();
 
 }

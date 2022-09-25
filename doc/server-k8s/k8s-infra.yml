@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: azure-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: azure-gateway
+  template:
+    metadata:
+      labels:
+        app: azure-gateway
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+      - name: azure-gateway
+        image: acr13myinno.azurecr.io/gateway:latest
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "docker"
+        ports:
+        - containerPort: 8080
+          name: gateway
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: azure-gateway
+spec:
+  ports:
+  - port: 8080
+  selector:
+    app: azure-gateway
+

@@ -36,11 +36,13 @@ public class SpringFoxConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("AMF-Level3")
+                .title("모두의 강의시스탬(AMF)")
                 .version("1.0")
                 .description("AMF4차수- 모두의강의")
                 .license("AMF42조")
                 .build();
     }
+    
+
 }
 //원래 http://localhost/swagger-ui.html로 접속했었는데, http://localhost/swagger-ui/로 바뀌었다고 한다... 
