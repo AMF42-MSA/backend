@@ -37,7 +37,7 @@ public class Auction {     // Entity. Domain Class.
 
     // }
 
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
         public Long getId() {
             return id;
