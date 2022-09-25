@@ -38,14 +38,17 @@ public class PaymentMethodController {
 
     //@PostMapping(value = {"/signup", "/admin/members"})
     @PostMapping("/paymentMethod")
-    public ResponseEntity registerPaymentMethod(@RequestBody RequestPaymentMethod requestPaymentMethod) throws URISyntaxException, JsonProcessingException, InterruptedException, ExecutionException {
+    public ResponseEntity registerPaymentMethod(@RequestBody RequestPaymentMethod requestPaymentMethod)
+        throws URISyntaxException, JsonProcessingException, InterruptedException, ExecutionException {
+
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
-        PaymentMethodDto paymentMethodDto = mapper.map(requestPaymentMethod, PaymentMethodDto.class);
-        paymentMethodService.registerPaymenetMethod(paymentMethodDto);
+        PaymentMethodDto inPaymentMethodDto = mapper.map(requestPaymentMethod, PaymentMethodDto.class);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(paymentMethodDto);   // return with 201
+        paymentMethodService.registerPaymenetMethod(inPaymentMethodDto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(requestPaymentMethod);   // return with 201
     }
     @PutMapping("/paymentMethod")
     public ResponseEntity updatePaymentMethod(@RequestBody RequestPaymentMethod requestPaymentMethod) throws URISyntaxException, JsonProcessingException, InterruptedException, ExecutionException {
