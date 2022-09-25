@@ -158,9 +158,15 @@ spring:
           filters:
             - AuthorizationHeaderFilter
         - id: auctions
-          uri: http://localhost:8084
+          uri: http://auction:8080
           predicates:
             - Path=/auctions/**
+          filters:
+            - AuthorizationHeaderFilter
+        - id: lectureBids
+          uri: http://auction:8080
+          predicates:
+            - Path=/lectureBids/**
           filters:
             - AuthorizationHeaderFilter
         - id: lectureRegisters
