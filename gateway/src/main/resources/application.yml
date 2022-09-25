@@ -170,7 +170,7 @@ spring:
           filters:
             - AuthorizationHeaderFilter
         - id: lectureRegisters
-          uri: http://localhost:8083
+          uri: http://localhost:8080
           predicates:
             - Path=/lectureRegisters/**
           filters:
