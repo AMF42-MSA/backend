@@ -26,11 +26,11 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>{    // R
     "    , lectureVo.startLectureDt   as startLectureDt                                 \n" +
     ", case                                                                             \n" +
     "   when                                                                            \n" +
-    " 	  to_char(auction.startAuctionDate, 'YYYYMMDD') > to_char(now(), 'YYYYMMDD')    \n" +
+    " 	  date_format(auction.startAuctionDate, '%Y%m%d') > date_format(now(), '%Y%m%d')    \n" +
     "   then                                                                            \n" +
     " 	  'BEFORE_AUCTION'                                                              \n" +
     "   when                                                                            \n" +
-    " 	  to_char(auction.endAuctionDate, 'YYYYMMDD') < to_char(now(), 'YYYYMMDD')      \n" +
+    " 	  date_format(auction.endAuctionDate, '%Y%m%d') < date_format(now(), '%Y%m%d')      \n" +
     "   then                                                                            \n" +
     " 	  'AFTER_AUCTION'                                                               \n" +
     "   else                                                                            \n" +
@@ -65,11 +65,11 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>{    // R
     "	 auction.auctionRegUserId as auctionRegUserId,                                    \n" +
 	  "  case                                                                             \n" +
     "     when                                                                          \n" +
-    " 	    to_char(auction.startAuctionDate, 'YYYYMMDD') > to_char(now(), 'YYYYMMDD')  \n" +
+    " 	    date_format(auction.startAuctionDate, '%Y%m%d') > date_format(now(), '%Y%m%d')  \n" +
     "     then                                                                          \n" +
     " 	    'BEFORE_AUCTION'                                                            \n" +
     "     when                                                                          \n" +
-    " 	    to_char(auction.endAuctionDate, 'YYYYMMDD') < to_char(now(), 'YYYYMMDD')    \n" +
+    " 	    date_format(auction.endAuctionDate, '%Y%m%d') < date_format(now(), '%Y%m%d')    \n" +
     "     then                                                                          \n" +
     " 	    'AFTER_AUCTION'                                                             \n" +
     "     else                                                                          \n" +
@@ -95,15 +95,15 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>{    // R
 
   " select																																						\n" +
   " a.frst_reg_date as regDate,                                                                                                                                  \n" +
-  " (select count(0) from auction b where to_char(b.frst_reg_date, 'YYYY/MM/DD')  = a.frst_reg_date and auction_status != 'CANCEL' ) as auctionCount,              \n" +
-  " (select count(0) from lecture_bid b where to_char(b.frst_reg_date, 'YYYY/MM/DD')  = a.frst_reg_date and b.status != 'CANCEL') as bidCount,                     \n" +
-  " (select count(0) from auction  b where to_char(b.last_chg_date, 'YYYY/MM/DD')  = a.frst_reg_date and b.auction_status= 'BID_SUCCESS') as successCount          \n" +
+  " (select count(0) from auction b where date_format(b.frst_reg_date, '%Y/%m/%d)  = a.frst_reg_date and auction_status != 'CANCEL' ) as auctionCount,              \n" +
+  " (select count(0) from lecture_bid b where date_format(b.frst_reg_date, '%Y/%m/%d)  = a.frst_reg_date and b.status != 'CANCEL') as bidCount,                     \n" +
+  " (select count(0) from auction  b where date_format(b.last_chg_date, '%Y/%m/%d)  = a.frst_reg_date and b.auction_status= 'BID_SUCCESS') as successCount          \n" +
   " from                                                                                                                                                          \n" +
   " (                                                                                                                                                             \n" +
-  " select  distinct to_char(a.frst_reg_date, 'YYYY/MM/DD') as frst_reg_date                                                                                        \n" +
+  " select  distinct date_format(a.frst_reg_date, '%Y/%m/%d) as frst_reg_date                                                                                        \n" +
   " from Auction a                                                                                                                                                \n" +
   " where                                                                                                                                                         \n" +
-  "    to_char(a.frst_reg_date, 'YYYYMMDD') >  to_char(timestampadd(DAY, -7, NOW()), 'YYYYMMDD')                                                                  \n" +
+  "    date_format(a.frst_reg_date, '%Y%m%d') >  date_format(timestampadd(DAY, -7, NOW()), '%Y%m%d')                                                                  \n" +
   " ) a                                                                                                                                                          "
   , nativeQuery = true)
   List<AuctionStaticsInfoResultDto> findAuctionStatics();
