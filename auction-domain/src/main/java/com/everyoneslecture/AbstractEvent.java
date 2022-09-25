@@ -16,6 +16,8 @@ public class AbstractEvent {
     String eventType;
     Long timestamp;
 
+
+
     public AbstractEvent(){
         this.setEventType(this.getClass().getSimpleName());
         // SimpleDateFormat defaultSimpleDateFormat = new SimpleDateFormat("YYYYMMddHHmmss");
