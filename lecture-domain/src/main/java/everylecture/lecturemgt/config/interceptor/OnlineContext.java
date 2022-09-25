@@ -27,7 +27,7 @@ public class OnlineContext {
     private final Logger log = LoggerFactory.getLogger(OnlineContext.class);
     
 	private String GUID;
-    private String URL;
+//    private String URL;
 
 //    public void setRequestURL(String requestURL) {
 //    	MDC.put("URL",requestURL);
@@ -49,21 +49,21 @@ public class OnlineContext {
     public void init() {
     	GUID =  UUID.randomUUID().toString();
     	MDC.put("GUID", GUID);
-    	URL = ServletUriComponentsBuilder.fromCurrentRequestUri().toUriString();
-    	String urlWords[] = URL.split("/");
-    	if (urlWords.length > 4) {
-    		String urlPath = "";
-    		for (int i = 4; i < urlWords.length ; i++) {
-    			urlPath = urlPath + "/" + urlWords[i]; 
-			}
-	    	MDC.put("URL",urlPath);
-    	}
+//    	URL = ServletUriComponentsBuilder.fromCurrentRequestUri().toUriString();
+//    	String urlWords[] = URL.split("/");
+//    	if (urlWords.length > 4) {
+//    		String urlPath = "";
+//    		for (int i = 4; i < urlWords.length ; i++) {
+//    			urlPath = urlPath + "/" + urlWords[i]; 
+//			}
+//	    	MDC.put("URL",urlPath);
+//    	}
 
     	//    	출처: https://prohannah.tistory.com/182 [Hello, Hannah!:티스토리]
-        log.debug("[ {} , {}] request scope bean create: {}", GUID, URL, this);
+        log.debug("[ {} , {}] request scope bean create: {}", GUID,  this);
     }
     @PreDestroy
     public void close() {
-        log.debug("[ {} , {}] request scope bean close: {}", GUID, URL, this);
+        log.debug("[ {} , {}] request scope bean close: {}", GUID,  this);
     }
 }
