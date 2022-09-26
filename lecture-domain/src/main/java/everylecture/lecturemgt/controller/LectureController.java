@@ -189,13 +189,22 @@ public class LectureController {
         
     	//feign - 회원정보 동기호출
     	//임시로 형변환
-    	long memberid = Long.parseLong(lecturesPostInDTO.getMemberId());
-    	ResponseEntity<MemberInfoDTO> memberInfoResult = memberClient.findById(memberid); 
-        MemberInfoDTO memberInfoDTO = memberInfoResult.getBody();
-        log.debug("member info: {}", memberInfoDTO);
-        
+    	//강의 등록자 Sunc 호출 오류 방생하면 임시 설정
+
+    	String memberName= "";
+		try {
+			long memberid = Long.parseLong(lecturesPostInDTO.getMemberId());
+			ResponseEntity<MemberInfoDTO> memberInfoResult = memberClient.findById(memberid); 
+			MemberInfoDTO memberInfoDTO = memberInfoResult.getBody();
+			log.debug("member info: {}", memberInfoDTO);
+			memberName = memberInfoDTO.getName();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			memberName = "임시설정";
+		}
+
         Lecture lecture = lecturePostInMapper.toEntity(lecturesPostInDTO);
-        lecture.setOpName(memberInfoDTO.getName());		//등록자명
+        lecture.setOpName(memberName);		//등록자명
         
         Lecture returnLecture= lectureService.registerLecture(lecture);
         LecturesPostOutDTO returnDto = lecturesPostOutMapper.toDto(returnLecture);
