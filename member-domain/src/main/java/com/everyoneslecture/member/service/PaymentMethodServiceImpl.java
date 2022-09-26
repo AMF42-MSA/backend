@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.everyoneslecture.member.domain.paymentMethod.dto.PaymentMethodDto;
+import com.everyoneslecture.member.domain.paymentMethod.dto.RequestPaymentMethod;
 import com.everyoneslecture.member.domain.paymentMethod.entity.PaymentMethodEntity;
 import com.everyoneslecture.member.domain.paymentMethod.enumeration.PaymentType;
 import com.everyoneslecture.member.domain.paymentMethod.repository.PaymentMethodRepository;
@@ -23,20 +24,20 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
     public PaymentMethodDto registerPaymenetMethod(PaymentMethodDto paymentMethodDto) {
 
         ModelMapper mapper = new ModelMapper();
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
 
         PaymentMethodEntity paymentMethodEntity = mapper.map(paymentMethodDto, PaymentMethodEntity.class);
         paymentMethodEntity.setPaymentType(PaymentType.valueOf(paymentMethodDto.getPaymentType()));
 
         paymentMethodRepository.save(paymentMethodEntity);
 
-        return paymentMethodDto;
+        return getPaymenetMethodByMemberId(paymentMethodDto.getMemberId());
     }
 
     @Override
     public PaymentMethodDto updatePaymenetMethod(PaymentMethodDto paymentMethodDto) {
         ModelMapper mapper = new ModelMapper();
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
 
         PaymentMethodEntity paymentMethodEntity = mapper.map(paymentMethodDto, PaymentMethodEntity.class);
         paymentMethodEntity.setPaymentType(PaymentType.valueOf(paymentMethodDto.getPaymentType()));
@@ -50,7 +51,7 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
         PaymentMethodEntity paymentMethodEntity = paymentMethodRepository.findByMemberId(memberId);
 
         ModelMapper mapper = new ModelMapper();
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
         PaymentMethodDto paymentMethodDto = mapper.map(paymentMethodEntity, PaymentMethodDto.class);
 
         return paymentMethodDto;

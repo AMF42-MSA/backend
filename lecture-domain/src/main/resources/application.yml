@@ -28,7 +28,7 @@ spring:
       bindings:
         # 강의 분류 내역 비동기 처리
         in-categoryChanged:   #입력(Consumer) 채널 (in-토픽이름)
-#         destination: categoryChanged   #토픽이름 (category의 이름으로 일단 진행)
+#        destination: categoryChanged   #토픽이름 (category의 이름으로 일단 진행)
           destination: lecture   #토픽이름
 
           contentType: application/json    #데이터형식
@@ -45,7 +45,7 @@ logging:
     org.springframework.cloud: debug
 
 spring.datasource:
-  url: jdbc:mysql://vm-mysql13.mysql.database.azure.com:3306/lecture?useUnicode=true&serverTimezone=Asia/Seoul
+  url: jdbc:mysql://amf42-mysql.mysql.database.azure.com:3306/lecture?useUnicode=true&serverTimezone=Asia/Seoul
 #  url: jdbc:mysql://mysql/member?useUnicode=true&serverTimezone=Asia/Seoul
   username: lecture
   password: lecture
@@ -108,7 +108,8 @@ spring:
           contentType: application/json    #데이터형식
 
 spring.datasource:
-  url: jdbc:mysql://vm-mysql13.mysql.database.azure.com:3306/lecture?useUnicode=true&serverTimezone=Asia/Seoul
+  url: jdbc:mysql://amf42-mysql.mysql.database.azure.com:3306/lecture?useUnicode=true&serverTimezone=Asia/Seoul
+#  url: jdbc:mysql://vm-mysql13.mysql.database.azure.com:3306/lecture?useUnicode=true&serverTimezone=Asia/Seoul
 #  url: jdbc:mysql://mysql/member?useUnicode=true&serverTimezone=Asia/Seoul
   username: lecture
   password: lecture

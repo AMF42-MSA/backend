@@ -181,10 +181,5 @@ spring:
             - Path=/**
 server:
   port: 8080
-  ssl:
-    key-store-password: sksksksksk
-    key-store: classpath:everyone.p12
-    key-store-type: PKCS12
-    key-alias: everyone
 token:
   secret: amf42_token

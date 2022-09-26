@@ -7,7 +7,6 @@ import lombok.Data;
 @Data
 public class RequestPaymentMethod {
 
-    private Long id;
     @NotNull(message = "사용자ID는 필수값입니다.!")
     private String memberId;
     private String paymentInfo;

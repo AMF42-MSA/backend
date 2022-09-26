@@ -22,6 +22,7 @@ public class PolicyHandler {
             return;
 
         MemberVo memberVo = new MemberVo();
+        memberVo.setId(memberJoined.getId());
         memberVo.setMemberId(memberJoined.getMemberId());
         memberVo.setMemberType(memberJoined.getMemberType());
         memberVo.setEmail(memberJoined.getEmail());

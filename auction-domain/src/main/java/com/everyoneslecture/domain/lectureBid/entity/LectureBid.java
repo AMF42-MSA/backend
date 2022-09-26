@@ -16,7 +16,7 @@ import com.everyoneslecture.domain.lectureBid.repository.LectureBidRepository;
 public class LectureBid {     // Entity. Domain Class.
 
 
-    @Id @GeneratedValue(strategy=GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
         public Long getId() {
             return id;

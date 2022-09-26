@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import com.everyoneslecture.member.domain.member.dto.MemberDto;
 import com.everyoneslecture.member.domain.member.dto.RequestMember;
 import com.everyoneslecture.member.domain.member.entity.MemberEntity;
+import com.everyoneslecture.member.domain.paymentMethod.dto.PaymentMethodDto;
+import com.everyoneslecture.member.domain.paymentMethod.dto.RequestPaymentMethod;
 import com.everyoneslecture.member.service.MemberService;
+import com.everyoneslecture.member.service.PaymentMethodService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import io.micrometer.core.annotation.Timed;
@@ -29,17 +32,19 @@ import java.util.ArrayList;
 public class MemberController {
 
     private MemberService memberService;
+    private PaymentMethodService paymentMethodService;
 
     @Autowired
     public MemberController(MemberService memberService) throws Exception {
+        this.paymentMethodService = paymentMethodService;
         this.memberService = memberService;
 
-        MemberDto memberDto = new MemberDto();
-        memberDto.setEmail("admin@sk.com");
-        memberDto.setPwd("1111");
-        memberDto.setMemberType("ROLE_ADMIN");
-        memberDto.setName("테스트관리자");
-        memberService.createMember(memberDto);
+        // MemberDto memberDto = new MemberDto();
+        // memberDto.setEmail("admin@sk.com");
+        // memberDto.setPwd("1111");
+        // memberDto.setMemberType("ROLE_ADMIN");
+        // memberDto.setName("테스트관리자");
+        // memberService.createMember(memberDto);
 
     }
 
@@ -100,6 +105,15 @@ public class MemberController {
         //return ResponseEntity.status(HttpStatus.OK).body(new ModelMapper().map(memberDto, MemberDto.class));
     }
 
+    @DeleteMapping(value = "/members/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<String> deleteMember(@PathVariable("id") Long id)
+        throws URISyntaxException, JsonProcessingException, InterruptedException, ExecutionException{
+
+        memberService.deleteMember(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body("정상적으로 삭제되었습니다.");
+    }
+
     @GetMapping("/welcome")
     @Timed(value = "users.welcome", longTask = true)
     public String welcome() {
@@ -108,4 +122,11 @@ public class MemberController {
     }
 
 
+    @PostMapping("/paymentMethods")
+    public ResponseEntity registerPaymentMethod(@RequestBody RequestPaymentMethod requestPaymentMethod)
+        throws URISyntaxException, JsonProcessingException, InterruptedException, ExecutionException {
+
+        memberService.registerPaymenetMethod(requestPaymentMethod);
+        return ResponseEntity.status(HttpStatus.CREATED).body(requestPaymentMethod);   // return with 201
+    }
 }
