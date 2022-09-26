@@ -57,19 +57,19 @@ public class PolicyHandler {
         if (!lectureAdded.validate())
             return;
         // 최소강의비가 없음
-        LectureVo lectureVo = new LectureVo();
-        lectureVo.setLectId(lectureAdded.getId());
-        lectureVo.setTitle(lectureAdded.getTitle());
-        lectureVo.setMinEnrollment(lectureAdded.getMinEnrollment());
-        lectureVo.setMaxEnrollment(lectureAdded.getMaxEnrollment());
-        lectureVo.setCategoryName(lectureAdded.getCategoryName());
-        lectureVo.setStartLectureDt(lectureAdded.getStartLectureDt());
-        lectureVo.setRegisterEndDt(lectureAdded.getRegisterEndDt());
-        lectureVo.setLectureStatus(lectureAdded.getLectureStatus());
-        lectureVo.setMemberId(lectureAdded.getMemberId());
-        lectureVo.setOpName(lectureAdded.getOpName());
-        lectureVo.setEndterDt(lectureAdded.getEndterDt());
-        lectureRepository.save(lectureVo);
+        LectureVO lectureVO = new LectureVO();
+        lectureVO.setLectId(lectureAdded.getId());
+        lectureVO.setTitle(lectureAdded.getTitle());
+        lectureVO.setMinEnrollment(lectureAdded.getMinEnrollment());
+        lectureVO.setMaxEnrollment(lectureAdded.getMaxEnrollment());
+        lectureVO.setCategoryName(lectureAdded.getCategoryName());
+        lectureVO.setStartLectureDt(lectureAdded.getStartLectureDt());
+        lectureVO.setRegisterEndDt(lectureAdded.getRegisterEndDt());
+        lectureVO.setLectureStatus(lectureAdded.getLectureStatus());
+        lectureVO.setMemberId(lectureAdded.getMemberId());
+        lectureVO.setOpName(lectureAdded.getOpName());
+        lectureVO.setEndterDt(lectureAdded.getEndterDt());
+        lectureRepository.save(lectureVO);
 
     }
 
@@ -78,19 +78,19 @@ public class PolicyHandler {
         if (!lectureUpdated.validate())
             return;
 
-        LectureVo lectureVo = new LectureVo();
-        lectureVo.setLectId(lectureUpdated.getId());
-        lectureVo.setTitle(lectureUpdated.getTitle());
-        lectureVo.setMinEnrollment(lectureUpdated.getMinEnrollment());
-        lectureVo.setMaxEnrollment(lectureUpdated.getMaxEnrollment());
-        lectureVo.setCategoryName(lectureUpdated.getCategoryName());
-        lectureVo.setStartLectureDt(lectureUpdated.getStartLectureDt());
-        lectureVo.setRegisterEndDt(lectureUpdated.getRegisterEndDt());
-        lectureVo.setLectureStatus(lectureUpdated.getLectureStatus());
-        lectureVo.setMemberId(lectureUpdated.getMemberId());
-        lectureVo.setOpName(lectureUpdated.getOpName());
-        lectureVo.setEndterDt(lectureUpdated.getEndterDt());
-        lectureRepository.save(lectureVo);
+        LectureVO lectureVO = new LectureVO();
+        lectureVO.setLectId(lectureUpdated.getId());
+        lectureVO.setTitle(lectureUpdated.getTitle());
+        lectureVO.setMinEnrollment(lectureUpdated.getMinEnrollment());
+        lectureVO.setMaxEnrollment(lectureUpdated.getMaxEnrollment());
+        lectureVO.setCategoryName(lectureUpdated.getCategoryName());
+        lectureVO.setStartLectureDt(lectureUpdated.getStartLectureDt());
+        lectureVO.setRegisterEndDt(lectureUpdated.getRegisterEndDt());
+        lectureVO.setLectureStatus(lectureUpdated.getLectureStatus());
+        lectureVO.setMemberId(lectureUpdated.getMemberId());
+        lectureVO.setOpName(lectureUpdated.getOpName());
+        lectureVO.setEndterDt(lectureUpdated.getEndterDt());
+        lectureRepository.save(lectureVO);
 
     }
 

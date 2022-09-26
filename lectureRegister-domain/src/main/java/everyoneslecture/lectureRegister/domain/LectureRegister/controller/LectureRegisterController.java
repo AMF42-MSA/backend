@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import everyoneslecture.lectureRegister.domain.LectureRegister.entity.LectureRegister;
 import everyoneslecture.lectureRegister.domain.LectureRegister.repository.LectureRegisterRepository;
 import everyoneslecture.lectureRegister.domain.LectureRegister.vo.LectureRepository;
-import everyoneslecture.lectureRegister.domain.LectureRegister.vo.LectureVo;
+import everyoneslecture.lectureRegister.domain.LectureRegister.vo.LectureVO;
 import everyoneslecture.lectureRegister.domain.LectureRegister.dto.LectureRegisterTempDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import everyoneslecture.lectureRegister.domain.LectureRegister.service.LectureRegisterService;
@@ -40,25 +40,28 @@ public class LectureRegisterController {
   @Autowired
   LectureRepository lectureRepository;
   LectureRegister lectureRegister;
-  LectureVo lectureVo;
+  LectureVO lectureVO;
 
   @RequestMapping(method = RequestMethod.GET, path = "lectureRegisters/searchLectureList")
-	public List<LectureRegisterTempDto> searchLectureList() throws JsonProcessingException, InterruptedException, ExecutionException{
+  public List<LectureRegisterTempDto> searchLectureList()
+      throws JsonProcessingException, InterruptedException, ExecutionException {
 
-		return lectureRegisterService.searchLectureList();
+    return lectureRegisterService.searchLectureList();
 
-	}
+  }
 
-  // @RequestMapping(method = RequestMethod.PUT, path = "lectureRegisters/RegistLect")
+  // @RequestMapping(method = RequestMethod.PUT, path =
+  // "lectureRegisters/RegistLect")
   // public String registerLecture(@RequestBody LectureRegister lectureRegister)
-  //     throws JsonProcessingException, InterruptedException, ExecutionException {
-  //   lectureRegisterService.registerLecture(lectureRegister);
-  //   return "강의 등록";
+  // throws JsonProcessingException, InterruptedException, ExecutionException {
+  // lectureRegisterService.registerLecture(lectureRegister);
+  // return "강의 등록";
   // }
 
-  // @RequestMapping(method = RequestMethod.GET, path = "lectureRegisters/searchLectureList")
+  // @RequestMapping(method = RequestMethod.GET, path =
+  // "lectureRegisters/searchLectureList")
   // public List<LectureRegister> getAllLecture() {
-  //   return lectureRegisterRepository.findAll();
+  // return lectureRegisterRepository.findAll();
   // }
 
 }

@@ -21,16 +21,16 @@ import org.springframework.stereotype.Repository;
 public interface LectureRegisterRepository extends JpaRepository<LectureRegister, Long> {
   @Query(
       "select                                                     \n" +
-      "      lectureVo.lectId             as    lectId            \n" +
-      "    , lectureVo.categoryName       as    categoryName      \n" +
-      "    , lectureVo.maxEnrollment      as    maxEnrollment     \n" +
-      "    , lectureVo.minEnrollment      as    minEnrollment     \n" +
-      "    , lectureVo.lectCost           as    lectCost          \n" +
-      "    , trim(lectureVo.title)        as    title             \n" +
-      "    , lectureVo.lectureStatus      as    lectureStatus     \n" +
-      "    , lectureVo.startLectureDt     as    startLectureDt    \n" +
+      "      lectureVO.lectId             as    lectId            \n" +
+      "    , lectureVO.categoryName       as    categoryName      \n" +
+      "    , lectureVO.maxEnrollment      as    maxEnrollment     \n" +
+      "    , lectureVO.minEnrollment      as    minEnrollment     \n" +
+      "    , lectureVO.lectCost           as    lectCost          \n" +
+      "    , trim(lectureVO.title)        as    title             \n" +
+      "    , lectureVO.lectureStatus      as    lectureStatus     \n" +
+      "    , lectureVO.startLectureDt     as    startLectureDt    \n" +
       "from                                   \n" +
-      "    LectureVo lectureVo                        \n"
+      "    LectureVO lectureVO                        \n"
       )
       List<LectureRegisterTempDto> findLectureAll();
 
