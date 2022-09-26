@@ -46,8 +46,7 @@ public interface LectureBidRepository extends CrudRepository<LectureBid, Long>{ 
     "     LectureVo lectureVo                                                                                                                                               \n" +
 	"     , Auction auction                                                                                                                                                   \n" +
 	"where auction.lectId = lectureVo.lectId                                                                                                                                  \n" +
-  "  and (auction.auctionStatus = 'AUCTION' OR auction.auctionStatus = 'BID_SUCCESS')																						                                            \n" +
-  "order by lectureVo.endter_dt desc"
+  "  and (auction.auctionStatus = 'AUCTION' OR auction.auctionStatus = 'BID_SUCCESS')																						                                              "
 
 
   )

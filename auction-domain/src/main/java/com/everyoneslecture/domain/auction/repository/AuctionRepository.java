@@ -50,8 +50,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>{    // R
     "    LectureVo lectureVo                                                            \n" +
 	"left join Auction auction                                                            \n" +
 	"on auction.lectId = lectureVo.lectId                                                 \n" +
-  "and (auction.auctionStatus = null or auction.auctionStatus != 'CANCEL')              \n" +
-  "order by lectureVo.endter_dt desc"
+  "and (auction.auctionStatus = null or auction.auctionStatus != 'CANCEL')"
   )
   List<AuctionDto> findLectAuctionAll();
   //Optional<LectureVo> findByLectId(Long lectId);
