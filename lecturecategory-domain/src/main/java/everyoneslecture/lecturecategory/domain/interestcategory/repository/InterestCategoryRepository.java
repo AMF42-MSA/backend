@@ -22,7 +22,7 @@ public interface InterestCategoryRepository extends JpaRepository<InterestCatego
 
   @Query(value = "SELECT category_id as categoryId, category_name as categoryName, count(0) as categoryCnt \n" +
                   "FROM interest_category \n" +
-                  "WHERE REGISTRATION_DATE >= (sysdate()-7) \n" +
+                  "WHERE REGISTRATION_DATE >= DATE_SUB(NOW(), INTERVAL 7 DAY) \n" +
                   "GROUP BY category_id, category_name \n" +
                   "ORDER BY categoryCnt DESC, category_id DESC \n" +
                   "LIMIT 5", nativeQuery = true)
