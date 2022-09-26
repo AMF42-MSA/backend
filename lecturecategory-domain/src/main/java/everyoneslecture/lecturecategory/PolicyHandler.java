@@ -2,8 +2,8 @@ package everyoneslecture.lecturecategory;
 
 import everyoneslecture.lecturecategory.domain.interestcategory.entity.InterestCategory;
 import everyoneslecture.lecturecategory.domain.interestcategory.event.LectureChanged;
+import everyoneslecture.lecturecategory.domain.interestcategory.event.MemberUpdated;
 import everyoneslecture.lecturecategory.domain.interestcategory.repository.InterestCategoryRepository;
-import everyoneslecture.lecturecategory.domain.interestcategory.vo.MemberUpdated;
 import everyoneslecture.lecturecategory.domain.interestcategory.vo.MemberVO;
 import everyoneslecture.lecturecategory.kafka.KafkaProcessor;
 import everyoneslecture.lecturecategory.service.InterestCategoryService;
@@ -40,7 +40,7 @@ public class PolicyHandler{
 
         for(InterestCategory interestCategory : interestCategories) {
             MemberVO memberVO = interestCategory.getMemberVO();
-            memberVO.setMemberId(memberUpdated.getEmail());
+            memberVO.setMemberId(memberUpdated.getMemberId());
             memberVO.setMemberName(memberUpdated.getName());
             memberVO.setEmail(memberUpdated.getEmail());
             interestCategoryRepository.save(interestCategory);
