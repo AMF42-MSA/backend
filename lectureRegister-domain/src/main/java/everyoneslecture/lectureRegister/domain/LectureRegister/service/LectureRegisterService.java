@@ -29,9 +29,10 @@ public interface LectureRegisterService {
          * Business Logic
          * 등록강좌리스트 조회
          **/
-        List<LectureRegisterTempDto>  searchLectureList() throws InterruptedException, ExecutionException, JsonProcessingException;
+        List<LectureRegisterDto> searchLectureList()
+                        throws InterruptedException, ExecutionException, JsonProcessingException;
 
         // LectureRegister registerLecture(LectureRegister lectureRegister)
-        //                 throws InterruptedException, ExecutionException, JsonProcessingException;
+        // throws InterruptedException, ExecutionException, JsonProcessingException;
 
 }

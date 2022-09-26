@@ -22,6 +22,7 @@ import everyoneslecture.lectureRegister.domain.LectureRegister.repository.Lectur
 import everyoneslecture.lectureRegister.domain.LectureRegister.vo.LectureRepository;
 import everyoneslecture.lectureRegister.domain.LectureRegister.vo.LectureVO;
 import everyoneslecture.lectureRegister.domain.LectureRegister.dto.LectureRegisterTempDto;
+import everyoneslecture.lectureRegister.domain.LectureRegister.dto.LectureRegisterDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import everyoneslecture.lectureRegister.domain.LectureRegister.service.LectureRegisterService;
 
@@ -43,7 +44,7 @@ public class LectureRegisterController {
   LectureVO lectureVO;
 
   @RequestMapping(method = RequestMethod.GET, path = "lectureRegisters/searchLectureList")
-  public List<LectureRegisterTempDto> searchLectureList()
+  public List<LectureRegisterDto> searchLectureList()
       throws JsonProcessingException, InterruptedException, ExecutionException {
 
     return lectureRegisterService.searchLectureList();
