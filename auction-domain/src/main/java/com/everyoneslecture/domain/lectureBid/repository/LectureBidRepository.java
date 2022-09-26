@@ -27,11 +27,11 @@ public interface LectureBidRepository extends CrudRepository<LectureBid, Long>{ 
     "    , lectureVo.startLectureDt   as startLectureDt                                                                                                                     \n" +
     ", case                                                                                                                                                                 \n" +
     "   when                                                                                                                                                                \n" +
-    " 		to_char(auction.startAuctionDate, 'YYYYMMDD') > to_char(now(), 'YYYYMMDD')                                                                                        \n" +
+    " 		date_format(auction.startAuctionDate, '%Y%m%d') > date_format(now(), '%Y%m%d')                                                                                        \n" +
     "   then                                                                                                                                                                \n" +
     " 		'BEFORE_AUCTION'                                                                                                                                                  \n" +
     "   when                                                                                                                                                                \n" +
-    " 		to_char(auction.endAuctionDate, 'YYYYMMDD') < to_char(now(), 'YYYYMMDD')                                                                                          \n" +
+    " 		date_format(auction.endAuctionDate, '%Y%m%d') < date_format(now(), '%Y%m%d')                                                                                          \n" +
     "   then                                                                                                                                                                \n" +
     " 		'AFTER_AUCTION'                                                                                                                                                   \n" +
     "   else                                                                                                                                                                \n" +
