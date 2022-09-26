@@ -1,7 +1,7 @@
 package everyoneslecture.lecturecategory;
 
 import everyoneslecture.lecturecategory.domain.interestcategory.entity.InterestCategory;
-import everyoneslecture.lecturecategory.domain.interestcategory.event.LectureAdded;
+import everyoneslecture.lecturecategory.domain.interestcategory.event.LectureChanged;
 import everyoneslecture.lecturecategory.domain.interestcategory.repository.InterestCategoryRepository;
 import everyoneslecture.lecturecategory.domain.interestcategory.vo.MemberUpdated;
 import everyoneslecture.lecturecategory.domain.interestcategory.vo.MemberVO;
@@ -50,28 +50,27 @@ public class PolicyHandler{
 
     /**
      * 관심분류 - 강의 등록 시 알림센터에 알림 전달
-     * @param memberUpdated
+     * @param lectureChagned
      */
-    @StreamListener(KafkaProcessor.INPUT)
-    public void wheneverLectureAdded(@Payload LectureAdded lectureAdded){
-        if(!lectureAdded.validate())
+    @StreamListener(KafkaProcessor.INPUT_LECTURE_CHANGED)
+    public void wheneverLectureAdded(@Payload LectureChanged lectureChanged){
+        if(!lectureChanged.validate())
             return;
 
-        // lectureAdded 이벤트에서 분류id 가져와서
-        // null이 아니면 관심분류 카테고리 레파지토리에서 분류id로 뽑아서
+        // lectureChanged 이벤트에서 분류명 가져와서
+        // null이 아니면 관심분류 카테고리 레파지토리에서 분류명으로 뽑아서
         // for문 돌아가며 알림 전달
-        Long categoryId = lectureAdded.getCategoryId();
-        if(categoryId != null) {
-            List<InterestCategory> interestCategories = interestCategoryRepository.findByCategoryId(categoryId);
+        String categoryName = lectureChanged.getCategoryName();
+        if(categoryName != null) {
+            List<InterestCategory> interestCategories = interestCategoryRepository.findByCategoryName(categoryName);
             for(InterestCategory interestCategory : interestCategories) {
                 MemberVO memberVO = interestCategory.getMemberVO();
 
                 String memberId = memberVO.getMemberId();
                 String memberName = memberVO.getMemberName();
-                String categoryName = lectureAdded.getCategoryName();
                 String email = memberVO.getEmail();
-                String lectureName = lectureAdded.getLectName();
-                String lectureStatus = lectureAdded.getLectStatus(); // 수정 필요할 것으로 예상 - 원래 enum타입이라..
+                String lectureName = lectureChanged.getTitle();
+                String lectureStatus = lectureChanged.getLectureStatus();
 
                 interestCategoryService.deliverNotification(memberId, memberName, categoryName, email, lectureName, lectureStatus);
             }

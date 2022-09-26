@@ -34,6 +34,9 @@ spring:
                 value:
                   serde: org.apache.kafka.common.serialization.Serdes$StringSerde
       bindings:
+        in-lectureChanged:
+          destination: lectureChanged
+          contentType: application/json
         event-in:
           group: lecturecategory
           destination: lecture
@@ -81,6 +84,9 @@ spring:
                 value:
                   serde: org.apache.kafka.common.serialization.Serdes$StringSerde
       bindings:
+        in-lectureChanged:
+          destination: lectureChanged
+          contentType: application/json
         event-in:
           group: lecturecategory
           destination: lecture

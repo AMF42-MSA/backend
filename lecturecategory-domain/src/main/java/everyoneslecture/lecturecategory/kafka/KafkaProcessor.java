@@ -9,6 +9,7 @@ public interface KafkaProcessor {
 
     String INPUT = "event-in";
     String OUTPUT = "event-out";
+    String INPUT_LECTURE_CHANGED = "in-lectureChanged";
 
     @Input(INPUT)
     SubscribableChannel inboundTopic();
@@ -16,4 +17,6 @@ public interface KafkaProcessor {
     @Output(OUTPUT)
     MessageChannel outboundTopic();
 
+    @Input(INPUT_LECTURE_CHANGED)
+    SubscribableChannel inboundLectureTopic();
 }

@@ -14,6 +14,9 @@ public interface InterestCategoryRepository extends JpaRepository<InterestCatego
   @Query(value = "SELECT * FROM interest_category WHERE category_id = :categoryId", nativeQuery = true)
   List<InterestCategory> findByCategoryId(@Param("categoryId") Long categoryId);
 
+  @Query(value = "SELECT * FROM interest_category WHERE category_name = :categoryName", nativeQuery = true)
+  List<InterestCategory> findByCategoryName(@Param("categoryName") String categoryName);
+
   @Query(value = "SELECT * FROM interest_category WHERE email = :email", nativeQuery = true)
   List<InterestCategory> findByMemberEmail(@Param("email") String email);
 
