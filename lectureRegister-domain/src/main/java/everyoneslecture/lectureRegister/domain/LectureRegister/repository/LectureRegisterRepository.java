@@ -1,4 +1,5 @@
 package everyoneslecture.lectureRegister.domain.LectureRegister.repository;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder.Case;
@@ -19,8 +20,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LectureRegisterRepository extends JpaRepository<LectureRegister, Long> {
-  @Query(
-      "select                                                     \n" +
+  @Query("select                                                     \n" +
       "      lectureVO.lectId             as    lectId            \n" +
       "    , lectureVO.categoryName       as    categoryName      \n" +
       "    , lectureVO.maxEnrollment      as    maxEnrollment     \n" +
@@ -30,8 +30,7 @@ public interface LectureRegisterRepository extends JpaRepository<LectureRegister
       "    , lectureVO.lectureStatus      as    lectureStatus     \n" +
       "    , lectureVO.startLectureDt     as    startLectureDt    \n" +
       "from                                   \n" +
-      "    LectureVO lectureVO                        \n"
-      )
-      List<LectureRegisterTempDto> findLectureAll();
+      "    LectureVO lectureVO                        \n")
+  List<LectureRegisterDto> findLectureAll();
 
 }

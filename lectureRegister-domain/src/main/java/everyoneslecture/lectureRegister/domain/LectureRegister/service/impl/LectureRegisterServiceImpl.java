@@ -21,12 +21,11 @@ import everyoneslecture.lectureRegister.domain.LectureRegister.dto.LectureRegist
 import everyoneslecture.lectureRegister.domain.LectureRegister.entity.LectureRegister;
 import everyoneslecture.lectureRegister.domain.LectureRegister.enums.LectureRegisterStatus;
 
-
 @Service
 @Transactional
 public class LectureRegisterServiceImpl implements LectureRegisterService {
 
-  private final Logger log = LoggerFactory.getLogger(LectureRegisterServiceImpl.class);
+	private final Logger log = LoggerFactory.getLogger(LectureRegisterServiceImpl.class);
 
 	@Override
 	public LectureRegister save(LectureRegister lectureRegister) {
@@ -39,7 +38,7 @@ public class LectureRegisterServiceImpl implements LectureRegisterService {
 	}
 
 	@Override
-    @Transactional(readOnly = true)
+	@Transactional(readOnly = true)
 	public Optional<LectureRegister> findOne(Long id) {
 		return null;
 	}
@@ -48,17 +47,16 @@ public class LectureRegisterServiceImpl implements LectureRegisterService {
 	public void delete(Long id) {
 	}
 
-  /**
-   * Business Logic
-   * 강좌 조회
-   **/
-  @Override
-  public List<LectureRegisterTempDto> searchLectureList()
-      throws InterruptedException, ExecutionException, JsonProcessingException {
-        List<LectureRegisterTempDto> LectureRegisterTempDtoDtoList = LectureRegister.repository().findLectureAll();
+	/**
+	 * Business Logic
+	 * 강좌 조회
+	 **/
+	@Override
+	public List<LectureRegisterDto> searchLectureList()
+			throws InterruptedException, ExecutionException, JsonProcessingException {
+		List<LectureRegisterDto> LectureRegisterDtoList = LectureRegister.repository().findLectureAll();
 
-        return LectureRegisterTempDtoDtoList;
-  }
+		return LectureRegisterDtoList;
+	}
 
 }
-
