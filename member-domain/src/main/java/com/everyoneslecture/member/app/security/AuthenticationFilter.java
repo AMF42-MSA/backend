@@ -76,6 +76,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter{
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write("{\"token\":\"" + token + "\"");
+        response.getWriter().write(",\"id\":\"" + memberdetails.getId() + "\"");
         response.getWriter().write(",\"memberId\":\"" + memberdetails.getMemberId() + "\"");
         response.getWriter().write(",\"name\":\"" + memberdetails.getName() + "\"");
         response.getWriter().write(",\"email\":\"" + memberdetails.getEmail() + "\"");
