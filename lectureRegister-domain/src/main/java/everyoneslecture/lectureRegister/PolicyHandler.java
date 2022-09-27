@@ -52,7 +52,7 @@ public class PolicyHandler {
     @Autowired
     LectureRepository lectureRepository;
 
-    @StreamListener(KafkaProcessor.INPUT)
+    @StreamListener(KafkaProcessor.INPUT_LECTURE_CHANGED)
     public void wheneverLectureAdded(@Payload LectureAdded lectureAdded) {
         if (!lectureAdded.validate())
             return;
@@ -73,7 +73,7 @@ public class PolicyHandler {
 
     }
 
-    @StreamListener(KafkaProcessor.INPUT)
+    @StreamListener(KafkaProcessor.INPUT_LECTURE_CHANGED)
     public void wheneverLectureUpdated(@Payload LectureUpdated lectureUpdated) {
         if (!lectureUpdated.validate())
             return;

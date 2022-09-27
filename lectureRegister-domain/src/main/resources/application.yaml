@@ -55,7 +55,7 @@ spring:
     stream:
       kafka:
         binder:
-          brokers: kafka:9092
+          brokers: kafka.kafka.svc.cluster.local:9092
         streams:
           binder:
             configuration:
@@ -65,13 +65,17 @@ spring:
                 value:
                   serde: org.apache.kafka.common.serialization.Serdes$StringSerde
       bindings:
+        in-lectureChanged:
+          destination: lectureChanged
+          contentType: application/json
         event-in:
-          group: amf42
+          group: everylecture
           destination: lecture
           contentType: application/json
         event-out:
           destination: lecture
           contentType: application/json
+
 token:
   expiration_time: 86400000
   secret: amf42_token
