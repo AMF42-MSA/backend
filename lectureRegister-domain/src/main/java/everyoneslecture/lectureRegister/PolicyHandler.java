@@ -53,43 +53,43 @@ public class PolicyHandler {
     LectureRepository lectureRepository;
 
     @StreamListener(KafkaProcessor.INPUT_LECTURE_CHANGED)
-    public void wheneverLectureAdded(@Payload LectureAdded lectureAdded) {
-        if (!lectureAdded.validate())
+    public void wheneverLectureAdded(@Payload LectureChanged LectureChanged) {
+        if (!LectureChanged.validate())
             return;
         // 최소강의비가 없음
         LectureVO lectureVO = new LectureVO();
-        lectureVO.setLectId(lectureAdded.getId());
-        lectureVO.setTitle(lectureAdded.getTitle());
-        lectureVO.setMinEnrollment(lectureAdded.getMinEnrollment());
-        lectureVO.setMaxEnrollment(lectureAdded.getMaxEnrollment());
-        lectureVO.setCategoryName(lectureAdded.getCategoryName());
-        lectureVO.setStartLectureDt(lectureAdded.getStartLectureDt());
-        lectureVO.setRegisterEndDt(lectureAdded.getRegisterEndDt());
-        lectureVO.setLectureStatus(lectureAdded.getLectureStatus());
-        lectureVO.setMemberId(lectureAdded.getMemberId());
-        lectureVO.setOpName(lectureAdded.getOpName());
-        lectureVO.setEndterDt(lectureAdded.getEndterDt());
+        lectureVO.setLectId(LectureChanged.getId());
+        lectureVO.setTitle(LectureChanged.getTitle());
+        lectureVO.setMinEnrollment(LectureChanged.getMinEnrollment());
+        lectureVO.setMaxEnrollment(LectureChanged.getMaxEnrollment());
+        lectureVO.setCategoryName(LectureChanged.getCategoryName());
+        lectureVO.setStartLectureDt(LectureChanged.getStartLectureDt());
+        lectureVO.setRegisterEndDt(LectureChanged.getRegisterEndDt());
+        lectureVO.setLectureStatus(LectureChanged.getLectureStatus());
+        lectureVO.setMemberId(LectureChanged.getMemberId());
+        lectureVO.setOpName(LectureChanged.getOpName());
+        lectureVO.setEndterDt(LectureChanged.getEndterDt());
         lectureRepository.save(lectureVO);
 
     }
 
     @StreamListener(KafkaProcessor.INPUT_LECTURE_CHANGED)
-    public void wheneverLectureUpdated(@Payload LectureUpdated lectureUpdated) {
-        if (!lectureUpdated.validate())
+    public void wheneverLectureUpdated(@Payload LectureChanged LectureChanged) {
+        if (!LectureChanged.validate())
             return;
 
         LectureVO lectureVO = new LectureVO();
-        lectureVO.setLectId(lectureUpdated.getId());
-        lectureVO.setTitle(lectureUpdated.getTitle());
-        lectureVO.setMinEnrollment(lectureUpdated.getMinEnrollment());
-        lectureVO.setMaxEnrollment(lectureUpdated.getMaxEnrollment());
-        lectureVO.setCategoryName(lectureUpdated.getCategoryName());
-        lectureVO.setStartLectureDt(lectureUpdated.getStartLectureDt());
-        lectureVO.setRegisterEndDt(lectureUpdated.getRegisterEndDt());
-        lectureVO.setLectureStatus(lectureUpdated.getLectureStatus());
-        lectureVO.setMemberId(lectureUpdated.getMemberId());
-        lectureVO.setOpName(lectureUpdated.getOpName());
-        lectureVO.setEndterDt(lectureUpdated.getEndterDt());
+        lectureVO.setLectId(LectureChanged.getId());
+        lectureVO.setTitle(LectureChanged.getTitle());
+        lectureVO.setMinEnrollment(LectureChanged.getMinEnrollment());
+        lectureVO.setMaxEnrollment(LectureChanged.getMaxEnrollment());
+        lectureVO.setCategoryName(LectureChanged.getCategoryName());
+        lectureVO.setStartLectureDt(LectureChanged.getStartLectureDt());
+        lectureVO.setRegisterEndDt(LectureChanged.getRegisterEndDt());
+        lectureVO.setLectureStatus(LectureChanged.getLectureStatus());
+        lectureVO.setMemberId(LectureChanged.getMemberId());
+        lectureVO.setOpName(LectureChanged.getOpName());
+        lectureVO.setEndterDt(LectureChanged.getEndterDt());
         lectureRepository.save(lectureVO);
 
     }
