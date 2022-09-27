@@ -53,7 +53,7 @@ public class InterestCategoryController {
     Long categoryId = Long.valueOf(paramMap.get("categoryId"));
     String categoryName = paramMap.get("categoryName");
 
-    if(interestCategoryService.existsInterestCategory(memberId, categoryId)) {
+    if(interestCategoryService.existsInterestCategory(email, categoryId)) {
       // 이미 해당 관심분류 존재할 경우, return -1
       return result;
     }
