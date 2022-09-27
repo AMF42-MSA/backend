@@ -118,6 +118,17 @@ public class MemberController {
     @Timed(value = "users.welcome", longTask = true)
     public String welcome() {
 //        return env.getProperty("greeting.message");
+        MemberDto memberDto = new MemberDto();
+        memberDto.setEmail("admin@sk.com");
+        memberDto.setPwd("1111");
+        memberDto.setMemberType("ROLE_ADMIN");
+        memberDto.setName("테스트관리자");
+        try {
+            memberService.createMember(memberDto);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         return "Welcome 모두의강의!!";
     }
 
