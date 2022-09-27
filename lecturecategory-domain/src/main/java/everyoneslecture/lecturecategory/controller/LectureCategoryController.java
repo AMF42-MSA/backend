@@ -15,7 +15,7 @@ import everyoneslecture.lecturecategory.service.LectureCategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "categories", description = "강의분류: 강의분류 등록, 수정, 삭제")
+@Tag(name = "categories", description = "강의분류: 강의분류 등록, 수정, 삭제, 전체조회")
 @RestController
 public class LectureCategoryController {
 
@@ -32,7 +32,12 @@ public class LectureCategoryController {
    * @return
    */
   @Tag(name="categories")
-  @Operation(summary = "카테고리 등록", description = "카테고리를 등록한다")
+  @Operation(summary = "카테고리 등록",
+            description = "카테고리를 등록한다. \n" +
+                            "- 파라미터 예시 \n" +
+                            "{ \n" +
+                            "  \"categoryName\": \"카테고리명\" \n" +
+                            "}")
   @RequestMapping(value="lectureCategories/registerCategory", method=RequestMethod.POST)
   public Long registerLectureCategoryPOST(@RequestBody Map<String, String> paramMap) {
     Long result = Long.valueOf(-1);
@@ -56,7 +61,7 @@ public class LectureCategoryController {
    */
   @Tag(name="categories")
   @Operation(summary = "카테고리 전체 조회", description = "카테고리 목록 전체를 조회한다")
-  @RequestMapping(value="lectureCategories/searchAll")
+  @RequestMapping(value="lectureCategories/searchAll", method=RequestMethod.GET)
   public List<LectureCategory> searchAllLectureCategory() {
     return lectureCategoryRepository.findAll();
   }
@@ -67,7 +72,13 @@ public class LectureCategoryController {
    * @return
    */
   @Tag(name="categories")
-  @Operation(summary = "카테고리명 수정", description = "카테고리명을 수정한다")
+  @Operation(summary = "카테고리명 수정",
+            description = "카테고리명을 수정한다. \n" +
+                            "- 파라미터 예시 \n" +
+                            "{ \n" +
+                            "  \"categoryId\": \"카테고리ID(숫자)\", \n" +
+                            "  \"categoryName\": \"카테고리명\" \n" +
+                            "}")
   @RequestMapping(value="lectureCategories/modifyCategoryName", method=RequestMethod.PATCH)
   public Long modifyLectureCategoryName(@RequestBody Map<String, String> paramMap) {
     Long result = Long.valueOf(-1);
@@ -92,7 +103,13 @@ public class LectureCategoryController {
    * @return
    */
   @Tag(name="categories")
-  @Operation(summary = "카테고리 삭제", description = "카테고리를 삭제한다")
+  @Operation(summary = "카테고리 삭제",
+              description = "카테고리를 삭제한다. \n" +
+                            "- 파라미터 예시 \n" +
+                            "{ \n" +
+                            "  \"categoryId\": \"카테고리ID(숫자)\", \n" +
+                            "  \"categoryName\": \"카테고리명\" \n" +
+                            "}")
   @RequestMapping(value="lectureCategories/deleteCategory", method=RequestMethod.DELETE)
   public Long deleteLectureCategory(@RequestBody Map<String, String> paramMap) {
     Long result = Long.valueOf(-1);

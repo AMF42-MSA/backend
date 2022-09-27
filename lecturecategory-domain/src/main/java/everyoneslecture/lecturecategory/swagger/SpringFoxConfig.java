@@ -26,7 +26,7 @@ public class SpringFoxConfig {
         return new ApiInfoBuilder()
                 .title("AMF-Level3 교육")
                 .version("1.0")
-                .description("AMF4차수- 모두의강의")
+                .description("AMF4차수- 모두의강의 강의분류 서비스 API")
                 .license("AMF42조")
                 .build();
     }

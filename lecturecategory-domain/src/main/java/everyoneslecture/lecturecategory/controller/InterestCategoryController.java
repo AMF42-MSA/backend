@@ -16,6 +16,7 @@ import everyoneslecture.lecturecategory.service.InterestCategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+@Tag(name = "interest_categories", description = "관심분류: 관심분류 등록, 삭제, 전체조회, 유저별 조회, top5 관심분류 조회")
 @RestController
 public class InterestCategoryController {
 
@@ -31,6 +32,17 @@ public class InterestCategoryController {
    * @param paramMap
    * @return
    */
+  @Tag(name="interest_categories")
+  @Operation(summary = "관심분류 등록",
+              description = "관심분류를 등록한다.\n" +
+                            "- 파라미터 예시 \n" +
+                              "{ \n" +
+                              "  \"memberId\": \"사용자ID\", \n" +
+                              "  \"memberName\": \"사용자명\" \n" +
+                              "  \"email\": \"이메일\" \n" +
+                              "  \"categoryId\": \"카테고리ID(숫자)\", \n" +
+                              "  \"categoryName\": \"카테고리명\" \n" +
+                              "}")
   @RequestMapping(value="interestCategories/registerInterestCategory", method=RequestMethod.POST)
   public Long registerInterestCategory(@RequestBody Map<String, String> paramMap) {
     Long result = Long.valueOf(-1);
@@ -55,7 +67,9 @@ public class InterestCategoryController {
    * 관심분류 전체 조회
    * @return
    */
-  @RequestMapping(value="interestCategories/searchAll")
+  @Tag(name="interest_categories")
+  @Operation(summary = "관심분류 전체조회", description = "관심분류 전체 목록을 조회한다")
+  @RequestMapping(value="interestCategories/searchAll", method=RequestMethod.GET)
   public List<InterestCategory> searchAllInterestCategory() {
     return interestCategoryRepository.findAll();
   }
@@ -64,7 +78,14 @@ public class InterestCategoryController {
    * 유저 별 관심분류 조회
    * @return
    */
-  @RequestMapping(value="interestCategories/searchByUser")
+  @Tag(name="interest_categories")
+  @Operation(summary = "관심분류 유저 별 조회",
+              description = "유저 별 관심분류 목록을 조회한다.\n" +
+                            "- 파라미터 예시 \n" +
+                              "{ \n" +
+                              "  \"email\": \"이메일\" \n" +
+                              "}")
+  @RequestMapping(value="interestCategories/searchByUser", method=RequestMethod.POST)
   public List<InterestCategory> searchInterestCategoryByUser(@RequestBody Map<String, String> paramMap) {
     return interestCategoryRepository.findByMemberEmail(paramMap.get("email"));
   }
@@ -74,6 +95,14 @@ public class InterestCategoryController {
    * @param paramMap
    * @return
    */
+  @Tag(name="interest_categories")
+  @Operation(summary = "관심분류 삭제",
+              description = "관심분류를 삭제(해제)한다.\n" +
+                            "- 파라미터 예시 \n" +
+                              "{ \n" +
+                              "  \"email\": \"이메일\" \n" +
+                              "  \"categoryId\": \"카테고리ID(숫자)\", \n" +
+                              "}")
   @RequestMapping(value="interestCategories/delete", method=RequestMethod.DELETE)
   public Long deleteInterestCategory(@RequestBody Map<String, String> paramMap) {
     Long result = Long.valueOf(-1);
@@ -98,7 +127,9 @@ public class InterestCategoryController {
    * 최근 7일 내 top 5 리턴, 0개일 경우 전체에서 top 5 리턴
    * @return
    */
-  @RequestMapping(value="interestCategories/top5InterestCategories")
+  @Tag(name="interest_categories")
+  @Operation(summary = "top5 관심분류 조회", description = "최근 일주일 간 등록이 많았던 관심분류를 조회한다. (없을 경우, 전체목록에서 top5 return)")
+  @RequestMapping(value="interestCategories/top5InterestCategories", method = RequestMethod.GET)
   public List<TopInterestCategoryDTO> top5InterestCategories() {
     List<TopInterestCategoryDTO> topInterestCategories = interestCategoryRepository.recentTop5InterestCategory();
     if(topInterestCategories.size() == 0) {
