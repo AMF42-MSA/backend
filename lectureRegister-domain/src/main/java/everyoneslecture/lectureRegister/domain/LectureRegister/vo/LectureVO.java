@@ -22,7 +22,7 @@ public class LectureVO { // Entity. Domain Class.
     private String categoryName;
     private Date startLectureDt; // 강의시작일
     private Date registerEndDt; // 수강마감일
-    private long lectureStatus; // 강의상태
+    private String lectureStatus; // 강의상태
     private String memberId; // 강의등록자ID
     private String opName; // 강의등록자
     private Date endterDt; // 강의등록일
@@ -92,11 +92,11 @@ public class LectureVO { // Entity. Domain Class.
         this.registerEndDt = registerEndDt;
     }
 
-    public long getLectureStatus() {
+    public String getLectureStatus() {
         return lectureStatus;
     }
 
-    public void setLectureStatus(long lectureStatus) {
+    public void setLectureStatus(String lectureStatus) {
         this.lectureStatus = lectureStatus;
     }
 
